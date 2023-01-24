@@ -337,7 +337,7 @@ CREATE TABLE `opinion` (
     FOREIGN KEY (`smo_type_id`)
     REFERENCES `sm_opinions_type` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
