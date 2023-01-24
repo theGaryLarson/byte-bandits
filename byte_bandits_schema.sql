@@ -322,7 +322,7 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
-
+SELECT * FROM sm_opinion_type;
 
 -- -----------------------------------------------------
 -- Table `opinion`
@@ -330,12 +330,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE `opinion` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `smo_type_id` INT NOT NULL,
-  `opinion` VARCHAR(255) NOT NULL,
+  `opinion` TEXT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `smo_type_id` (`smo_type_id` ASC) VISIBLE,
-  CONSTRAINT `opinions_ibfk_1`
+  CONSTRAINT `opinion_ibfk_1`
     FOREIGN KEY (`smo_type_id`)
-    REFERENCES `sm_opinions_type` (`id`))
+    REFERENCES `sm_opinion_type` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8mb4
@@ -351,10 +351,10 @@ CREATE TABLE `profile_opinion` (
   PRIMARY KEY (`id`),
   INDEX `core_id` (`core_id` ASC) VISIBLE,
   INDEX `opinion_id` (`opinion_id` ASC) VISIBLE,
-  CONSTRAINT `profile_opinions_ibfk_1`
+  CONSTRAINT `profile_opinion_ibfk_1`
     FOREIGN KEY (`core_id`)
     REFERENCES `core_profile` (`id`),
-  CONSTRAINT `profile_opinions_ibfk_2`
+  CONSTRAINT `profile_opinion_ibfk_2`
     FOREIGN KEY (`opinion_id`)
     REFERENCES `opinion` (`id`))
 ENGINE = InnoDB
@@ -440,7 +440,7 @@ ENGINE = InnoDB;
 -- Table `sm_item_by_seller`
 -- -----------------------------------------------------
 CREATE TABLE `sm_item_by_seller` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `sm_transaction_id` INT NOT NULL,
   `sm_seller_id` INT NOT NULL,
   `sm_item_id` INT NOT NULL,
@@ -494,7 +494,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE `post` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `social_media_id` INT NOT NULL,
-  `content` VARCHAR(45) NOT NULL,
+  `content` VARCHAR(144) NOT NULL,
   INDEX `fk_post_social_media1_idx` (`social_media_id` ASC) VISIBLE,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_post_social_media1`
@@ -510,7 +510,7 @@ ENGINE = InnoDB;
 CREATE TABLE `like` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `social_media_id` INT NOT NULL,
-  `content` VARCHAR(45) NOT NULL,
+  `content` VARCHAR(144) NOT NULL,
   `url` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_like_social_media1_idx` (`social_media_id` ASC) VISIBLE,
@@ -548,10 +548,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE `group` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(45) NULL,
-  `url` VARCHAR(45) NOT NULL,
   `social_media_id` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(144) NULL,
+  `url` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`, `social_media_id`),
   INDEX `fk_group_social_media1_idx` (`social_media_id` ASC) VISIBLE,
   CONSTRAINT `fk_group_social_media1`
@@ -571,7 +571,7 @@ CREATE TABLE `sm_opinion_type_by_platform` (
   INDEX `fk_sm_opinion_category_has_social_media_platform_social_me_idx` (`social_media_platform_id` ASC) VISIBLE,
   INDEX `fk_sm_opinion_category_has_social_media_platform_sm_opinio_idx` (`sm_opinion_type_id` ASC) VISIBLE,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_sm_opinion_category_has_social_media_platform_sm_opinions1`
+  CONSTRAINT `fk_sm_opinion_category_has_social_media_platform_sm_opinion1`
     FOREIGN KEY (`sm_opinion_type_id`)
     REFERENCES `sm_opinion_type` (`id`)
     ON DELETE NO ACTION
