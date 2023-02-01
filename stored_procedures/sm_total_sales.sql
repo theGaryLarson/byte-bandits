@@ -7,5 +7,6 @@ BEGIN
   JOIN sm_item_by_seller ON sm_seller.id = sm_item_by_seller.id
   JOIN sm_transaction ON sm_item_by_seller.sm_transaction_id = sm_transaction.id
   GROUP BY sm_seller.seller;
-END
+END//
 DELIMITER ;
+CALL sm_total_sales();
