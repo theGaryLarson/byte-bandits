@@ -146,12 +146,12 @@ VALUES (11, 'I believe in increasing funding for public education'),
        (14, 'I believe in a non-interventional foreign policy'),
        (15, 'I support common-sense gun control measures');
        
-INSERT INTO profile_opinion (core_id, opinion_id) 
-VALUES (11, 10), 
-       (12, 11),
-       (13, 12),
-       (14, 13),
-       (15, 14);
+INSERT INTO profile_opinion (core_id, opinion_id, intensity, `date`) 
+VALUES (11, 11, 1, '2023-01-20'), 
+       (12, 12, 10, '2020-03-17'),
+       (13, 13, 5, '2022-08-18'),
+       (14, 14, 7, '2022-07-23'),
+       (15, 15, 4, '2022-04-21');
 
 ##########################################
 #            SOCIAL MEDIA                #

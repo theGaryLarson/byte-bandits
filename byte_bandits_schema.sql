@@ -267,8 +267,6 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`opinion` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `smo_type_id` INT NOT NULL,
   `opinion` VARCHAR(255) NOT NULL,
-  `intensity` INT NOT NULL,
-  `date` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `smo_type_id` (`smo_type_id` ASC) VISIBLE,
   CONSTRAINT `opinions_ibfk_1`
@@ -422,6 +420,8 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`profile_opinion` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `core_id` INT NOT NULL,
   `opinion_id` INT NOT NULL,
+  `date` DATE NOT NULL,
+  `intensity` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `core_id` (`core_id` ASC) VISIBLE,
   INDEX `opinion_id` (`opinion_id` ASC) VISIBLE,
@@ -600,7 +600,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `targeted_marketing`.`sm_item_by_seller` ;
 
 CREATE TABLE IF NOT EXISTS `targeted_marketing`.`sm_item_by_seller` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `sm_transaction_id` INT NOT NULL,
   `sm_seller_id` INT NOT NULL,
   `sm_item_id` INT NOT NULL,
