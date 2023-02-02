@@ -1,0 +1,67 @@
+{
+  "social_media_platform": "BENDOVER",
+  "data": [
+    {
+      "id": "936DA01F-9ABD-4D9D-80C7-02AF85C822A8",
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "jane.doe@example.com",
+      "political_affiliation": "Liberal",
+      "political_intensity": 10,
+      "religious_affiliation": "Atheist",
+      "religious_intensity": 1,
+      "social_issue_views": {
+        "climate_change": "Pro-action",
+        "immigration": "Pro-immigration",
+        "healthcare": "Pro-universal healthcare"
+      },
+      "social_issue_view_intensity": {
+        "climate_change": 10,
+        "immigration": 10,
+        "healthcare": 10
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Liberal",
+        "religious_affiliation": "Atheist",
+        "gender": "I"
+      },
+      "gender": "TM",
+      "age": 30,
+      "location": "New York, NY",
+      "education": "Bachelor's degree in Computer Science",
+      "occupation": "Software Engineer",
+      "hobbies": ["Programming", "Reading", "Hiking"]
+    },
+    {
+      "id": "7C4A8D09-E2F8-496E-AFCE-DA96A76E31A3",
+      "first_name": "John",
+      "last_name": "Smith",
+      "email": "john.smith@example.com",
+      "political_affiliation": "Conservative",
+      "political_intensity": 1,
+      "religious_affiliation": "Christian",
+      "religious_intensity": 10,
+      "social_issue_views": {
+        "climate_change": "Skeptical",
+        "immigration": "Anti-immigration",
+        "healthcare": "Pro-market healthcare"
+      },
+      "social_issue_view_intensity": {
+        "climate_change": 1,
+        "immigration": 1,
+        "healthcare": 1
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Conservative",
+        "religious_affiliation": "Christian",
+        "gender": "F"
+      },
+      "gender": "TF",
+      "age": 25,
+      "location": "Los Angeles, CA",
+      "education": "Associate's degree in Business",
+      "occupation": "Entrepreneur",
+      "hobbies": ["Surfing", "Yoga", "Cooking"]
+    }
+  ]
+}
