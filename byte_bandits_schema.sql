@@ -645,6 +645,46 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
+-- -----------------------------------------------------
+-- Table `targeted_marketing`.`occupation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing`.`occupation` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing`.`occupation` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `core_profile_id` INT NOT NULL,
+  `job_title` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_occupation_core_profile1_idx` (`core_profile_id` ASC) VISIBLE,
+  CONSTRAINT `fk_occupation_core_profile1`
+    FOREIGN KEY (`core_profile_id`)
+    REFERENCES `targeted_marketing`.`core_profile` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing`.`social_mate_preference`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing`.`social_mate_preference` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing`.`social_mate_preference` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `core_profile_id` INT NOT NULL,
+  `political_affiliation` VARCHAR(45) NULL,
+  `religious_affiliation` VARCHAR(45) NULL,
+  `gender` VARCHAR(4) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_social_mate_preference_core_profile1_idx` (`core_profile_id` ASC) VISIBLE,
+  CONSTRAINT `fk_social_mate_preference_core_profile1`
+    FOREIGN KEY (`core_profile_id`)
+    REFERENCES `targeted_marketing`.`core_profile` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
