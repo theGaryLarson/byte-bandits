@@ -9,8 +9,10 @@ DECLARE CONTINUE HANDLER FOR NOT FOUND
     SET not_found = TRUE;
 DECLARE opinion VARCHAR;
 DECLARE intensity INT;
+DECLARE opinion_type VARCHAR;
 INSERT INTO opinion (opinion, intensity) VALUES (opinion, intensity);
-INSERT INTO sm_opinion_type (type) VALUES ('from csv');
+IF NOT EXISTS (SELECT * FROM sm_opinion_type WHERE type = opinion_type ) THEN
+    INSERT INTO sm_opinion_type (type) VALUES (opinion_type);
 IF not_found = TRUE THEN
     SELECT 'Values not inserted - no values found.' AS message;
 ELSE
