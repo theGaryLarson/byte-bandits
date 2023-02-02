@@ -8,6 +8,7 @@
 -- IGNORE 1 ROWS;
 
 -- ALSO need to make sure this is being linked by a key to core_profile...hmmm
+-- I'm assuming some data will be auto insert, like the auto-increment pk for opinion/opinion type and that dependent tables will automatically update??
 
 DROP PROCEDURE IF EXISTS InsertOpinion;
 
