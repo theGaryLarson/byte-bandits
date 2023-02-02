@@ -32,11 +32,11 @@ VALUES (11, 'M', 'Caucasian', '1987-05-23', 'Single'),
 	   (14, 'F', 'Hispanic', '1989-07-20', 'Widowed');
 
 INSERT INTO ip (core_id, ip_address, is_v4)
-VALUES (11, '192.168.1.1', 1),
-       (12, '192.168.1.2', 1),
-	   (13, '192.168.1.3', 1), 
-	   (14, '192.168.1.4', 1),
-       (15, '192.168.1.5', 1);
+VALUES (11, '10.10.0.22', 1),
+       (12, '10.0.0.22', 1),
+	   (13, '11.1.1.3', 1), 
+	   (14, '10.0.1.2', 1),
+       (15, '10.5.2.11', 1);
 
 INSERT INTO ip_location (ip_id, city, state, zip, country)
 VALUES (1, 'New York', 'NY', '', 'USA'),
