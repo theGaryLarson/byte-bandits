@@ -7,6 +7,8 @@
 -- LINES TERMINATED BY '\n'
 -- IGNORE 1 ROWS;
 
+-- ALSO need to make sure this is being linked by a key to core_profile...hmmm
+
 DROP PROCEDURE IF EXISTS InsertOpinion;
 
 DELIMITER //
