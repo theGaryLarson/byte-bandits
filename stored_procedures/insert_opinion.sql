@@ -4,7 +4,7 @@ DELIMITER //
 
 CREATE PROCEDURE 'InsertOpinion'()
 BEGIN
-    DECLARE not_found = TRUE;
+    DECLARE not_found = FALSE;
 DECLARE CONTINUE HANDLER FOR NOT FOUND
     SET not_found = TRUE;
 INSERT INTO opinion (opinion, intensity) VALUES ('from csv', 'from csv');
