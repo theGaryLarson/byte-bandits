@@ -1,3 +1,12 @@
+
+-- FOR CSV....how to use this with unkempt data??
+-- LOAD DATA INFILE 'c:/tmp/discounts.csv' 
+-- INTO TABLE discounts 
+-- FIELDS TERMINATED BY ',' 
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
+
 DROP PROCEDURE IF EXISTS InsertOpinion;
 
 DELIMITER //
