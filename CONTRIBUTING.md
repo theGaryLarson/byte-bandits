@@ -1,7 +1,8 @@
 # How to Contribute 
 
 ### Schema changes
-1. Any changes to the schema should only be done in your section unless discussed with other team members.
+1. Any changes to the schema should only be done in your section of the byte_bandits_schema.sql file
+unless discussed with other team members.
 2. When making changes be sure to also adjust the insert statements in the byte_bandits_inserts.sql file to reflect your changes.
 3. Once you are satisfied with your changes.
 4. Rerun the byte_bandits_schema.sql file to rebuild the database.
@@ -22,7 +23,11 @@
 &nbsp; * Long names are preferred over abbreviated names.
 3. Be sure the procedures run as expected and create them only for your section unless communicating with a team member.
 4. Once it runs as expected be sure it is saved in the stored_procedures folder of the repo.
-5. Push changes to the main branch of the respository
+5. Make sure the repo is up-to-date (git status | git pull). Push changes to the main branch of the respository
 6. If there are issues create a branch prefixed with your initials so we can work as a team to troubleshoot.
+
+    
+    Once, everything is running as expected push changes to main.
+    Always ensure you are up to date by doing a git pull prior to pushing upstream.
 
 
