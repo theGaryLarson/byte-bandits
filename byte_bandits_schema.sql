@@ -685,6 +685,35 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`social_mate_preference` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `targeted_marketing`.`bendover_data_feed`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing`.`bendover_data_feed` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing`.`bendover_data_feed` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `bendover_id` VARCHAR(144) NULL,
+  `first_name` VARCHAR(45) NULL,
+  `last_name` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `political_affiliation` VARCHAR(45) NULL,
+  `political_intensity` INT NULL,
+  `religious_affiliation` VARCHAR(45) NULL,
+  `religious_intensity` INT NULL,
+  `social_issue_views` VARCHAR(200) NULL,
+  `social_issue_post_date` VARCHAR(200) NULL,
+  `social_issue_view_intensity` VARCHAR(200) NULL,
+  `social_mate_preference` VARCHAR(200) NULL,
+  `gender` VARCHAR(3) NULL,
+  `age` INT NULL,
+  `location` VARCHAR(45) NULL,
+  `education` VARCHAR(144) NULL,
+  `occupation` VARCHAR(144) NULL,
+  `hobbies` VARCHAR(200) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
