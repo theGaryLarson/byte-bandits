@@ -10,4 +10,4 @@ with open('../csv/clean_bendover_data_feed.csv', 'w', newline='') as f:
     writer = csv.DictWriter(f, fieldnames=data['data'][0].keys())
     writer.writeheader()
     for row in data['data']:
-        writer.writerow({k: f'"{v}"' for k, v in row.items()})
+        writer.writerow(row)
