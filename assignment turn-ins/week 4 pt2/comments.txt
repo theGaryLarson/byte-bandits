@@ -1,0 +1,8 @@
+LOAD is not working on my system. I tried to troubleshoot. I found i am supposed to change the permissions in my.ini file but the file does not exist.
+
+After our discussion our idea was to load all the data into one table. Which is reflected in our schema with the bendover_data_feed table.
+However, we cannot even get it to add the data because of the below error.
+
+Here is the error we are receiving:
+
+19:23:03	LOAD DATA INFILE 'csv/clean_bendover_data_feed.csv' INTO TABLE `targeted_marketing`.`bendover_data_feed` FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS	Error Code: 1290. The MySQL server is running with the --secure-file-priv option so it cannot execute this statement	0.000 sec
