@@ -711,6 +711,7 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`bendover_data_feed` (
   `occupation` VARCHAR(144) NULL,
   `hobbies` VARCHAR(200) NULL,
   PRIMARY KEY (`id`))
+AUTO_INCREMENT = 1
 ENGINE = InnoDB;
 
 
