@@ -1,3 +1,4 @@
+USE targeted_marketing;
 DELIMITER //
 # returns social media platform primary key (id)
 CREATE FUNCTION get_sm_platform_id

@@ -1,3 +1,4 @@
+USE targeted_marketing;
 DELIMITER //
 CREATE PROCEDURE delete_bendover_names_in_core_profile()
 BEGIN

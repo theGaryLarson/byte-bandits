@@ -1,3 +1,4 @@
+USE targeted_marketing;
 DELIMITER //
 
 CREATE PROCEDURE insert_social_mate_preference

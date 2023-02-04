@@ -1,3 +1,4 @@
+USE targeted_marketing;
 DELIMITER //
 # Checks if social media platform exists
 CREATE FUNCTION check_platform_exists
