@@ -17,5 +17,5 @@ END//
 DELIMITER ;
 
 # error worth mentioning while its obvious. John Doe PK is in every row
-SELECT get_profile_id_by_name("John", "Doe") as "Profile ID", f_name, l_name
-FROM core_profile;
+SELECT get_profile_id_by_name("John", "Doe"); -- as "Profile ID", f_name, l_name
+-- FROM core_profile;
