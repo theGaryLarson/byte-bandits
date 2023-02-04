@@ -8,7 +8,7 @@ But if you want to play around and learn to use git in a collaborative way I sug
 * **py** - contains python scripts for converting json to csv and converting opinions into likert scale rating
 * **snippets** - some tidbits and incomplete procedures experimenting with different aspects of SQL
 * **stored_procedures** - contains all the stored procedure scripts for the targeted_marketing schema
-* **functions** - helper methods to make procedure code more readable
+* **functions** - helper methods to make procedures code more readable
 * **view_data_scripts** - contains all the views created for the targeted_marketing schema
 
 ### Core Files (targeted_marketing schema)
