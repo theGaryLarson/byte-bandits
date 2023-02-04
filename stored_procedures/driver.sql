@@ -1,0 +1,9 @@
+DELIMITER //
+CREATE PROCEDURE driver()
+
+BEGIN
+SET @profile_id = 0;
+
+END//
+
+DELIMITER ;

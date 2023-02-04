@@ -137,7 +137,10 @@ VALUES ('Education'),
 	   ('Healthcare'),
        ('Immigration'),
        ('Foreign Policy'),
-       ('Gun Control');
+       ('Gun Control'),
+       ('Religion'),
+	   ('Politics'),
+	   ('Climate-Change');
 
 INSERT INTO opinion (smo_type_id, opinion) 
 VALUES (11, 'I believe in increasing funding for public education'),
@@ -199,12 +202,12 @@ VALUES (1, 1, 1),
        (4, 4, 4), 
        (5, 5, 5);
 
-INSERT INTO social_media (core_id, sm_platform_id, url, last_active)
-VALUES (11, 11, 'https://www.facebook.com/johndoe', '2022-01-01'),
-	   (12, 12, 'https://www.twitter.com/janesmith', '2023-01-02'),
-       (13, 13, 'https://www.instagram.com/bobjohnson', '2023-01-03'),
-       (14, 14, 'https://www.linkedin.com/sarawilliams', '2021-01-04'),
-       (15, 15, 'https://www.youtube.com/garylarson', '2023-01-23');
+INSERT INTO social_media (core_id, sm_platform_id, user_guid, url, last_active)
+VALUES (11, 11,'54966999-feb6-4de4-ae32-3bcad7ed7067', 'https://www.facebook.com/johndoe', '2022-01-01'),
+	   (12, 12,'6622b1c8-2adf-4ada-9f7a-6915e4a67e92', 'https://www.twitter.com/janesmith', '2023-01-02'),
+       (13, 13, '6e781adb-d622-4a60-a723-8b79fbb45cf0', 'https://www.instagram.com/bobjohnson', '2023-01-03'),
+       (14, 14, '2c9eb5b1-8dc6-435e-a717-4c2b75af0113', 'https://www.linkedin.com/sarawilliams', '2021-01-04'),
+       (15, 15, '63d0ba09-1d99-4d47-8a58-d10b8412acc2', 'https://www.youtube.com/garylarson', '2023-01-23');
 
 INSERT INTO post (social_media_id, content)
 VALUES (11, 'Excited to announce the launch of our new product!'),
@@ -213,7 +216,7 @@ VALUES (11, 'Excited to announce the launch of our new product!'),
        (14, 'Networking and connecting with like-minded professionals on LinkedIn'),
        (15, 'Watch my latest video on YouTube for tips on personal development');
        
- INSERT INTO `like` (social_media_id, content, url) 
+ INSERT INTO `like` (social_media_id, content, liked_url) 
  VALUES (11, 'The benefits of yoga', 'https://www.example.com/yoga-article'),
 		(12, 'Make a homemade face mask is great', 'https://www.example.com/diy-face-mask'),
 		(13, 'Sustainable living in Urban Areas', 'https://www.example.com/sustainable-living'),
@@ -227,7 +230,7 @@ VALUES (11, 12),
        (14, 15),
        (15, 11);
        
-INSERT INTO `group` (id, name, description, url, social_media_id) 
+INSERT INTO `group` (id, name, description, group_url, social_media_id) 
 VALUES (1, 'Marketing Professionals', 'A group for marketing professionals to connect and share ideas.', 'https://www.facebook.com/groups/marketingprofessionals/', 11),
 	   (2, 'Entrepreneurs', 'A group for entrepreneurs to connect and share resources.', 'https://www.facebook.com/groups/entrepreneurs/', 11),
        (3, 'Tech enthusiasts', 'A group for tech enthusiasts to discuss the latest advancements.', 'https://www.facebook.com/groups/techenthusiasts/', 11),

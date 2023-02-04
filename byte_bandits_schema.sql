@@ -120,8 +120,9 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`social_media` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `core_id` INT NOT NULL,
   `sm_platform_id` INT NOT NULL,
-  `url` VARCHAR(255) NOT NULL,
-  `last_active` DATE NOT NULL,
+  `user_guid` VARCHAR(255) NOT NULL,
+  `url` VARCHAR(255) NULL,
+  `last_active` DATE NULL,
   PRIMARY KEY (`id`),
   INDEX `core_id` (`core_id` ASC) VISIBLE,
   INDEX `sm_platform_id` (`sm_platform_id` ASC) VISIBLE,
@@ -170,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`group` (
   `social_media_id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(144) NULL DEFAULT NULL,
-  `url` VARCHAR(255) NOT NULL,
+  `group_url` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`, `social_media_id`),
   INDEX `fk_group_social_media1_idx` (`social_media_id` ASC) VISIBLE,
   CONSTRAINT `fk_group_social_media1`
@@ -232,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`like` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `social_media_id` INT NOT NULL,
   `content` VARCHAR(144) NOT NULL,
-  `url` VARCHAR(45) NOT NULL,
+  `liked_url` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_like_social_media1_idx` (`social_media_id` ASC) VISIBLE,
   CONSTRAINT `fk_like_social_media1`
@@ -401,6 +402,8 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`profile_data` (
   `ethnicity` VARCHAR(45) NULL DEFAULT NULL,
   `birthdate` DATE NULL DEFAULT NULL,
   `marital_status` ENUM('Single', 'Separated', 'Divorced', 'Married', 'Widowed') NULL DEFAULT NULL,
+  `education` VARCHAR(144) NULL,
+  `occupation` VARCHAR(144) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_meta_data_core_profile1_idx` (`core_id` ASC) VISIBLE,
   CONSTRAINT `fk_meta_data_core_profile1`
@@ -604,6 +607,7 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`sm_item_by_seller` (
   `sm_transaction_id` INT NOT NULL,
   `sm_seller_id` INT NOT NULL,
   `sm_item_id` INT NOT NULL,
+  `price` DECIMAL(10,2) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_sm_seller_has_sm_item_sm_item1_idx` (`sm_item_id` ASC) VISIBLE,
   INDEX `fk_sm_seller_has_sm_item_sm_seller1_idx` (`sm_seller_id` ASC) VISIBLE,
@@ -680,6 +684,70 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing`.`social_mate_preference` (
   CONSTRAINT `fk_social_mate_preference_core_profile1`
     FOREIGN KEY (`core_profile_id`)
     REFERENCES `targeted_marketing`.`core_profile` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing`.`bendover_data_feed`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing`.`bendover_data_feed` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing`.`bendover_data_feed` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `bendover_id` VARCHAR(144) NULL,
+  `first_name` VARCHAR(45) NULL,
+  `last_name` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `political_affiliation` VARCHAR(45) NULL,
+  `political_intensity` INT NULL,
+  `religious_affiliation` VARCHAR(45) NULL,
+  `religious_intensity` INT NULL,
+  `social_issue_views` VARCHAR(200) NULL,
+  `social_issue_post_date` VARCHAR(200) NULL,
+  `social_issue_view_intensity` VARCHAR(200) NULL,
+  `social_mate_preference` VARCHAR(200) NULL,
+  `gender` VARCHAR(3) NULL,
+  `age` INT NULL,
+  `location` VARCHAR(45) NULL,
+  `education` VARCHAR(144) NULL,
+  `occupation` VARCHAR(144) NULL,
+  `hobbies` VARCHAR(200) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing`.`hobby`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing`.`hobby` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing`.`hobby` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `hobby_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing`.`profile_hobby`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing`.`profile_hobby` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing`.`profile_hobby` (
+  `core_id` INT NOT NULL,
+  `hobby_id` INT NOT NULL,
+  INDEX `fk_profile_hobby_core_profile1_idx` (`core_id` ASC) VISIBLE,
+  INDEX `fk_profile_hobby_hobby1_idx` (`hobby_id` ASC) VISIBLE,
+  CONSTRAINT `fk_profile_hobby_core_profile1`
+    FOREIGN KEY (`core_id`)
+    REFERENCES `targeted_marketing`.`core_profile` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_profile_hobby_hobby1`
+    FOREIGN KEY (`hobby_id`)
+    REFERENCES `targeted_marketing`.`hobby` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
