@@ -32,5 +32,6 @@ END IF;
 END//
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS get_opinion_id;
 SELECT get_opinion_id(13, "TEST");
 DELETE FROM opinion WHERE opinion = "TEST";
