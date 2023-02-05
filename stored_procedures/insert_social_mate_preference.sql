@@ -22,3 +22,4 @@ SET gender_pref = JSON_EXTRACT(mate_preference, $gender);
 -- FROM bendover_data_feed,
 -- WHERE 
 END//
+DELIMITER ;
