@@ -38,7 +38,8 @@ DECLARE curr_opinion_id					INT; # OPINION ID TO BE USED IN PROFILE_OPINION SO A
 DECLARE cur CURSOR FOR
 SELECT *
 FROM bendover_data_feed;
-DECLARE CONTINUE HANDLER FOR NOT FOUND SET @done = TRUE;
+DECLARE CONTINUE HANDLER FOR NOT FOUND
+    SET @done = TRUE;
 
 # intialize variables that will be used for scope of driver call
 # todo: create a method that checks if platform exists, if not adds it then returns PK
