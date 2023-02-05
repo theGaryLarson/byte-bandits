@@ -11,7 +11,7 @@ DETERMINISTIC
 BEGIN
     DECLARE profile_opinion_id    INT;
 
-    SELECT id, core_id, opinion_id, `date`, intensity
+    SELECT id
     INTO profile_opinion_id
     FROM profile_opinion
     WHERE core_profile_id_arg = core_id AND opinion_id_arg = opinion_id;
@@ -22,3 +22,5 @@ BEGIN
     END IF;
 END//
 DELIMITER ;
+SELECT check_exists_profile_opinion(15, 15);
+ DROP PROCEDURE IF EXISTS  check_exists_profile_opinion;
