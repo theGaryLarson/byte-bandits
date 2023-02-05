@@ -15,13 +15,14 @@ DECLARE found_opinion 		VARCHAR(255);
 SELECT opinion.id, opinion.opinion 
 INTO found_opinion_id, found_opinion
 FROM opinion
-WHERE opinion.opinion = opinon_var;
+WHERE opinion.opinion = opinion_var;
 
 IF found_opinion_id IS NULL THEN
-	INSERT INTO opinion
+	INSERT INTO opinion (smo_type_id, opinion)
     VALUES(smo_type_id_var, opinion_var);
     
-    SELECT opinion.id INTO found_opinion_id
+    SELECT opinion.id
+    INTO found_opinion_id
 	FROM opinion
 	WHERE opinion.opinion = opinion_var;
     RETURN found_opinion_id;
@@ -30,3 +31,6 @@ ELSE
 END IF;
 END//
 DELIMITER ;
+
+SELECT get_opinion_id(13, "TEST");
+DELETE FROM opinion WHERE opinion = "TEST";
