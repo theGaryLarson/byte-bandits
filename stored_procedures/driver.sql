@@ -5,7 +5,7 @@ CREATE PROCEDURE bendover_driver()
 BEGIN
 -- each field from bendover_data_feed_table needed to store fetch from cursor data
 DECLARE curr_primary_key					INT;
-DECLARE curr_bendover_id					INT;
+DECLARE curr_bendover_id					VARCHAR(200);
 DECLARE curr_f_name							VARCHAR(45);
 DECLARE curr_l_name							VARCHAR(45);
 DECLARE curr_email							VARCHAR(45);
@@ -41,6 +41,7 @@ FROM bendover_data_feed;
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET @done = TRUE;
 
 # intialize variables that will be used for scope of driver call
+# todo: create a method that checks if platform exists, if not adds it then returns PK
 SELECT id INTO platform_id
 FROM social_media_platform
 WHERE platform = "BENDOVER";
@@ -84,19 +85,43 @@ insertion_loop: LOOP
     -- insert into email table from current bendover_data_feed record
     CALL insert_email(curr_profile_id, curr_email);
     
-    -- todo: insert political affiliation and political intensity into profile_opinion
-	-- use hardcoded sm_opinion_type.type
-    -- get opinion_id from opinion table. if doesn't exist enter then return id
-    -- use insert into profile_opinion(core_id, opinion_id, date, intensity) --> (curr_profile_id, curr_opinion_id, CURDATE(), )
-    -- todo: transaction assignment - add some logic to see if there already is a profile opinion for this opinion_id if
-    -- so transfer current to transaction table and insert new if intensity has changed
-        
+    -- insert political affiliation and political intensity into profile_opinion
     -- store the opinion type for the current political_affiliation in curr_opinion_type_id
     -- adds 'Politics' if not found then returns the id. (have to be really careful about typos)
     SELECT get_current_opinion_type_id('Politics')
     INTO curr_opinion_type_id;
-        
-    SELECT get_opinion_id(curr_opinion_type_id, curr_political_affil) INTO curr_opinion_id;
+
+    SELECT get_opinion_id(curr_opinion_type_id, curr_political_affil)
+    INTO curr_opinion_id;
+
+	-- fixme: transaction assignment - add some logic to see if there already is a profile opinion for this opinion_id
+	--  if so transfer current record to transaction table and insert new intensity & date (even if intensity is the same)
+    CALL insert_profile_opinion
+    (
+        curr_profile_id,
+        curr_opinion_id,
+        CURDATE(),
+        curr_political_intensity
+	);
+
+    -- todo: insert religious affiliation data
+	-- change to religion category
+    SELECT get_current_opinion_type_id('Religion')
+    INTO curr_opinion_type_id;
+
+	-- get or create an id for the opinion on religion and store it in curr_opinion_id
+	SELECT get_opinion_id(curr_opinion_type_id, curr_religious_affil)
+    INTO curr_opinion_id;
+
+	-- fixme: transaction assignment - add some logic to see if there already is a profile opinion for this opinion_id
+	--  if so transfer current record to transaction table and insert new intensity & date (even if intensity is the same)
+	CALL insert_profile_opinion
+    (
+        curr_profile_id,
+        curr_opinion_id,
+        CURDATE(),
+        curr_religious_intensity
+	);
     -- leave loop if next item is not found
     IF @done THEN
 		LEAVE insertion_loop;
@@ -105,3 +130,4 @@ END LOOP;
 END//
 
 DELIMITER ;
+CALL bendover_driver();
