@@ -1,5 +1,6 @@
+USE `targeted_marketing`;
 DELIMITER //
-CREATE PROCEDURE json_convert() 
+CREATE PROCEDURE json_convert()
 
 BEGIN
 DECLARE json_string	VARCHAR(255);
