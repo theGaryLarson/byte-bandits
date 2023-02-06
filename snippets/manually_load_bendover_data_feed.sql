@@ -1,10 +1,6 @@
 DELETE  
 FROM `targeted_marketing`.`bendover_data_feed`
 WHERE id > 0;
-SHOW CREATE TABLE bendover_data_feed;
-
-# ALTER TABLE bendover_data_feed
-# CHANGE COLUMN age birthdate DATE;
 
 INSERT INTO `targeted_marketing`.`bendover_data_feed` 
 (
