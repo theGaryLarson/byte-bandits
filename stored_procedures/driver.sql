@@ -46,7 +46,6 @@ DECLARE CONTINUE HANDLER FOR NOT FOUND
 SELECT id INTO platform_id
 FROM social_media_platform
 WHERE platform = "BENDOVER";
-SELECT platform_id;
 
 # populate core profile names first to generate needed primary keys for FK dependencies
 -- todo: this method will handle duplicates and aliases ... eventually
