@@ -124,16 +124,20 @@ insertion_loop: LOOP
 
 	-- fixme: transaction assignment - add some logic to see if there already is a profile opinion for this opinion_id
 	--  if so transfer current record to transaction table and insert new intensity & date (even if intensity is the same)
-	# todo: social issue views       (json)
-	# todo: social issue post date   (json)
-	# todo: social issue intensity   (json)
+	# todo: social issue views       (json)  ---
+	# todo: social issue post date   (json)    --> all 3 associated
+	# todo: social issue intensity   (json)  ---
+
+	# todo: social mate preference   (json) - has its own table
+	# todo: hobbies                  (json) - hobby table, profile_hobby table
 
 	# todo: gender
-	# todo: age
-	# todo: location
+	# todo: birthdate
 	# todo: education
 	# todo: occupation
-	# todo: hobbies                  (json)
+	# todo: location
+
+
     -- leave loop if next item is not found
     IF @done THEN
 		LEAVE insertion_loop;
