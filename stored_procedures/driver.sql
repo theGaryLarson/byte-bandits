@@ -18,7 +18,7 @@ DECLARE curr_social_issue_date				VARCHAR(200);
 DECLARE curr_social_issue_view_intensity	VARCHAR(200);
 DECLARE curr_social_mate_pref				VARCHAR(200);
 DECLARE curr_gender							VARCHAR(3);
-DECLARE curr_age							INT;
+DECLARE curr_birthdate						DATE;
 DECLARE curr_location						VARCHAR(45);
 DECLARE curr_education						VARCHAR(144);
 DECLARE curr_occupation						VARCHAR(144);
@@ -64,7 +64,7 @@ insertion_loop: LOOP
                     curr_social_issue_view_intensity,
                     curr_social_mate_pref,
                     curr_gender,
-                    curr_age,
+                    curr_birthdate,
                     curr_location,
                     curr_education,
                     curr_occupation,
@@ -131,10 +131,16 @@ insertion_loop: LOOP
 	# todo: social mate preference   (json) - has its own table
 	# todo: hobbies                  (json) - hobby table, profile_hobby table
 
-	# todo: gender
-	# todo: birthdate
-	# todo: education
-	# todo: occupation
+	-- profile_data table inserts ------------------------------------------------------------
+	CALL insert_profile_data
+	(
+	    curr_profile_id,
+	    curr_gender,
+	    curr_birthdate,
+	    curr_education,
+	    curr_occupation
+	);
+    # ----------------------------------------------------------------------------------------
 	# todo: location
 
 
