@@ -709,7 +709,7 @@ CREATE TABLE IF NOT EXISTS `byte-bandits-sandbox`.`bendover_data_feed` (
   `social_issue_view_intensity` VARCHAR(200) NULL,
   `social_mate_preference` VARCHAR(200) NULL,
   `gender` VARCHAR(3) NULL,
-  `age` INT NULL,
+  `birthdate` DATE NULL,
   `location` VARCHAR(45) NULL,
   `education` VARCHAR(144) NULL,
   `occupation` VARCHAR(144) NULL,
