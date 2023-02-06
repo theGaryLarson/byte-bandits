@@ -1,6 +1,9 @@
 """
-Psuedocode for gathering data feed json objects from BENDOVER
+Pseudocode for gathering data feed json objects from BENDOVER
+Implements a web crawler to collect data feeds from BENDOVER social media site.
 """
+
+
 class BendoverCrawler:
     def __init__(self):
         self.api = self.initialize_bendover_api()

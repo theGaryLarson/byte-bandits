@@ -11,31 +11,33 @@ Pseudocode for scaling intensity on the Likert scale
     Scale the sentiment score on a scale of 1 to 10, with 1 being strongly opposed, 10 being strongly for, and 5 being
     indifferent.
 """
+import types
+
+import language
+
 """
     !!PSEUDOCODE!! Is not intended to run/does NOT run.
-    
-    from google.cloud import language
-    from google.cloud.language import enums
-    from google.cloud.language import types
+"""
+# from google.cloud import language
+# from google.cloud.language import enums
+# from google.cloud.language import types
 
 
 # Create a client object
-    client = language.LanguageServiceClient()
+client = language.LanguageServiceClient()
 
 # Define the text to analyze
-    text = "I love ice cream!"
+text = "Soylent Green is made out of people"
 
 # Call the analyze_sentiment method
-    document = types.Document(content=text, type=enums.Document.Type.PLAIN_TEXT)
-    sentimentToIntensity = client.analyze_sentiment(document=document).document_sentiment
+document = types.Document(content=text, type=enums.Document.Type.PLAIN_TEXT)
+sentimentToIntensity = client.analyze_sentiment(document=document).document_sentiment
 
-# Scale the sentiment score on a scale of 1 to 10
-    scale = (sentimentToIntensity.score + 1) * 5
+# Scale the sentiment score on a scale of 1 to 10. Googles scale is 0 to 1.
+scale = (sentimentToIntensity.score * 9) + 1
 
 # Print the scaled sentiment score
-    print("Sentiment score (1-10):", scale)
-"""
-
+print("Sentiment score (1-10):", scale)
 """
     Code would run pre-processing by another team and replace json
     intensity text with a Likert scale representation

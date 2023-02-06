@@ -57,4 +57,4 @@ def read_facebook_json(fb_json_file):
 
 
 if __name__ == '__main__':
-    read_facebook_json('../json/facebook_data.json')
+    read_facebook_json('../json/raw_facebook_data.json')
