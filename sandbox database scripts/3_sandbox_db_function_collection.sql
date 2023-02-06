@@ -77,6 +77,7 @@ END IF;
 END//
 DELIMITER ;
 
+DELIMITER //
 CREATE FUNCTION get_current_opinion_type_id
 (
 	opinion_type_var VARCHAR(45)
@@ -160,7 +161,7 @@ DETERMINISTIC READS SQL DATA
 BEGIN
   DECLARE result INT;
   SELECT id INTO result
-  FROM byte-bandits-sandbox.core_profile
+  FROM `byte-bandits-sandbox`.core_profile
   WHERE f_name = first_name AND l_name = last_name;
   IF result IS NULL THEN
       # fixme: hack solution to my main driver procedure quitting early
