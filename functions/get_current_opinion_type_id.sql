@@ -24,6 +24,8 @@ IF found_type IS NULL THEN
     INTO found_id
     FROM sm_opinion_type
     WHERE sm_opinion_type.`type` = opinion_type_var;
+	# fixme: hack solution to my main driver procedure quitting early
+	SET @done = FALSE;
     RETURN found_id;
 ELSE
 	RETURN found_id;
@@ -31,3 +33,5 @@ END IF;
 END//
 
 DELIMITER ;
+
+DROP FUNCTION get_current_opinion_type_id;

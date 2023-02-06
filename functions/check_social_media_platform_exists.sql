@@ -16,6 +16,9 @@ FROM social_media_platform
 WHERE `social_media_platform`.platform = platform;
 
 IF found_platform IS NULL THEN
+    # fixme: hack solution to my main driver procedure quitting early
+	SET @done = FALSE;
+
 	RETURN FALSE;
 ELSE
 	RETURN TRUE;

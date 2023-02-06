@@ -12,6 +12,10 @@ BEGIN
   SELECT id INTO result
   FROM targeted_marketing.core_profile
   WHERE f_name = first_name AND l_name = last_name;
+  IF result IS NULL THEN
+      # fixme: hack solution to my main driver procedure quitting early
+      SET @done = FALSE;
+  END IF;
   RETURN result;
 END//
 DELIMITER ;

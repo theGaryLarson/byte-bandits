@@ -25,6 +25,8 @@ WHERE profile_data.occupation = job_var;
 IF found_job IS NULL THEN
 	INSERT INTO profile_data(core_id, occupation)
     VALUES (profile_id_var, job_var);
+	# fixme: hack solution to my main driver procedure quitting early
+	SET @done = FALSE;
 END IF;
 END//
 

@@ -16,6 +16,8 @@ BEGIN
     FROM profile_opinion
     WHERE core_profile_id_arg = core_id AND opinion_id_arg = opinion_id;
     IF profile_opinion_id IS  NULL THEN
+        # fixme: hack solution to my main driver procedure quitting early
+	    SET @done = FALSE;
         RETURN FALSE;
     ELSE
         RETURN TRUE;

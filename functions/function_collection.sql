@@ -1,5 +1,4 @@
 USE targeted_marketing;
-
 DELIMITER //
 CREATE FUNCTION check_exists_email
 (
@@ -16,6 +15,8 @@ FROM email
 WHERE email.email = email_var;
 
 IF found_email IS NULL THEN
+    # fixme: hack solution to my main driver procedure quitting early
+    SET @done = FALSE;
 	RETURN FALSE;
 ELSE
 	RETURN TRUE;
@@ -40,6 +41,8 @@ BEGIN
     FROM profile_opinion
     WHERE core_profile_id_arg = core_id AND opinion_id_arg = opinion_id;
     IF profile_opinion_id IS  NULL THEN
+        # fixme: hack solution to my main driver procedure quitting early
+	    SET @done = FALSE;
         RETURN FALSE;
     ELSE
         RETURN TRUE;
@@ -64,6 +67,9 @@ FROM social_media_platform
 WHERE `social_media_platform`.platform = platform;
 
 IF found_platform IS NULL THEN
+    # fixme: hack solution to my main driver procedure quitting early
+	SET @done = FALSE;
+
 	RETURN FALSE;
 ELSE
 	RETURN TRUE;
@@ -71,7 +77,6 @@ END IF;
 END//
 DELIMITER ;
 
-DELIMITER //
 CREATE FUNCTION get_current_opinion_type_id
 (
 	opinion_type_var VARCHAR(45)
@@ -97,6 +102,8 @@ IF found_type IS NULL THEN
     INTO found_id
     FROM sm_opinion_type
     WHERE sm_opinion_type.`type` = opinion_type_var;
+	# fixme: hack solution to my main driver procedure quitting early
+	SET @done = FALSE;
     RETURN found_id;
 ELSE
 	RETURN found_id;
@@ -131,6 +138,10 @@ IF found_opinion_id IS NULL THEN
     INTO found_opinion_id
 	FROM opinion
 	WHERE opinion.opinion = opinion_var;
+
+	# fixme: hack solution to my main driver procedure quitting early
+	SET @done = FALSE;
+
     RETURN found_opinion_id;
 ELSE
 	RETURN found_opinion_id;
@@ -151,6 +162,10 @@ BEGIN
   SELECT id INTO result
   FROM targeted_marketing.core_profile
   WHERE f_name = first_name AND l_name = last_name;
+  IF result IS NULL THEN
+      # fixme: hack solution to my main driver procedure quitting early
+      SET @done = FALSE;
+  END IF;
   RETURN result;
 END//
 DELIMITER ;
@@ -170,6 +185,10 @@ DECLARE result_id INT;
 SELECT id INTO result_id
 FROM social_media_platform
 WHERE social_media_platform.platform = platform;
+
+IF result_id IS NULL THEN
+    SET @done = FALSE;
+END IF;
 
 RETURN result_id;
 END//

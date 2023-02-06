@@ -15,6 +15,8 @@ FROM email
 WHERE email.email = email_var;
 
 IF found_email IS NULL THEN
+    # fixme: hack solution to my main driver procedure quitting early
+    SET @done = FALSE;
 	RETURN FALSE;
 ELSE
 	RETURN TRUE;
@@ -22,3 +24,4 @@ END IF;
 END//
 DELIMITER ;
 SELECT check_exists_email('gary.larson@seattlecolleges.edu');
+DROP FUNCTION check_exists_email;

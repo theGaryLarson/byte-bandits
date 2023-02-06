@@ -25,6 +25,10 @@ IF found_opinion_id IS NULL THEN
     INTO found_opinion_id
 	FROM opinion
 	WHERE opinion.opinion = opinion_var;
+
+	# fixme: hack solution to my main driver procedure quitting early
+	SET @done = FALSE;
+
     RETURN found_opinion_id;
 ELSE
 	RETURN found_opinion_id;

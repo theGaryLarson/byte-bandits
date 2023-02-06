@@ -23,6 +23,8 @@ WHERE profile_data.education = education_var;
 IF found_edu IS NULL THEN
 	INSERT INTO profile_data(core_id, education)
     VALUES (profile_id_var, education_var);
+	# fixme: hack solution to my main driver procedure quitting early
+	SET @done = FALSE;
 END IF;
 END//
 

@@ -9,6 +9,8 @@ BEGIN
 IF get_profile_id_by_name(f_name_var, l_name_var) IS NULL THEN
 	INSERT INTO core_profile(f_name, l_name)
     VALUES (f_name_var, l_name_var);
+	# fixme: hack solution to my main driver procedure quitting early
+	SET @done = FALSE;
 	#ELSE
 		-- todo: handle people with same name and aliases
 		-- leverage bendover tables unique bendover_id, url of social media table and/or email?

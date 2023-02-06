@@ -15,6 +15,10 @@ SELECT id INTO result_id
 FROM social_media_platform
 WHERE social_media_platform.platform = platform;
 
+IF result_id IS NULL THEN
+    SET @done = FALSE;
+END IF;
+
 RETURN result_id;
 END//
 DELIMITER ;
