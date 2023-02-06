@@ -41,7 +41,7 @@ DECLARE CONTINUE HANDLER FOR NOT FOUND
 # todo: create a method that checks if platform exists, if not adds it then returns PK
 SELECT id INTO platform_id
 FROM social_media_platform
-WHERE platform = "BENDOVER";
+WHERE platform = 'BENDOVER';
 
 # populate core profile names first to generate needed primary keys for FK dependencies
 -- todo: this method will handle duplicates and aliases ... eventually
