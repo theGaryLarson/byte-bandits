@@ -1,0 +1,3 @@
+SHOW PROCEDURE STATUS;
+SHOW PROCEDURE STATUS WHERE Db = 'targeted_marketing';
+SHOW FUNCTION STATUS WHERE Db = 'targeted_marketing';
