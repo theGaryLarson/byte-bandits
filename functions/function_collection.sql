@@ -77,6 +77,7 @@ END IF;
 END//
 DELIMITER ;
 
+DELIMITER //
 CREATE FUNCTION get_current_opinion_type_id
 (
 	opinion_type_var VARCHAR(45)
