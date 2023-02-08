@@ -1,3 +1,4 @@
+USE targeted_marketing;
 ##########################################
 #            PERSONAL INFO               #
 ##########################################
@@ -135,12 +136,12 @@ VALUES ('11', '11'),
 INSERT INTO sm_opinion_type (type) 
 VALUES ('Education'),
 	   ('Healthcare'),
-       ('Immigration'),
+       ('Immigration'), # Brink
        ('Foreign Policy'),
-       ('Gun Control'),
-       ('Religion'),
-	   ('Politics'),
-	   ('Climate-Change');
+       ('Gun Control'), # Brink
+       ('Religion'), # Robel
+	   ('Politics'), # Nick
+	   ('Climate-Change'); # Brink
 
 INSERT INTO opinion (smo_type_id, opinion) 
 VALUES (11, 'I believe in increasing funding for public education'),
