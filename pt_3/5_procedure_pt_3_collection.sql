@@ -130,6 +130,7 @@ DELIMITER ;
 
 DELIMITER //
 
+ # todo: adjust to match new schema
 CREATE PROCEDURE insert_profile_opinion
 (
     core_profile_id_arg         INT,
