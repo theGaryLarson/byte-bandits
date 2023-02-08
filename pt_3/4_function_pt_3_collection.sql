@@ -25,6 +25,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
+ # todo: adjust to match new schema
 CREATE FUNCTION check_exists_profile_opinion
 (
     core_profile_id_arg         INT,
@@ -78,6 +79,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
+ # todo: adjust to match new schema
 CREATE FUNCTION get_current_opinion_type_id
 (
 	opinion_type_var VARCHAR(45)
@@ -114,6 +116,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
+ # todo: adjust to match new schema
 CREATE FUNCTION get_opinion_id
 (
 	smo_type_id_var		INT,
