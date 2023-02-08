@@ -771,6 +771,79 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`gender_look_up`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`gender_look_up` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`gender_look_up` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `identity` VARCHAR(45) NOT NULL,
+  `acronym` VARCHAR(4) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`political_transaction`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`political_transaction` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`political_transaction` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `profile_opinion_has_political_affiliation_id` INT NOT NULL,
+  `time_stamp` DATE NOT NULL,
+  `prev_intensity` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_political_transactions_profile_opinion_has_political_aff_idx` (`profile_opinion_has_political_affiliation_id` ASC) VISIBLE,
+  CONSTRAINT `fk_political_transactions_profile_opinion_has_political_affil1`
+    FOREIGN KEY (`profile_opinion_has_political_affiliation_id`)
+    REFERENCES `targeted_marketing`.`profile_opinion_has_political_affiliation` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`religious_transactions`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`religious_transactions` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`religious_transactions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `profile_opinion_has_religious_affiliation_id` INT NOT NULL,
+  `time_stamp` DATE NOT NULL,
+  `prev_intensity` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_religious_transactions_profile_opinion_has_religious_aff_idx` (`profile_opinion_has_religious_affiliation_id` ASC) VISIBLE,
+  CONSTRAINT `fk_religious_transactions_profile_opinion_has_religious_affil1`
+    FOREIGN KEY (`profile_opinion_has_religious_affiliation_id`)
+    REFERENCES `targeted_marketing`.`profile_opinion_has_religious_affiliation` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`social_issue_transaction`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`social_issue_transaction` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`social_issue_transaction` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `profile_opinion_has_social_issue_view_id` INT NOT NULL,
+  `time_stamp` DATE NOT NULL,
+  `prev_intensity` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_social_issue_transactions_profile_opinion_has_social_iss_idx` (`profile_opinion_has_social_issue_view_id` ASC) VISIBLE,
+  CONSTRAINT `fk_social_issue_transactions_profile_opinion_has_social_issue1`
+    FOREIGN KEY (`profile_opinion_has_social_issue_view_id`)
+    REFERENCES `targeted_marketing`.`profile_opinion_has_social_issue_view` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 USE `targeted_marketing_pt_3` ;
 
 -- -----------------------------------------------------
@@ -1026,7 +1099,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `check_platform_exists`(
 BEGIN
 DECLARE found_platform VARCHAR(255);
 
-SELECT `targeted_marketing_pt_3`.social_media_platform.platform
+SELECT `targeted_marketing`.social_media_platform.platform
 INTO found_platform
 FROM social_media_platform
 WHERE `social_media_platform`.platform = platform;
@@ -1146,7 +1219,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `get_profile_id_by_name`(
 BEGIN
   DECLARE result INT;
   SELECT id INTO result
-  FROM targeted_marketing_pt_3.core_profile
+  FROM targeted_marketing.core_profile
   WHERE f_name = first_name AND l_name = last_name;
   IF result IS NULL THEN
       # fixme: hack solution to my main driver procedure quitting early
@@ -1389,7 +1462,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_profile_data`(
 BEGIN
     DECLARE curr_id     INT;
 
-    SELECT targeted_marketing_pt_3.profile_data.core_id
+    SELECT targeted_marketing.profile_data.core_id
     INTO curr_id
     FROM profile_data
     WHERE core_id = core_id_var;
@@ -1458,7 +1531,7 @@ DELIMITER ;
 DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`profile_data_view`;
 DROP VIEW IF EXISTS `targeted_marketing_pt_3`.`profile_data_view` ;
 USE `targeted_marketing_pt_3`;
-CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `targeted_marketing_pt_3`.`profile_data_view` AS select `targeted_marketing_pt_3`.`core_profile`.`id` AS `Core id`,`targeted_marketing_pt_3`.`core_profile`.`f_name` AS `f_name`,`targeted_marketing_pt_3`.`core_profile`.`l_name` AS `l_name`,`targeted_marketing_pt_3`.`profile_data`.`id` AS `Profile Data id`,`targeted_marketing_pt_3`.`profile_data`.`gender` AS `gender`,round(((to_days(curdate()) - to_days(`targeted_marketing_pt_3`.`profile_data`.`birthdate`)) / 365.25),0) AS `Age`,`targeted_marketing_pt_3`.`profile_data`.`education` AS `Latest Education`,`targeted_marketing_pt_3`.`profile_data`.`occupation` AS `Current Occupation` from (`targeted_marketing_pt_3`.`core_profile` join `targeted_marketing_pt_3`.`profile_data` on((`targeted_marketing_pt_3`.`core_profile`.`id` = `targeted_marketing_pt_3`.`profile_data`.`core_id`))) order by 'Core id';
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `targeted_marketing`.`profile_data_view` AS select `targeted_marketing`.`core_profile`.`id` AS `Core id`,`targeted_marketing`.`core_profile`.`f_name` AS `f_name`,`targeted_marketing`.`core_profile`.`l_name` AS `l_name`,`targeted_marketing`.`profile_data`.`id` AS `Profile Data id`,`targeted_marketing`.`profile_data`.`gender` AS `gender`,round(((to_days(curdate()) - to_days(`targeted_marketing`.`profile_data`.`birthdate`)) / 365.25),0) AS `Age`,`targeted_marketing`.`profile_data`.`education` AS `Latest Education`,`targeted_marketing`.`profile_data`.`occupation` AS `Current Occupation` from (`targeted_marketing`.`core_profile` join `targeted_marketing`.`profile_data` on((`targeted_marketing`.`core_profile`.`id` = `targeted_marketing`.`profile_data`.`core_id`))) order by 'Core id';
 
 -- -----------------------------------------------------
 -- View `targeted_marketing_pt_3`.`profile_opinion_view`
@@ -1466,7 +1539,7 @@ CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY D
 DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`profile_opinion_view`;
 DROP VIEW IF EXISTS `targeted_marketing_pt_3`.`profile_opinion_view` ;
 USE `targeted_marketing_pt_3`;
-CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `targeted_marketing_pt_3`.`profile_opinion_view` AS select `targeted_marketing_pt_3`.`profile_opinion`.`id` AS `Core id`,`targeted_marketing_pt_3`.`core_profile`.`f_name` AS `f_name`,`targeted_marketing_pt_3`.`core_profile`.`l_name` AS `l_name`,`targeted_marketing_pt_3`.`sm_opinion_type`.`type` AS `Category`,`targeted_marketing_pt_3`.`profile_opinion`.`opinion_id` AS `opinion_id`,`targeted_marketing_pt_3`.`opinion`.`opinion` AS `opinion`,`targeted_marketing_pt_3`.`profile_opinion`.`intensity` AS `intensity`,`targeted_marketing_pt_3`.`profile_opinion`.`date` AS `Post-date` from (((`targeted_marketing_pt_3`.`profile_opinion` join `targeted_marketing_pt_3`.`core_profile` on((`targeted_marketing_pt_3`.`core_profile`.`id` = `targeted_marketing_pt_3`.`profile_opinion`.`core_id`))) join `targeted_marketing_pt_3`.`opinion` on((`targeted_marketing_pt_3`.`opinion`.`id` = `targeted_marketing_pt_3`.`profile_opinion`.`opinion_id`))) join `targeted_marketing_pt_3`.`sm_opinion_type` on((`targeted_marketing_pt_3`.`opinion`.`smo_type_id` = `targeted_marketing_pt_3`.`sm_opinion_type`.`id`))) order by `targeted_marketing_pt_3`.`sm_opinion_type`.`type`,`targeted_marketing_pt_3`.`profile_opinion`.`intensity` desc,`targeted_marketing_pt_3`.`core_profile`.`l_name`,`targeted_marketing_pt_3`.`core_profile`.`f_name`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `targeted_marketing`.`profile_opinion_view` AS select `targeted_marketing`.`profile_opinion`.`id` AS `Core id`,`targeted_marketing`.`core_profile`.`f_name` AS `f_name`,`targeted_marketing`.`core_profile`.`l_name` AS `l_name`,`targeted_marketing`.`sm_opinion_type`.`type` AS `Category`,`targeted_marketing`.`profile_opinion`.`opinion_id` AS `opinion_id`,`targeted_marketing`.`opinion`.`opinion` AS `opinion`,`targeted_marketing`.`profile_opinion`.`intensity` AS `intensity`,`targeted_marketing`.`profile_opinion`.`date` AS `Post-date` from (((`targeted_marketing`.`profile_opinion` join `targeted_marketing`.`core_profile` on((`targeted_marketing`.`core_profile`.`id` = `targeted_marketing`.`profile_opinion`.`core_id`))) join `targeted_marketing`.`opinion` on((`targeted_marketing`.`opinion`.`id` = `targeted_marketing`.`profile_opinion`.`opinion_id`))) join `targeted_marketing`.`sm_opinion_type` on((`targeted_marketing`.`opinion`.`smo_type_id` = `targeted_marketing`.`sm_opinion_type`.`id`))) order by `targeted_marketing`.`sm_opinion_type`.`type`,`targeted_marketing`.`profile_opinion`.`intensity` desc,`targeted_marketing`.`core_profile`.`l_name`,`targeted_marketing`.`core_profile`.`f_name`;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
