@@ -1,8 +1,9 @@
-DELETE  
-FROM `targeted_marketing`.`bendover_data_feed`
+USE targeted_marketing_pt_3;
+DELETE
+FROM `targeted_marketing_pt_3`.`bendover_data_feed`
 WHERE id > 0;
 
-INSERT INTO `targeted_marketing`.`bendover_data_feed` 
+INSERT INTO `targeted_marketing_pt_3`.`bendover_data_feed` 
 (
 	bendover_id,
 	first_name,

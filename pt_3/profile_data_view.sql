@@ -1,3 +1,4 @@
+USE targeted_marketing_pt_3;
 CREATE VIEW profile_data_view AS
 SELECT core_profile.id AS 'Core id',
 							f_name,

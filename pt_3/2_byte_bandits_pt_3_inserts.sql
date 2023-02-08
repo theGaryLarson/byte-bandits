@@ -1,4 +1,4 @@
-USE targeted_marketing;
+USE targeted_marketing_pt_3;
 ##########################################
 #            PERSONAL INFO               #
 ##########################################
@@ -9,6 +9,7 @@ VALUES ('John', 'Doe'),
 	   ('Bob', 'Johnson'),
 	   ('Sara', 'Williams'),
 	   ('Gary', 'Larson');
+SELECT * FROM core_profile;
 
 INSERT INTO address (core_id, street, apt, city, state, zip, country)
 VALUES (11, '123 Main St', 'Apt 4', 'New York', 'NY', '10001', 'USA'),
@@ -17,20 +18,34 @@ VALUES (11, '123 Main St', 'Apt 4', 'New York', 'NY', '10001', 'USA'),
 	   (14, '321 Pine St', NULL, 'Houston', 'TX', '77001', 'USA'),
 	   (15, '315 Hemlock St', NULL, 'Sequim', 'WA', '98362', 'USA'),
        (15, '13746 Roosevelt Way N', NULL, 'Seattle', 'WA', '98133', 'USA');
+       SELECT * FROM address;
 
 INSERT INTO alias (core_id, f_name, l_name)
-VALUES (11, 'John', 'Doe'),
-       (12, 'Jane', 'Smith'),
-	   (13, 'Bob', 'Johnson'),
-	   (14, 'Sara', 'Williams'),
-       (15, 'Michael', 'Larson'),
-       (15, 'dotZero', NULL);
+VALUES (15, 'dotZero', NULL);
+SELECT * FROM alias;
 
-INSERT INTO profile_data (core_id, gender, ethnicity, birthdate, marital_status)
-VALUES (11, 'M', 'Caucasian', '1987-05-23', 'Single'),
-       (12, 'F', 'African American', '1993-09-12', 'Married'),
-	   (13, 'M', 'Asian', '1978-03-15', 'Divorced'),
-	   (14, 'F', 'Hispanic', '1989-07-20', 'Widowed');
+# todo insert gender_look_up values
+INSERT INTO gender_look_up (identity, acronym)
+VALUES
+    ('Female', 'F'),
+    ('Male', 'M'),
+    ('Intersex', 'I'),
+    ('Transfemale', 'TF'),
+    ('Transmale', 'TM'),
+    ('Bigender', 'B');
+SELECT * FROM gender_look_up;
+
+INSERT INTO profile_data (core_id, gender_id, ethnicity, birthdate, marital_status)
+VALUES (11, 2, 'Caucasian', '1987-05-23', 'Single'),
+       (12, 1, 'African American', '1993-09-12', 'Married'),
+	   (13, 2, 'Asian', '1978-03-15', 'Divorced'),
+	   (14, 1, 'Hispanic', '1989-07-20', 'Widowed');
+# todo: create as view
+SELECT f_name, l_name, gender_id, gender_look_up.acronym FROM core_profile
+JOIN profile_data
+ON core_profile.id = profile_data.core_id
+JOIN gender_look_up
+ON gender_id = gender_look_up.id;
 
 INSERT INTO ip (core_id, ip_address, is_v4)
 VALUES (11, '10.10.0.22', 1),
@@ -54,11 +69,13 @@ VALUES (11, 'johndoe@gmail.com'),
        (15, 'gary.larson@email.com');
 
 INSERT INTO phone (core_id, country_code, area_code, extension, line_number)
-VALUES (11, '1', '555', '555', '5555'),
-       (12, '555-555-5556'),
-       (13, '555-555-5557'),
-	   (14, '555-555-5558'),
-       (15, '555-555-5559');
+VALUES (11, '1', '123', '555', '5555'),
+       (12, '1','123','555', '5556'),
+       (13, '1','456','555', '5557'),
+	   (14, '1','456','555', '5558'),
+       (15, '1','789','555', '5559');
+SELECT * FROM phone;
+
        
 ##########################################
 #              PRODUCTS                  #
@@ -132,30 +149,40 @@ VALUES ('11', '11'),
 ##########################################
 #              OPINIONS                  #
 ##########################################
-
-INSERT INTO sm_opinion_type (type) 
+DELETE FROM social_issue_view_type_look_up WHERE id > 0;
+INSERT INTO social_issue_view_type_look_up (`type`)
 VALUES ('Education'),
-	   ('Healthcare'),
-       ('Immigration'), # Brink
-       ('Foreign Policy'),
-       ('Gun Control'), # Brink
-       ('Religion'), # Robel
-	   ('Politics'), # Nick
-	   ('Climate-Change'); # Brink
+        ('Healthcare'),
+        ('Immigration'),
+        ('Foreign Policy'),
+        ('Gun Control'),
+        ('Climate-Change');
 
-INSERT INTO opinion (smo_type_id, opinion) 
-VALUES (11, 'I believe in increasing funding for public education'),
-       (12, 'I support universal healthcare access'),
-       (13, 'I support a fair and humane immigration policy'),
-       (14, 'I believe in a non-interventional foreign policy'),
-       (15, 'I support common-sense gun control measures');
-       
-INSERT INTO profile_opinion (core_id, opinion_id, intensity, `date`)
-VALUES (11, 11, 1, '2023-01-20'),
-       (12, 12, 10, '2020-03-17'),
-       (13, 13, 5, '2022-08-18'),
-       (14, 14, 7, '2022-07-23'),
-       (15, 15, 4, '2022-04-21');
+SELECT * FROM social_issue_view_type_look_up;
+-- todo: insert opinions according to new schema
+-- INSERT INTO sm_opinion_type (type) 
+-- VALUES ('Education'),
+-- 	   ('Healthcare'),
+--        ('Immigration'), # Brink
+--        ('Foreign Policy'),
+--        ('Gun Control'), # Brink
+--        ('Religion'), # Robel
+-- 	   ('Politics'), # Nick
+-- 	   ('Climate-Change'); # Brink
+
+-- INSERT INTO opinion (smo_type_id, opinion) 
+-- VALUES (11, 'I believe in increasing funding for public education'),
+--        (12, 'I support universal healthcare access'),
+--        (13, 'I support a fair and humane immigration policy'),
+--        (14, 'I believe in a non-interventional foreign policy'),
+--        (15, 'I support common-sense gun control measures');
+--        
+-- INSERT INTO profile_opinion (core_id, opinion_id, intensity, `date`)
+-- VALUES (11, 11, 1, '2023-01-20'),
+--        (12, 12, 10, '2020-03-17'),
+--        (13, 13, 5, '2022-08-18'),
+--        (14, 14, 7, '2022-07-23'),
+--        (15, 15, 4, '2022-04-21');
 
 ##########################################
 #            SOCIAL MEDIA                #
@@ -238,29 +265,30 @@ VALUES (1, 'Marketing Professionals', 'A group for marketing professionals to co
        (4, 'Social Media Strategists', 'A group for social media strategists to discuss best practices and share tips.', 'https://www.facebook.com/groups/socialmediastrategists/', 11),
        (5, 'Startup Founders', 'A group for startup founders to connect and share resources.', 'https://www.facebook.com/groups/startupfounders/', 11);
 
-INSERT INTO sm_opinion_type_by_platform (sm_opinion_type_id, social_media_platform_id)
-VALUES (11, 11),
-	   (11, 12),
-       (11, 13),
-       (11, 14),
-       (11, 15),
-       (12, 11),
-	   (12, 12),
-       (12, 13),
-       (12, 14),
-       (12, 15),
-       (13, 11),
-	   (13, 12),
-       (13, 13),
-       (13, 14),
-       (13, 15),
-       (14, 11),
-	   (14, 12),
-       (14, 13),
-       (14, 14),
-       (14, 15),
-       (15, 11),
-	   (15, 12),
-       (15, 13),
-       (15, 14),
-       (15, 15);
+-- todo: change to fit new schema
+-- INSERT INTO sm_opinion_type_by_platform (sm_opinion_type_id, social_media_platform_id)
+-- VALUES (11, 11),
+-- 	   (11, 12),
+--        (11, 13),
+--        (11, 14),
+--        (11, 15),
+--        (12, 11),
+-- 	   (12, 12),
+--        (12, 13),
+--        (12, 14),
+--        (12, 15),
+--        (13, 11),
+-- 	   (13, 12),
+--        (13, 13),
+--        (13, 14),
+--        (13, 15),
+--        (14, 11),
+-- 	   (14, 12),
+--        (14, 13),
+--        (14, 14),
+--        (14, 15),
+--        (15, 11),
+-- 	   (15, 12),
+--        (15, 13),
+--        (15, 14),
+--        (15, 15);

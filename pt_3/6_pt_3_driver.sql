@@ -1,4 +1,4 @@
-USE targeted_marketing;
+USE targeted_marketing_pt_3;
 DELIMITER //
 CREATE PROCEDURE bendover_driver()
 
