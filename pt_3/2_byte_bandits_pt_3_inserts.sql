@@ -159,6 +159,19 @@ VALUES ('Education'),
         ('Climate-Change');
 
 SELECT * FROM social_issue_view_type_look_up;
+
+INSERT INTO political_affiliation_look_up (affiliation)
+VALUES    ('Liberal'),
+          ('Conservative'),
+          ('Independent'),
+          ('Conservative');
+
+USE targeted_marketing_pt_3;
+INSERT INTO core_profile_has_political_affiliation (core_profile_id, political_affiliation_look_up_id, intensity)
+VALUES ( 11, 17, 10),
+       ( 12, 18, 1),
+       ( 13, 19, 5),
+       ( 14, 20, 9);
 -- todo: insert opinions according to new schema
 -- INSERT INTO sm_opinion_type (type) 
 -- VALUES ('Education'),
