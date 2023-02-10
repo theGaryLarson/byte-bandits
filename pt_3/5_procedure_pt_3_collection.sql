@@ -146,6 +146,7 @@ BEGIN
         # return true if is inserted
     # ELSE
         # return false letting us know it exists and need to transfer to opinion transaction table
+        # INSERT INTO <TRANSACTION TABLE>
     END IF;
 END//
 DELIMITER ;
