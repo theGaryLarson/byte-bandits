@@ -4,7 +4,7 @@ fix profile_hobby  table: add pk</br>
 create hobby_transaction table
 
 * Get procedures and functions functioning so pipeline works as expected.
-* Create transactions that make use of our transaction tables. (logs data / moves records when intensity changes)
+* Create transactions that make use of our transaction tables. (logs data when not inserted as expected / moves records when intensity changes)
 * Extra credit: Checking if opinion changes via a VIEW or a TRIGGER.
 
 ## Byte Bandits: Part 3 of 6
