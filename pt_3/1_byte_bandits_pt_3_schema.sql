@@ -521,30 +521,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `targeted_marketing_pt_3`.`sm_transaction`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`sm_transaction` ;
-
-CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`sm_transaction` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `core_id` INT NOT NULL,
-  `smp_id` INT NOT NULL,
-  `price_paid` DECIMAL(10,2) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Transactions_core_profile1_idx` (`core_id` ASC) VISIBLE,
-  INDEX `fk_Transactions_social_media_platforms1_idx` (`smp_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Transactions_core_profile1`
-    FOREIGN KEY (`core_id`)
-    REFERENCES `targeted_marketing_pt_3`.`core_profile` (`id`),
-  CONSTRAINT `fk_Transactions_social_media_platforms1`
-    FOREIGN KEY (`smp_id`)
-    REFERENCES `targeted_marketing_pt_3`.`social_media_platform` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
 -- Table `targeted_marketing_pt_3`.`sm_seller`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`sm_seller` ;
@@ -565,23 +541,50 @@ DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`sm_item_by_seller` ;
 
 CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`sm_item_by_seller` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `sm_transaction_id` INT NOT NULL,
   `sm_seller_id` INT NOT NULL,
   `sm_item_id` INT NOT NULL,
-  `price` DECIMAL(10,2) NULL,
+  `price` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_sm_seller_has_sm_item_sm_item1_idx` (`sm_item_id` ASC) VISIBLE,
   INDEX `fk_sm_seller_has_sm_item_sm_seller1_idx` (`sm_seller_id` ASC) VISIBLE,
-  INDEX `fk_sm_seller_has_item_sm_transaction1_idx` (`sm_transaction_id` ASC) VISIBLE,
-  CONSTRAINT `fk_sm_seller_has_item_sm_transaction1`
-    FOREIGN KEY (`sm_transaction_id`)
-    REFERENCES `targeted_marketing_pt_3`.`sm_transaction` (`id`),
   CONSTRAINT `fk_sm_seller_has_sm_item_sm_item1`
     FOREIGN KEY (`sm_item_id`)
     REFERENCES `targeted_marketing_pt_3`.`sm_item` (`id`),
   CONSTRAINT `fk_sm_seller_has_sm_item_sm_seller1`
     FOREIGN KEY (`sm_seller_id`)
     REFERENCES `targeted_marketing_pt_3`.`sm_seller` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`sm_transaction`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`sm_transaction` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`sm_transaction` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `core_id` INT NOT NULL,
+  `smp_id` INT NOT NULL,
+  `sm_item_by_seller_id` INT NOT NULL,
+  `price_paid` DECIMAL(10,2) NOT NULL,
+  `purchase_date` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Transactions_core_profile1_idx` (`core_id` ASC) VISIBLE,
+  INDEX `fk_Transactions_social_media_platforms1_idx` (`smp_id` ASC) VISIBLE,
+  INDEX `fk_sm_transaction_sm_item_by_seller1_idx` (`sm_item_by_seller_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Transactions_core_profile1`
+    FOREIGN KEY (`core_id`)
+    REFERENCES `targeted_marketing_pt_3`.`core_profile` (`id`),
+  CONSTRAINT `fk_Transactions_social_media_platforms1`
+    FOREIGN KEY (`smp_id`)
+    REFERENCES `targeted_marketing_pt_3`.`social_media_platform` (`id`),
+  CONSTRAINT `fk_sm_transaction_sm_item_by_seller1`
+    FOREIGN KEY (`sm_item_by_seller_id`)
+    REFERENCES `targeted_marketing_pt_3`.`sm_item_by_seller` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -607,6 +610,30 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`political_affiliation_look_up`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`political_affiliation_look_up` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`political_affiliation_look_up` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `affiliation` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`religious_affiliation_look_up`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`religious_affiliation_look_up` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`religious_affiliation_look_up` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `affiliation` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `targeted_marketing_pt_3`.`social_mate_preference`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`social_mate_preference` ;
@@ -615,11 +642,13 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`social_mate_preference` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `core_profile_id` INT NOT NULL,
   `gender_id` INT NOT NULL,
-  `political_affiliation` VARCHAR(45) NULL,
-  `religious_affiliation` VARCHAR(45) NULL,
+  `political_affiliation_look_up_id` INT NOT NULL,
+  `religious_affiliation_look_up_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_social_mate_preference_core_profile1_idx` (`core_profile_id` ASC) VISIBLE,
   INDEX `fk_social_mate_preference_gender_look_up1_idx` (`gender_id` ASC) VISIBLE,
+  INDEX `fk_social_mate_preference_political_affiliation_look_up1_idx` (`political_affiliation_look_up_id` ASC) VISIBLE,
+  INDEX `fk_social_mate_preference_religious_affiliation_look_up1_idx` (`religious_affiliation_look_up_id` ASC) VISIBLE,
   CONSTRAINT `fk_social_mate_preference_core_profile1`
     FOREIGN KEY (`core_profile_id`)
     REFERENCES `targeted_marketing_pt_3`.`core_profile` (`id`)
@@ -628,6 +657,16 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`social_mate_preference` (
   CONSTRAINT `fk_social_mate_preference_gender_look_up1`
     FOREIGN KEY (`gender_id`)
     REFERENCES `targeted_marketing_pt_3`.`gender_look_up` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_social_mate_preference_political_affiliation_look_up1`
+    FOREIGN KEY (`political_affiliation_look_up_id`)
+    REFERENCES `targeted_marketing_pt_3`.`political_affiliation_look_up` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_social_mate_preference_religious_affiliation_look_up1`
+    FOREIGN KEY (`religious_affiliation_look_up_id`)
+    REFERENCES `targeted_marketing_pt_3`.`religious_affiliation_look_up` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -675,15 +714,31 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`time_spent_on_hobby_look_up`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`time_spent_on_hobby_look_up` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`time_spent_on_hobby_look_up` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `time_spent` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `targeted_marketing_pt_3`.`profile_hobby`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`profile_hobby` ;
 
 CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`profile_hobby` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `core_id` INT NOT NULL,
   `hobby_id` INT NOT NULL,
+  `time_spent_on_hobby_look_up_id` INT NOT NULL,
   INDEX `fk_profile_hobby_core_profile1_idx` (`core_id` ASC) VISIBLE,
   INDEX `fk_profile_hobby_hobby1_idx` (`hobby_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`),
+  INDEX `fk_profile_hobby_hobby_frequency_look_up1_idx` (`time_spent_on_hobby_look_up_id` ASC) VISIBLE,
   CONSTRAINT `fk_profile_hobby_core_profile1`
     FOREIGN KEY (`core_id`)
     REFERENCES `targeted_marketing_pt_3`.`core_profile` (`id`)
@@ -692,6 +747,11 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`profile_hobby` (
   CONSTRAINT `fk_profile_hobby_hobby1`
     FOREIGN KEY (`hobby_id`)
     REFERENCES `targeted_marketing_pt_3`.`hobby_look_up` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_profile_hobby_hobby_frequency_look_up1`
+    FOREIGN KEY (`time_spent_on_hobby_look_up_id`)
+    REFERENCES `targeted_marketing_pt_3`.`time_spent_on_hobby_look_up` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -804,18 +864,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `targeted_marketing_pt_3`.`political_affiliation_look_up`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`political_affiliation_look_up` ;
-
-CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`political_affiliation_look_up` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `affiliation` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `targeted_marketing_pt_3`.`core_profile_has_political_affiliation`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`core_profile_has_political_affiliation` ;
@@ -864,18 +912,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `targeted_marketing_pt_3`.`religious_affiliation_look_up`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`religious_affiliation_look_up` ;
-
-CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`religious_affiliation_look_up` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `affiliation` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `targeted_marketing_pt_3`.`core_profile_has_religious_affiliation`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`core_profile_has_religious_affiliation` ;
@@ -915,6 +951,32 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`religious_transaction` (
   CONSTRAINT `fk_religious_transaction_core_profile_has_religious_affiliati1`
     FOREIGN KEY (`core_profile_has_religious_affiliation_id`)
     REFERENCES `targeted_marketing_pt_3`.`core_profile_has_religious_affiliation` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`hobby_transaction`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`hobby_transaction` ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`hobby_transaction` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `timestamp` DATE NOT NULL,
+  `profile_hobby_id` INT NOT NULL,
+  `prev_time_spent_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_hobby_transaction_profile_hobby1_idx` (`profile_hobby_id` ASC) VISIBLE,
+  INDEX `fk_hobby_transaction_time_spent_on_hobby_look_up1_idx` (`prev_time_spent_id` ASC) VISIBLE,
+  CONSTRAINT `fk_hobby_transaction_profile_hobby1`
+    FOREIGN KEY (`profile_hobby_id`)
+    REFERENCES `targeted_marketing_pt_3`.`profile_hobby` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_hobby_transaction_time_spent_on_hobby_look_up1`
+    FOREIGN KEY (`prev_time_spent_id`)
+    REFERENCES `targeted_marketing_pt_3`.`time_spent_on_hobby_look_up` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
