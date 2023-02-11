@@ -20,7 +20,7 @@
 * *religious_transaction* - stores change in intensity based on religious lean
 * *social_issue_view_transaction* - stores change in intensity based on social issue view intensity
 * *sm_transaction* - social media purchases: tracks date and price from given seller
-* *hobby_transaciton* - tracks a change in a profile's given hobbies
+* *hobby_transaction* - tracks a change in a profile's given hobbies
 
 > Now using your design, add a means to support logging the transactions, so if a problem were to be found with the data it can be traced back to the transaction that caused it. At this point you should be thinking “I am going to have to be date tagging the transactions”
 
@@ -30,8 +30,10 @@ We would alter our pipeline so that each procedure that insert data into these t
 <hr></hr>
 
 ### Extra credit
+> For extra credit, add "opinion change transaction detection" to your database schema 
 
-* We have transaction tables listed above in our transaction tables. These would be used to track the change in intensity of the opinions (political, religious, social_issue_views)
+
+* We have transaction tables listed above in our transaction tables. These would be used to track the change in intensity of the opinions (political, religious, social_issue_views). A view would be created where we could compare previous changes in intensity. We can filter by dates with BETWEEN and/or look for variance in intensity fairly easily with some basic subtraction.
 
 <hr></hr>
 
@@ -40,9 +42,10 @@ We would alter our pipeline so that each procedure that insert data into these t
 ~~create hobby_transaction table~~</br>
 
 **Q: Are these expected?**
-* Get procedures and functions functioning so pipeline works as expected. 
+* Get procedures and functions refactored so pipeline works as expected. 
 * Create transactions that make use of our transaction tables. (logs data when not inserted as expected / moves records when intensity changes)
-* Checking if opinion changes via a VIEW or a TRIGGER.
+  * Uses COMMIT and ROLLBACK keywords. Wouldn't necessarily need to rollback if we are logging in another table, right?
+* Checking if opinion changes via a VIEW or a TRIGGER?
 <hr></hr>
 
 
