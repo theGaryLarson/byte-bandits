@@ -1,6 +1,6 @@
 
 # Todo:
-fix profile_hobby  table: add pk</br>
+~~fix profile_hobby  table: add pk~~</br>
 create hobby_transaction table
 
 * Get procedures and functions functioning so pipeline works as expected.
@@ -19,6 +19,7 @@ create hobby_transaction table
  * social_mate_preference_look_up - *we just use the gender_look_up table*
  * gender_look_up - lists the various gender identities. VARCHAR(4) to include room for more. Recognizing gender fluidity in our design.
  * hobby_look_up - A list of distinct hobbies.
+ * time_spent_on_hobby_look_up - a list of frequencies indicating amount of time spent on a hobby. (e.g  "daily", "twice weekly", "once a week", "weekends", "at least once a month", etc.)
 
 ### Transaction Tables
 
