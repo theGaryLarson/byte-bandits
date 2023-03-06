@@ -35,11 +35,25 @@ VALUES
     ('Bigender', 'B');
 SELECT * FROM gender_look_up;
 
+
 INSERT INTO profile_data (core_id, gender_id, ethnicity, birthdate, marital_status)
 VALUES (11, 2, 'Caucasian', '1987-05-23', 'Single'),
        (12, 1, 'African American', '1993-09-12', 'Married'),
 	   (13, 2, 'Asian', '1978-03-15', 'Divorced'),
 	   (14, 1, 'Hispanic', '1989-07-20', 'Widowed');
+
+
+# todo: maybe the updated version since erd contains education & occupation ^
+# fixme: missing gender_id, can't find starting pk value in gender_lookup table
+    # used same gender_id as above profile_data, not sure if it's right since there's repeated gender_id's
+-- INSERT INTO profile_data (core_id, gender_id, ethnicity, birthdate, marital_status, education, occupation)
+-- VALUES (11, 2, 'Caucasian', '1987-05-23', 'Single', 'Bachelor's degree in Computer Science', 'Software Engineer'),
+--        (12, 1, 'African American', '1993-09-12', 'Married', 'Associate's degree in Business', 'Entrepreneur'),
+-- 	   (13, 2, 'Asian', '1978-03-15', 'Divorced', 'Master's degree in Education', 'Teacher'),
+-- 	   (14, 1, 'Hispanic', '1989-07-20', 'Widowed', 'Doctorate degree in Physics', 'Research Scientist'),
+-- 	   (15, 2, 'Hispanic', '1989-07-20', 'Widowed', 'Bachelor's degree in Computer Science', 'Software Engineer');
+
+
 # todo: create as view
 SELECT f_name, l_name, gender_id, gender_look_up.acronym FROM core_profile
 JOIN profile_data
@@ -75,6 +89,56 @@ VALUES (11, '1', '123', '555', '5555'),
 	   (14, '1','456','555', '5558'),
        (15, '1','789','555', '5559');
 SELECT * FROM phone;
+
+
+# fixme: should hobby_name be array entries or should I just pick one hobby for each entry
+# INSERT INTO hobby_look_up (hobby_name)
+# VALUES("[''Programming'', ''Reading'', ''Hiking'']"),
+#     ("[''Surfing'', ''Yoga'', ''Cooking'']"),
+#     ("['Painting', 'Traveling', 'Gardening']"),
+#     ("['Astronomy, Sudoku, Beer Pong']"),
+#     ("['Programming', 'Reading', 'Hiking']");
+
+INSERT INTO hobby_lookup (hobby_name)
+VALUES('Programming'),
+    ('Yoga'),
+    ('Painting'),
+    ('Sudoku'),
+    ('Reading');
+
+INSERT INTO time_spent_on_hobby_lookup (frequency)
+VALUES('Daily'),
+      ('Weekly'),
+      ('Weekdays'),
+      ('Weekends');
+
+INSERT INTO occupation (core_id, occupation)
+VALUES (11, 'Software Engineer'),
+       (12, 'Entrepreneur'),
+       (13, 'Teacher'),
+       (14, 'Research Scientist'),
+       (15, 'Software Engineer');
+
+# todo: can't seem to find fk id's in schema for --> gender_id, political_affiliation_look_up_id, religious_affiliation_look_up_id
+# fixme: need fk id's for --> gender_id, political_affiliation_look_up_id, religious_affiliation_look_up_id
+ INSERT INTO social_mate_preference (core_id, gender_id, political_affiliation, religious_affiliation)
+ VALUES (11, , 'Liberal', 'Atheist'),
+ 	     (12, , 'Conservative', 'Christian'),
+        (13, , 'Independent', 'Buddhist'),
+        (14, , 'Conservative', 'Jewish');
+
+
+# todo: can't seem to find fk id's in schema for --> hobby_id
+    # what is the hobby_id star at if there's no auto_increment value given? does it start at 1?
+# fixme: need fk id's for --> hobby_id
+INSERT INTO profile_hobby (core_id, hobby_id)
+VALUES
+    (11, ),
+    (12, ),
+    (13, ),
+    (14, ),
+    (15, ),
+    (16, );
 
        
 ##########################################
@@ -196,6 +260,36 @@ VALUES ( 11, 17, 10),
 --        (13, 13, 5, '2022-08-18'),
 --        (14, 14, 7, '2022-07-23'),
 --        (15, 15, 4, '2022-04-21');
+
+
+
+INSERT INTO religious_affiliation_look_up (affiliation)
+VALUES ('Atheist'),
+       ('Christian'),
+       ('Buddhist'),
+       ('Jewish'),
+       ('Atheist');
+
+
+# todo: checked the schema to find starting value for core_profile_religious_affiliation auto-increment, but there wasn't one??
+# todo: would auto-increment value start at 1 then??
+# fixme: timestamp dates are examples, couldn't find actual dates in clean_bendover_data_feed.csv
+INSERT INTO religious_transaction (core_profile_religious_affiliation, `timestamp`, prev_intensity)
+VALUES (, '2022-10-04', 1),
+       (, '2022-12-31', 10),
+       (, '2023-02-04', 7),
+       (, '2023-02-14', 8),
+       (, '2023-03-02', 4);
+
+
+# todo: checked the schema to find starting value for religious_affiliation_look_up_id auto-increment, but there wasn't one??
+INSERT INTO core_profile_religious_affiliation (religious_affiliation_look_up_id, core_profile_id)
+VALUES (, 11),
+       (, 12),
+       (, 13),
+       (, 14),
+       (, 15);
+
 
 ##########################################
 #            SOCIAL MEDIA                #
