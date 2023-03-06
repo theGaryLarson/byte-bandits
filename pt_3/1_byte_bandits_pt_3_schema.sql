@@ -368,6 +368,7 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`gender_look_up` (
   `identity` VARCHAR(45) NOT NULL,
   `acronym` VARCHAR(4) NOT NULL,
   PRIMARY KEY (`id`))
+AUTO_INCREMENT = 11
 ENGINE = InnoDB;
 
 
