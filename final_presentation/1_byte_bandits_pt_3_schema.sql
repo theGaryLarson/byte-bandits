@@ -384,8 +384,8 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`profile_data` (
   `ethnicity` VARCHAR(45) NULL DEFAULT NULL,
   `birthdate` DATE NULL DEFAULT NULL,
   `marital_status` ENUM('Single', 'Separated', 'Divorced', 'Married', 'Widowed') NULL DEFAULT NULL,
-  `education` VARCHAR(144) NULL,
-  `occupation` VARCHAR(144) NULL,
+  most_recent_education VARCHAR(144) NULL,
+  current_occupation VARCHAR(144) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_meta_data_core_profile1_idx` (`core_id` ASC) VISIBLE,
   INDEX `fk_profile_data_gender_look_up1_idx` (`gender_id` ASC) VISIBLE,
@@ -592,18 +592,36 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `targeted_marketing_pt_3`.`occupation`
+-- Table `targeted_marketing_pt_3`.`past_occupation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`occupation` ;
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.past_education ;
 
-CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`occupation` (
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.past_education (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `core_profile_id` INT NOT NULL,
-  `job_title` VARCHAR(45) NOT NULL,
+  `core_id` INT NOT NULL,
+  `credentials` VARCHAR(144) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_occupation_core_profile1_idx` (`core_profile_id` ASC) VISIBLE,
+  INDEX `fk_education_core_profile1_idx` (`core_id` ASC) VISIBLE,
+  CONSTRAINT `fk_education_core_profile1`
+    FOREIGN KEY (`core_id`)
+    REFERENCES `targeted_marketing_pt_3`.`core_profile` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `targeted_marketing_pt_3`.`past_education`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `targeted_marketing_pt_3`.past_occupation ;
+
+CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.past_occupation (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `core_id` INT NOT NULL,
+  `job_title` VARCHAR(144) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX fk_occupation_core_profile1_idx (`core_id` ASC) VISIBLE,
   CONSTRAINT `fk_occupation_core_profile1`
-    FOREIGN KEY (`core_profile_id`)
+    FOREIGN KEY (`core_id`)
     REFERENCES `targeted_marketing_pt_3`.`core_profile` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -629,7 +647,7 @@ DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`religious_affiliation_look_up` ;
 
 CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`religious_affiliation_look_up` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `affiliation` VARCHAR(45) NULL,
+  `affiliation` VARCHAR(45) UNIQUE NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -641,17 +659,17 @@ DROP TABLE IF EXISTS `targeted_marketing_pt_3`.`social_mate_preference` ;
 
 CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`social_mate_preference` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `core_profile_id` INT NOT NULL,
+  core_id INT NOT NULL,
   `gender_id` INT NOT NULL,
   `political_affiliation_look_up_id` INT NOT NULL,
   `religious_affiliation_look_up_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_social_mate_preference_core_profile1_idx` (`core_profile_id` ASC) VISIBLE,
+  INDEX `fk_social_mate_preference_core_profile1_idx` (core_id ASC) VISIBLE,
   INDEX `fk_social_mate_preference_gender_look_up1_idx` (`gender_id` ASC) VISIBLE,
   INDEX `fk_social_mate_preference_political_affiliation_look_up1_idx` (`political_affiliation_look_up_id` ASC) VISIBLE,
   INDEX `fk_social_mate_preference_religious_affiliation_look_up1_idx` (`religious_affiliation_look_up_id` ASC) VISIBLE,
   CONSTRAINT `fk_social_mate_preference_core_profile1`
-    FOREIGN KEY (`core_profile_id`)
+    FOREIGN KEY (core_id)
     REFERENCES `targeted_marketing_pt_3`.`core_profile` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -711,7 +729,8 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`hobby_look_up` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `hobby_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB,
+AUTO_INCREMENT = 11;
 
 
 -- -----------------------------------------------------
@@ -735,11 +754,8 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`profile_hobby` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `core_id` INT NOT NULL,
   `hobby_id` INT NOT NULL,
-  `time_spent_on_hobby_look_up_id` INT NOT NULL,
-  INDEX `fk_profile_hobby_core_profile1_idx` (`core_id` ASC) VISIBLE,
-  INDEX `fk_profile_hobby_hobby1_idx` (`hobby_id` ASC) VISIBLE,
+  `weekly_time_spent` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_profile_hobby_hobby_frequency_look_up1_idx` (`time_spent_on_hobby_look_up_id` ASC) VISIBLE,
   CONSTRAINT `fk_profile_hobby_core_profile1`
     FOREIGN KEY (`core_id`)
     REFERENCES `targeted_marketing_pt_3`.`core_profile` (`id`)
@@ -748,11 +764,6 @@ CREATE TABLE IF NOT EXISTS `targeted_marketing_pt_3`.`profile_hobby` (
   CONSTRAINT `fk_profile_hobby_hobby1`
     FOREIGN KEY (`hobby_id`)
     REFERENCES `targeted_marketing_pt_3`.`hobby_look_up` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_profile_hobby_hobby_frequency_look_up1`
-    FOREIGN KEY (`time_spent_on_hobby_look_up_id`)
-    REFERENCES `targeted_marketing_pt_3`.`time_spent_on_hobby_look_up` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
