@@ -21,7 +21,7 @@ SELECT core_profile.id	AS 'Core id',
         core_profile_has_political_affiliation.intensity AS 'Political affiliation intensity'
 FROM core_profile
 JOIN social_mate_preference
-ON core_profile.id = social_mate_preference.core_profile_id
+ON core_profile.id = social_mate_preference.core_id
 JOIN political_affiliation_look_up
 ON social_mate_preference.political_affiliation_look_up_id = political_affiliation_look_up.id
 JOIN core_profile_has_political_affiliation
