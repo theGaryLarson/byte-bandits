@@ -73,7 +73,6 @@ def load_bendover_data_feed(json_file_path):
             person["occupation"],
             json.dumps(person["hobbies"])
         )
-        print(values)
         cursor.execute(sql, values)
         db.commit()
 
