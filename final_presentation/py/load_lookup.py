@@ -1,6 +1,7 @@
 import mysql.connector
 import json
 from vm_config import config;
+from load_BO_user_data import load_bendover_data_feed
 
 
 def load_religious_affiliation_lookup_mysql(json_file_path):
@@ -75,9 +76,40 @@ def load_social_media_platform(json_file_path):
         cnx.commit()
 
 
+def load_newspaper(json_file_path):
+    """
+        load_newspaper is dependent on political_affiliation table
+    """
+    # Load JSON data from file
+    with open(json_file_path, 'r') as f:
+        data = json.load(f)
+
+    # Insert each item as a new row in the table
+    with mysql.connector.connect(**config) as cnx:
+        with cnx.cursor() as cursor:
+            for newspaper in data['national_newspapers']:
+                party_id = None
+                if newspaper["associated_party"] is not None:
+                    query = "SELECT id FROM political_affiliation_lookup WHERE affiliation = %s"
+                    cursor.execute(query, (newspaper["associated_party"],))
+                    result = cursor.fetchone()
+                    if result is not None:
+                        party_id = result[0]
+                add_newspaper = "INSERT INTO newspaper (name, political_affiliation_id)  VALUES (%s, %s)"
+                data_newspaper = (newspaper['newspaper'], party_id)
+                print(add_newspaper, data_newspaper)
+                cursor.execute(add_newspaper, data_newspaper)
+
+        # Commit the changes
+        cnx.commit()
+
+
 if __name__ == '__main__':
+    # load_bendover_data_feed("../json/bendover_data_feed.json")
     # load_religious_affiliation_lookup_mysql("../json/religious_affiliation_lookup.json")
     # load_political_affiliation_lookup_mysql("../json/political_affiliation_lookup.json")
     # load_social_issue_view_type_lookup("../json/social_issue_view_type_lookup.json")
-    load_social_media_platform("../json/social_media_platform.json")
+    # load_social_media_platform("../json/social_media_platform.json")
+    load_newspaper("../json/newspaper.json")
+
     print()
