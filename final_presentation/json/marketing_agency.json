@@ -1,0 +1,104 @@
+{
+    "marketing_agency": [
+        {
+            "name": "Wieden+Kennedy",
+            "website": "https://www.wk.com/",
+            "headquarters": "Portland, Oregon"
+        },
+        {
+            "name": "Droga5",
+            "website": "https://droga5.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "McCann Worldgroup",
+            "website": "https://www.mccann.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "Leo Burnett",
+            "website": "https://www.leoburnett.com/",
+            "headquarters": "Chicago, Illinois"
+        },
+        {
+            "name": "Ogilvy",
+            "website": "https://www.ogilvy.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "BBDO Worldwide",
+            "website": "https://www.bbdo.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "Digitas",
+            "website": "https://www.digitas.com/",
+            "headquarters": "Boston, Massachusetts"
+        },
+        {
+            "name": "TBWA Worldwide",
+            "website": "https://tbwa.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "Mindshare",
+            "website": "https://www.mindshareworld.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "R/GA",
+            "website": "https://www.rga.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "DDB Worldwide",
+            "website": "https://www.ddb.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "Grey Group",
+            "website": "https://www.grey.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "The Martin Agency",
+            "website": "https://www.martinagency.com/",
+            "headquarters": "Richmond, Virginia"
+        },
+        {
+            "name": "MullenLowe",
+            "website": "https://www.mullenlowe.com/",
+            "headquarters": "Boston, Massachusetts"
+        },
+        {
+            "name": "VMLY&R",
+            "website": "https://www.vmlyr.com/",
+            "headquarters": "Kansas City, Missouri"
+        },
+        {
+            "name": "Havas Worldwide",
+            "website": "https://havas.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "Anomaly",
+            "website": "https://anomaly.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "Huge",
+            "website": "https://www.hugeinc.com/",
+            "headquarters": "Brooklyn, New York"
+        },
+        {
+            "name": "360i",
+            "website": "https://360i.com/",
+            "headquarters": "New York, New York"
+        },
+        {
+            "name": "Camp + King",
+            "website": "https://www.camp-king.com/",
+            "headquarters": "San Francisco, California"
+        }
+    ]
+}
