@@ -930,7 +930,7 @@ DROP TABLE IF EXISTS `votemate`.`magazine` ;
 CREATE TABLE IF NOT EXISTS `votemate`.`magazine` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `political_affiliation_id` INT NOT NULL,
+  `political_affiliation_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_magazine_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
   CONSTRAINT `fk_magazine_political_affiliation1`
@@ -949,7 +949,7 @@ DROP TABLE IF EXISTS `votemate`.`newspaper` ;
 CREATE TABLE IF NOT EXISTS `votemate`.`newspaper` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `political_affiliation_id` INT NOT NULL,
+  `political_affiliation_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_newspaper_political_affiliation_look_up1_idx` (`political_affiliation_id` ASC) VISIBLE,
   CONSTRAINT `fk_newspaper_political_affiliation_look_up1`
