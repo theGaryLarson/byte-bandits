@@ -214,10 +214,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `votemate`.`ad` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`ad` (
-  `id` INT NOT NULL DEFAULT 11,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `marketing_agency_id` INT NOT NULL,
   `political_affiliation_id` INT NULL,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `ads_name` (`name` ASC) VISIBLE,
   INDEX `fk_ads_marketing_agency1_idx` (`marketing_agency_id` ASC) VISIBLE,
