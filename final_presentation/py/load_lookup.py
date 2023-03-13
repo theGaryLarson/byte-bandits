@@ -72,6 +72,23 @@ def load_social_media_platform(json_file_path):
         cnx.commit()
 
 
+def load_marketing_agency(json_file_path):
+    # Load JSON data from file
+    with open(json_file_path, 'r') as f:
+        data = json.load(f)
+
+    # Insert each item as a new row in the table
+    with mysql.connector.connect(**config) as cnx:
+        with cnx.cursor() as cursor:
+            for agency in data['marketing_agency']:
+                add_agency = "INSERT INTO marketing_agency (name, url, headquarters)  VALUES (%s, %s, %s)"
+                data_agency = (agency['name'], agency['website'], agency['headquarters'])
+                cursor.execute(add_agency, data_agency)
+
+        # Commit the changes
+        cnx.commit()
+
+
 def load_newspaper(json_file_path):
     """
         load_newspaper is dependent on political_affiliation table
@@ -175,8 +192,8 @@ def load_website(json_file_path):
                         party_id = result[0]
                 add_website = "INSERT INTO website (name, website_url,  political_affiliation_id)" \
                               "  VALUES (%s, %s, %s)"
-                data_web_broadcast = (website['name'], website['url'], party_id)
-                cursor.execute(add_website, data_web_broadcast)
+                data_web_website = (website['name'], website['url'], party_id)
+                cursor.execute(add_website, data_web_website)
 
         # Commit the changes
         cnx.commit()
@@ -201,17 +218,19 @@ def load_podcast(json_file_path):
                     result = cursor.fetchone()
                     if result is not None:
                         party_id = result[0]
-                add_website = "INSERT INTO podcast (name, podcast_url,  political_affiliation_id)" \
+                add_podcast = "INSERT INTO podcast (name, podcast_url,  political_affiliation_id)" \
                               "  VALUES (%s, %s, %s)"
-                data_web_broadcast = (podcast['name'], podcast['url'], party_id)
-                cursor.execute(add_website, data_web_broadcast)
+                data_podcast = (podcast['name'], podcast['url'], party_id)
+                cursor.execute(add_podcast, data_podcast)
 
         # Commit the changes
         cnx.commit()
 
 
-
-def load_marketing_agency(json_file_path):
+def load_ad(json_file_path):
+    """
+        load_podcast is dependent on political_affiliation table
+    """
     # Load JSON data from file
     with open(json_file_path, 'r') as f:
         data = json.load(f)
@@ -219,10 +238,25 @@ def load_marketing_agency(json_file_path):
     # Insert each item as a new row in the table
     with mysql.connector.connect(**config) as cnx:
         with cnx.cursor() as cursor:
-            for agency in data['marketing_agency']:
-                add_agency = "INSERT INTO marketing_agency (name, url, headquarters)  VALUES (%s, %s, %s)"
-                data_agency = (agency['name'], agency['website'], agency['headquarters'])
-                cursor.execute(add_agency, data_agency)
+            for ad in data['ad']:
+                party_id = None
+                if ad["associated_party"] is not None:
+                    party_query = "SELECT id FROM political_affiliation_lookup WHERE affiliation = %s"
+                    cursor.execute(party_query, (ad["associated_party"],))
+                    party_result = cursor.fetchone()
+                    if party_result is not None:
+                        party_id = party_result[0]
+                agency_id = None
+                if ad["marketing_agency"] is not None:
+                    agency_query = "SELECT id FROM marketing_agency WHERE name = %s"
+                    cursor.execute(agency_query, (ad["marketing_agency"],))
+                    agency_result = cursor.fetchone()
+                    if agency_result is not None:
+                        agency_id = party_result[0]
+                add_ad = "INSERT INTO ad (name, marketing_agency_id,  political_affiliation_id)" \
+                         "  VALUES (%s, %s, %s)"
+                data_ad = (ad['ad_title'], agency_id, party_id)
+                cursor.execute(add_ad, data_ad)
 
         # Commit the changes
         cnx.commit()
@@ -241,4 +275,6 @@ if __name__ == '__main__':
     load_web_broadcast("../json/web_broadcast.json")
     load_website("../json/website.json")
     load_podcast("../json/podcast.json")
+    # dependent on marketing_agency and political_affiliation_lookup tables
+    load_ad("../json/ad.json")
     print()
