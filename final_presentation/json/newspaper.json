@@ -1,0 +1,24 @@
+{
+  "national_newspapers": [
+    {"newspaper": "The New York Times", "associated_party": "Democratic Party"},
+    {"newspaper": "The Washington Post", "associated_party": "Democratic Party"},
+    {"newspaper": "The Wall Street Journal", "associated_party": "Republican Party"},
+    {"newspaper": "USA Today", "associated_party": null},
+    {"newspaper": "Los Angeles Times", "associated_party": "Democratic Party"},
+    {"newspaper": "Chicago Tribune", "associated_party": "Republican Party"},
+    {"newspaper": "The Boston Globe", "associated_party": "Democratic Party"},
+    {"newspaper": "San Francisco Chronicle", "associated_party": "Democratic Party"},
+    {"newspaper": "The Dallas Morning News", "associated_party": "Republican Party"},
+    {"newspaper": "Houston Chronicle", "associated_party": "Democratic Party"},
+    {"newspaper": "The Philadelphia Inquirer", "associated_party": "Democratic Party"},
+    {"newspaper": "The Denver Post", "associated_party": "Democratic Party"},
+    {"newspaper": "The Miami Herald", "associated_party": "Democratic Party"},
+    {"newspaper": "The Atlanta Journal-Constitution", "associated_party": "Republican Party"},
+    {"newspaper": "The Seattle Times", "associated_party": "Democratic Party"},
+    {"newspaper": "The Arizona Republic", "associated_party": "Republican Party"},
+    {"newspaper": "The Detroit News", "associated_party": "Republican Party"},
+    {"newspaper": "St. Louis Post-Dispatch", "associated_party": "Democratic Party"},
+    {"newspaper": "Tampa Bay Times", "associated_party": "Democratic Party"},
+    {"newspaper": "The Star-Ledger", "associated_party": "Democratic Party"}
+  ]
+}
