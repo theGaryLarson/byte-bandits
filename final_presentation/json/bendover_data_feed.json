@@ -5,7 +5,7 @@
       "first_name": "Jane",
       "last_name": "Doe",
       "email": "jane.doe@example.com",
-      "political_affiliation": "Liberal",
+      "political_affiliation": "Libertarian Party",
       "political_intensity": 10,
       "religious_affiliation": "Atheist",
       "religious_intensity": 1,
@@ -27,7 +27,7 @@
         }
       },
       "social_mate_preference": {
-        "political_affiliation": "Liberal",
+        "political_affiliation": "Libertarian Party",
         "religious_affiliation": "Atheist",
         "gender": "I"
       },
@@ -43,7 +43,7 @@
       "first_name": "John",
       "last_name": "Smith",
       "email": "john.smith@example.com",
-      "political_affiliation": "Conservative",
+      "political_affiliation": "Republican Party",
       "political_intensity": 1,
       "religious_affiliation": "Christian",
       "religious_intensity": 10,
@@ -65,7 +65,7 @@
         }
       },
       "social_mate_preference": {
-        "political_affiliation": "Conservative",
+        "political_affiliation": "Republican Party",
         "religious_affiliation": "Christian",
         "gender": "F"
       },
@@ -119,7 +119,7 @@
       "first_name": "Michael",
       "last_name": "Brown",
       "email": "michael.brown@example.com",
-      "political_affiliation": "Conservative",
+      "political_affiliation": "Republican Party",
       "political_intensity": 9,
       "religious_affiliation": "Jewish",
       "religious_intensity": 8,
@@ -141,7 +141,7 @@
         }
       },
       "social_mate_preference": {
-        "political_affiliation": "Conservative",
+        "political_affiliation": "Republican Party",
         "religious_affiliation": "Jewish",
         "gender": "F"
       },
@@ -157,7 +157,7 @@
       "first_name": "Jane",
       "last_name": "Doe",
       "email": "jane.doe@example.com",
-      "political_affiliation": "Liberal",
+      "political_affiliation": "Democratic Party",
       "political_intensity": 6,
       "religious_affiliation": "Atheist",
       "religious_intensity": 4,
@@ -179,7 +179,7 @@
         }
       },
       "social_mate_preference": {
-        "political_affiliation": "Liberal",
+        "political_affiliation": "Democratic Party",
         "religious_affiliation": "Atheist",
         "gender": "I"
       },
