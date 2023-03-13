@@ -1,4 +1,3 @@
-
 {
   "political_affiliation_lookup": [
     {"party": "Democratic Party"},
@@ -9,6 +8,7 @@
     {"party": "Socialist Party USA"},
     {"party": "Party for Socialism and Liberation"},
     {"party": "American Solidarity Party"},
-    {"party": "Prohibition Party"}
+    {"party": "Prohibition Party"},
+    {"party": "Independent"}
   ]
 }
