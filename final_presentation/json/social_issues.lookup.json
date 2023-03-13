@@ -1,0 +1,24 @@
+{
+  "social_issue_categories": [
+    {"category": "Climate Change"},
+    {"category": "Gun Control"},
+    {"category": "LGBTQ+ Rights"},
+    {"category": "Abortion"},
+    {"category": "Racial Justice"},
+    {"category": "Income Inequality"},
+    {"category": "Immigration"},
+    {"category": "Healthcare"},
+    {"category": "Education"},
+    {"category": "Gender Equality"},
+    {"category": "Police Brutality"},
+    {"category": "Privacy"},
+    {"category": "Foreign Policy"},
+    {"category": "Free Speech"},
+    {"category": "Drug Policy"},
+    {"category": "Animal Rights"},
+    {"category": "Economic Development"},
+    {"category": "Homelessness"},
+    {"category": "Cybersecurity"},
+    {"category": "Criminal Justice Reform"}
+  ]
+}
