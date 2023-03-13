@@ -183,20 +183,187 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `votemate`.`marketing_agency`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`marketing_agency` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`marketing_agency` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `url` VARCHAR(255) NOT NULL,
+  `headquarters` VARCHAR(144) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`political_affiliation_lookup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`political_affiliation_lookup` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`political_affiliation_lookup` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `affiliation` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`ad`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`ad` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`ad` (
+  `id` INT NOT NULL DEFAULT 11,
+  `marketing_agency_id` INT NOT NULL,
+  `political_affiliation_id` INT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `ads_name` (`name` ASC) VISIBLE,
+  INDEX `fk_ads_marketing_agency1_idx` (`marketing_agency_id` ASC) VISIBLE,
+  INDEX `fk_ad_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  CONSTRAINT `fk_ads_marketing_agency1`
+    FOREIGN KEY (`marketing_agency_id`)
+    REFERENCES `votemate`.`marketing_agency` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ad_political_affiliation1`
+    FOREIGN KEY (`political_affiliation_id`)
+    REFERENCES `votemate`.`political_affiliation_lookup` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`podcast`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`podcast` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`podcast` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `political_affiliation_id` INT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `podcast_url` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `podcast_name` (`name` ASC) INVISIBLE,
+  INDEX `fk_podcast_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
+  CONSTRAINT `fk_podcast_political_affiliation1`
+    FOREIGN KEY (`political_affiliation_id`)
+    REFERENCES `votemate`.`political_affiliation_lookup` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`web_broadcast`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`web_broadcast` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`web_broadcast` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `political_affiliation_id` INT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `broadcast_url` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `broadcast_name` (`name` ASC) VISIBLE,
+  INDEX `fk_web_broadcast_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
+  CONSTRAINT `fk_web_broadcast_political_affiliation1`
+    FOREIGN KEY (`political_affiliation_id`)
+    REFERENCES `votemate`.`political_affiliation_lookup` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`website`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`website` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`website` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `political_affiliation_id` INT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `website_url` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `url` (`website_url` ASC) VISIBLE,
+  INDEX `fk_websites_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
+  CONSTRAINT `fk_websites_political_affiliation1`
+    FOREIGN KEY (`political_affiliation_id`)
+    REFERENCES `votemate`.`political_affiliation_lookup` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`user_clicks`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`user_clicks` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`user_clicks` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `core_id` INT NOT NULL,
+  `click_timestamp` DATETIME NOT NULL,
+  `ad_id` INT NULL,
+  `podcast_id` INT NULL,
+  `web_broadcast_id` INT NULL,
+  `website_id` INT NULL,
+  `website_length_of_stay_seconds` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_user_clicks_core_profile1_idx` (`core_id` ASC) VISIBLE,
+  INDEX `fk_user_clicks_ads1_idx` (`ad_id` ASC) VISIBLE,
+  INDEX `fk_user_clicks_podcast1_idx` (`podcast_id` ASC) VISIBLE,
+  INDEX `fk_user_clicks_web_broadcast1_idx` (`web_broadcast_id` ASC) VISIBLE,
+  INDEX `fk_user_clicks_websites1_idx` (`website_id` ASC) VISIBLE,
+  CONSTRAINT `fk_user_clicks_core_profile1`
+    FOREIGN KEY (`core_id`)
+    REFERENCES `votemate`.`core_profile` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_clicks_ads1`
+    FOREIGN KEY (`ad_id`)
+    REFERENCES `votemate`.`ad` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_clicks_podcast1`
+    FOREIGN KEY (`podcast_id`)
+    REFERENCES `votemate`.`podcast` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_clicks_web_broadcast1`
+    FOREIGN KEY (`web_broadcast_id`)
+    REFERENCES `votemate`.`web_broadcast` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_clicks_websites1`
+    FOREIGN KEY (`website_id`)
+    REFERENCES `votemate`.`website` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `votemate`.`ip`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `votemate`.`ip` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`ip` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `core_id` INT NOT NULL,
+  `user_clicks_id` INT NOT NULL,
   `ip_address` VARCHAR(45) NOT NULL,
   `is_v4` BIT(1) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_url_core_profile1_idx` (`core_id` ASC) VISIBLE,
-  CONSTRAINT `fk_url_core_profile1`
-    FOREIGN KEY (`core_id`)
-    REFERENCES `votemate`.`core_profile` (`id`))
+  INDEX `fk_ip_user_clicks1_idx` (`user_clicks_id` ASC) VISIBLE,
+  CONSTRAINT `fk_ip_user_clicks1`
+    FOREIGN KEY (`user_clicks_id`)
+    REFERENCES `votemate`.`user_clicks` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -404,18 +571,6 @@ CREATE TABLE IF NOT EXISTS `votemate`.`past_occupation` (
     REFERENCES `votemate`.`core_profile` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`political_affiliation_lookup`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`political_affiliation_lookup` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`political_affiliation_lookup` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `affiliation` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -987,154 +1142,6 @@ CREATE TABLE IF NOT EXISTS `votemate`.`subscriptions` (
   CONSTRAINT `fk_subscriptions_magazine1`
     FOREIGN KEY (`magazine_id`)
     REFERENCES `votemate`.`magazine` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`marketing_agency`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`marketing_agency` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`marketing_agency` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`ad`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`ad` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`ad` (
-  `id` INT NOT NULL DEFAULT 11,
-  `marketing_agency_id` INT NOT NULL,
-  `political_affiliation_id` INT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `ads_name` (`name` ASC) VISIBLE,
-  INDEX `fk_ads_marketing_agency1_idx` (`marketing_agency_id` ASC) VISIBLE,
-  INDEX `fk_ad_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-  CONSTRAINT `fk_ads_marketing_agency1`
-    FOREIGN KEY (`marketing_agency_id`)
-    REFERENCES `votemate`.`marketing_agency` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ad_political_affiliation1`
-    FOREIGN KEY (`political_affiliation_id`)
-    REFERENCES `votemate`.`political_affiliation_lookup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`podcast`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`podcast` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`podcast` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `political_affiliation_id` INT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `podcast_name` (`name` ASC) INVISIBLE,
-  INDEX `fk_podcast_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
-  CONSTRAINT `fk_podcast_political_affiliation1`
-    FOREIGN KEY (`political_affiliation_id`)
-    REFERENCES `votemate`.`political_affiliation_lookup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`web_broadcast`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`web_broadcast` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`web_broadcast` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `political_affiliation_id` INT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `broadcast_name` (`name` ASC) VISIBLE,
-  INDEX `fk_web_broadcast_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
-  CONSTRAINT `fk_web_broadcast_political_affiliation1`
-    FOREIGN KEY (`political_affiliation_id`)
-    REFERENCES `votemate`.`political_affiliation_lookup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`website`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`website` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`website` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `political_affiliation_id` INT NULL,
-  `website_url` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `url` (`website_url` ASC) VISIBLE,
-  INDEX `fk_websites_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
-  CONSTRAINT `fk_websites_political_affiliation1`
-    FOREIGN KEY (`political_affiliation_id`)
-    REFERENCES `votemate`.`political_affiliation_lookup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`user_clicks`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`user_clicks` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`user_clicks` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `core_id` INT NOT NULL,
-  `click_timestamp` DATETIME NOT NULL,
-  `ad_id` INT NULL,
-  `podcast_id` INT NULL,
-  `web_broadcast_id` INT NULL,
-  `website_id` INT NULL,
-  `website_length_of_stay_seconds` INT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_user_clicks_core_profile1_idx` (`core_id` ASC) VISIBLE,
-  INDEX `fk_user_clicks_ads1_idx` (`ad_id` ASC) VISIBLE,
-  INDEX `fk_user_clicks_podcast1_idx` (`podcast_id` ASC) VISIBLE,
-  INDEX `fk_user_clicks_web_broadcast1_idx` (`web_broadcast_id` ASC) VISIBLE,
-  INDEX `fk_user_clicks_websites1_idx` (`website_id` ASC) VISIBLE,
-  CONSTRAINT `fk_user_clicks_core_profile1`
-    FOREIGN KEY (`core_id`)
-    REFERENCES `votemate`.`core_profile` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_clicks_ads1`
-    FOREIGN KEY (`ad_id`)
-    REFERENCES `votemate`.`ad` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_clicks_podcast1`
-    FOREIGN KEY (`podcast_id`)
-    REFERENCES `votemate`.`podcast` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_clicks_web_broadcast1`
-    FOREIGN KEY (`web_broadcast_id`)
-    REFERENCES `votemate`.`web_broadcast` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_clicks_websites1`
-    FOREIGN KEY (`website_id`)
-    REFERENCES `votemate`.`website` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
