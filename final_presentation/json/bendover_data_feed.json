@@ -1,0 +1,194 @@
+{
+  "data": [
+    {
+      "id": "936DA01F-9ABD-4D9D-80C7-02AF85C822A8",
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "jane.doe@example.com",
+      "political_affiliation": "Liberal",
+      "political_intensity": 10,
+      "religious_affiliation": "Atheist",
+      "religious_intensity": 1,
+      "social_issues": {
+        "climate_change": {
+          "view": "Pro-action",
+          "post_date": "2022-04-12",
+          "view_intensity": 10
+        },
+        "immigration": {
+          "view": "Pro-immigration",
+          "post_date": "2022-04-13",
+          "view_intensity": 10
+        },
+        "healthcare": {
+          "view": "Pro-universal healthcare",
+          "post_date": "2022-04-14",
+          "view_intensity": 10
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Liberal",
+        "religious_affiliation": "Atheist",
+        "gender": "I"
+      },
+      "gender": "TM",
+      "birthdate": "1993-02-06",
+      "location": "New York, NY",
+      "education": "Bachelor's degree in Computer Science",
+      "occupation": "Software Engineer",
+      "hobbies": ["Programming", "Reading", "Hiking"]
+    },
+    {
+      "id": "7C4A8D09-E2F8-496E-AFCE-DA96A76E31A3",
+      "first_name": "John",
+      "last_name": "Smith",
+      "email": "john.smith@example.com",
+      "political_affiliation": "Conservative",
+      "political_intensity": 1,
+      "religious_affiliation": "Christian",
+      "religious_intensity": 10,
+      "social_issues": {
+        "climate_change": {
+          "view": "Skeptical",
+          "post_date": "2021-04-12",
+          "view_intensity": 1
+        },
+        "immigration": {
+          "view": "Anti-immigration",
+          "post_date": "2021-04-13",
+          "view_intensity": 1
+        },
+        "healthcare": {
+          "view": "Pro-market healthcare",
+          "post_date": "2021-04-14",
+          "view_intensity": 1
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Conservative",
+        "religious_affiliation": "Christian",
+        "gender": "F"
+      },
+      "gender": "TF",
+      "birthdate": "2001-02-20",
+      "location": "Los Angeles, CA",
+      "education": "Associate's degree in Business",
+      "occupation": "Entrepreneur",
+      "hobbies": ["Surfing", "Yoga", "Cooking"]
+    },
+    {
+      "id": "A1B2C3D4-E5F6-G7H8-I9J0-K1L2M3N4O5",
+      "first_name": "Emily",
+      "last_name": "Johnson",
+      "email": "emily.johnson@example.com",
+      "political_affiliation": "Independent",
+      "political_intensity": 5,
+      "religious_affiliation": "Buddhist",
+      "religious_intensity": 7,
+      "social_issues": {
+        "climate_change": {
+          "view": "Pro-action",
+          "post_date": "2022-04-15",
+          "view_intensity": 9
+        },
+        "immigration": {
+          "view": "Pro-immigration",
+          "post_date": "2022-04-16",
+          "view_intensity": 8
+        },
+        "healthcare": {
+          "view": "Pro-universal healthcare",
+          "post_date": "2022-04-17",
+          "view_intensity": 7
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Independent",
+        "religious_affiliation": "Buddhist",
+        "gender": "M"
+      },
+      "gender": "F",
+      "birthdate": "1994-02-06",
+      "location": "Chicago, IL",
+      "education": "Master's degree in Education",
+      "occupation": "Teacher",
+      "hobbies": ["Painting", "Traveling", "Gardening"]
+    },
+    {
+      "id": "P1Q2R3S4-T5U6-V7W8-X9Y0-Z1A2B3C4D5",
+      "first_name": "Michael",
+      "last_name": "Brown",
+      "email": "michael.brown@example.com",
+      "political_affiliation": "Conservative",
+      "political_intensity": 9,
+      "religious_affiliation": "Jewish",
+      "religious_intensity": 8,
+      "social_issues": {
+        "climate_change": {
+        "view": "Skeptical",
+        "post_date": "2021-04-15",
+        "view_intensity": 1
+        },
+        "immigration": {
+          "view": "Anti-immigration",
+          "post_date": "2021-04-16",
+          "view_intensity": 2
+        },
+        "healthcare": {
+          "view": "Pro-market healthcare",
+          "post_date": "2021-04-17",
+          "view_intensity": 3
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Conservative",
+        "religious_affiliation": "Jewish",
+        "gender": "F"
+      },
+      "gender": "TF",
+      "birthdate": "1998-05-22",
+      "location": "Houston, TX",
+      "education": "Doctorate degree in Physics",
+      "occupation": "Research Scientist",
+      "hobbies": ["Astronomy, Sudoku, Beer Pong"]
+    },
+    {
+      "id": "936DA01F-9ABD-4D9D-80C7-02AF85C822A8",
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "jane.doe@example.com",
+      "political_affiliation": "Liberal",
+      "political_intensity": 6,
+      "religious_affiliation": "Atheist",
+      "religious_intensity": 4,
+      "social_issues": {
+        "climate_change": {
+          "view": "Pro-action",
+          "post_date": "2023-01-12",
+          "view_intensity": 1
+        },
+        "immigration": {
+          "view": "Pro-immigration",
+          "post_date": "2023-01-13",
+          "view_intensity": 10
+        },
+        "healthcare": {
+          "view": ", Pro-universal healthcare",
+          "post_date": "2023-01-14",
+          "view_intensity": 5
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Liberal",
+        "religious_affiliation": "Atheist",
+        "gender": "I"
+      },
+      "gender": "TM",
+      "birthdate": "1998-10-31",
+      "location": "New York, NY",
+      "education": "Bachelor's degree in Computer Science",
+      "occupation": "Software Engineer",
+      "hobbies": ["Programming", "Reading", "Hiking"]
+    }
+  ]
+}
