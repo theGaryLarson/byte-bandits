@@ -4,7 +4,7 @@
             "marketing_agency": "Wieden+Kennedy",
             "ad_title": "Together: the NBA is back",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-03-13 00:00:00",
+            "start_airtime": "2022-03-13 00:00:00",
             "end_airtime": "2022-03-20 00:00:00",
             "networks": ["ABC", "ESPN", "TNT"]
         },
@@ -12,7 +12,7 @@
             "marketing_agency": "Droga5",
             "ad_title": "Unlocking the True Power of Your DNA with 23andMe",
             "associated_party": null,
-            "start_datetime": "2022-03-18 08:00:00",
+            "start_airtime": "2022-03-18 08:00:00",
             "end_airtime": "2022-03-22 16:00:00",
             "networks": ["Discovery Channel", "National Geographic"]
         },
@@ -20,7 +20,7 @@
             "marketing_agency": "McCann Worldgroup",
             "ad_title": "We Are America",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-03-25 12:00:00",
+            "start_airtime": "2022-03-25 12:00:00",
             "end_airtime": "2022-03-30 20:00:00",
             "networks": ["CNN", "MSNBC", "ABC"]
         },
@@ -28,7 +28,7 @@
             "marketing_agency": "Leo Burnett",
             "ad_title": "I'm a Mac, and I'm a PC",
             "associated_party": null,
-            "start_datetime": "2022-04-01 08:00:00",
+            "start_airtime": "2022-04-01 08:00:00",
             "end_airtime": "2022-04-07 16:00:00",
             "networks": ["CBS", "NBC"]
         },
@@ -36,7 +36,7 @@
             "marketing_agency": "Ogilvy",
             "ad_title": "Life's Good: Do What You Can't",
             "associated_party": null,
-            "start_datetime": "2022-04-09 12:00:00",
+            "start_airtime": "2022-04-09 12:00:00",
             "end_airtime": "2022-04-14 20:00:00",
             "networks": ["HGTV", "Food Network", "Travel Channel"]
         },
@@ -44,7 +44,7 @@
             "marketing_agency": "BBDO Worldwide",
             "ad_title": "Doritos Crash the Super Bowl Finalist - Cowboy Kid",
             "associated_party": null,
-            "start_datetime": "2022-04-16 08:00:00",
+            "start_airtime": "2022-04-16 08:00:00",
             "end_airtime": "2022-04-20 16:00:00",
             "networks": ["Fox", "CBS", "NBC"]
         },
@@ -52,7 +52,7 @@
             "marketing_agency": "Digitas",
             "ad_title": "The Most Beautiful Equation",
             "associated_party": null,
-            "start_datetime": "2022-04-22 12:00:00",
+            "start_airtime": "2022-04-22 12:00:00",
             "end_airtime": "2022-04-27 20:00:00",
             "networks": ["ABC", "CBS", "NBC"]
         },
@@ -60,7 +60,7 @@
             "marketing_agency": "TBWA Worldwide",
             "ad_title": "First Time",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-04-30 08:00:00",
+            "start_airtime": "2022-04-30 08:00:00",
             "end_airtime": "2022-05-06 16:00:00",
             "networks": ["CNN", "MSNBC"]
         },
@@ -68,7 +68,7 @@
             "marketing_agency": "Mindshare",
             "ad_title": "The League of Extraordinary Influencers",
             "associated_party": null,
-            "start_datetime": "2022-03-13 00:00:00",
+            "start_airtime": "2022-03-13 00:00:00",
             "end_airtime": "2022-03-20 00:00:00",
             "networks": ["VH1", "MTV"]
         },
@@ -76,7 +76,7 @@
             "marketing_agency": "R/GA",
             "ad_title": "Love Has No Labels | Diversity & Inclusion | Ad Council",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-03-15 00:00:00",
+            "start_airtime": "2022-03-15 00:00:00",
             "end_airtime": "2022-03-22 00:00:00",
             "networks": ["ABC", "CBS", "NBC"]
         },
@@ -84,7 +84,7 @@
             "marketing_agency": "Wieden+Kennedy",
             "ad_title": "The Truth Is Worth It: Fearlessness",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-03-17 00:00:00",
+            "start_airtime": "2022-03-17 00:00:00",
             "end_airtime": "2022-03-24 00:00:00",
             "networks": ["CNN", "MSNBC", "Fox News"]
         },
@@ -92,7 +92,7 @@
             "marketing_agency": "Droga5",
             "ad_title": "The New York Times - The Truth is Hard",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-03-19 00:00:00",
+            "start_airtime": "2022-03-19 00:00:00",
             "end_airtime": "2022-03-26 00:00:00",
             "networks": ["CNN", "MSNBC", "ABC"]
         },
@@ -100,7 +100,7 @@
             "marketing_agency": "McCann Worldgroup",
             "ad_title": "Verizon | The Coach Who Wouldn't Be Here",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-03-21 00:00:00",
+            "start_airtime": "2022-03-21 00:00:00",
             "end_airtime": "2022-03-28 00:00:00",
             "networks": ["Fox", "CBS", "NBC"]
         },
@@ -108,7 +108,7 @@
             "marketing_agency": "Leo Burnett",
             "ad_title": "Samsung - Growing Up",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-03-23 00:00:00",
+            "start_airtime": "2022-03-23 00:00:00",
             "end_airtime": "2022-03-30 00:00:00",
             "networks": ["ABC", "CBS", "NBC"]
         },
@@ -116,7 +116,7 @@
             "marketing_agency": "Ogilvy",
             "ad_title": "IBM - Dear Tech",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-03-25 00:00:00",
+            "start_airtime": "2022-03-25 00:00:00",
             "end_airtime": "2022-04-01 00:00:00",
             "networks": ["CNN", "MSNBC", "ABC"]
         },
@@ -124,7 +124,7 @@
             "marketing_agency": "BBDO Worldwide",
             "ad_title": "Guinness - Sapeurs",
             "associated_party": "Democratic Party",
-            "start_datetime": "2022-03-27 00:00:00",
+            "start_airtime": "2022-03-27 00:00:00",
             "end_airtime": "2022-04-03 00:00:00",
             "networks": ["CNN", "MSNBC", "ABC"]
         },
