@@ -217,12 +217,15 @@ CREATE TABLE IF NOT EXISTS `votemate`.`ad` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `marketing_agency_id` INT NOT NULL,
   `political_affiliation_id` INT NULL,
-  `name` VARCHAR(255) NOT NULL,
+  `ad_title` VARCHAR(255) NOT NULL,
+  `start_airtime` DATETIME NOT NULL,
+  `end_airtime` DATETIME NOT NULL,
+  `networks` JSON NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `ads_name` (`name` ASC) VISIBLE,
+  INDEX `ads_name` (`ad_title` ASC) VISIBLE,
   INDEX `fk_ads_marketing_agency1_idx` (`marketing_agency_id` ASC) VISIBLE,
   INDEX `fk_ad_political_affiliation1_idx` (`political_affiliation_id` ASC) VISIBLE,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  UNIQUE INDEX `name_UNIQUE` (`ad_title` ASC) VISIBLE,
   CONSTRAINT `fk_ads_marketing_agency1`
     FOREIGN KEY (`marketing_agency_id`)
     REFERENCES `votemate`.`marketing_agency` (`id`)
@@ -1256,12 +1259,28 @@ DROP TABLE IF EXISTS `votemate`.`voter_ballot_finished` ;
 CREATE TABLE IF NOT EXISTS `votemate`.`voter_ballot_finished` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `time_submitted` DATETIME NOT NULL,
-  `voter_ballot_started_id` INT NOT NULL,
+  `start_time` DATETIME NOT NULL,
+  `finish_time` DATETIME NOT NULL,
+  `voter_profile_id` INT NOT NULL,
+  `ballot_id` INT NOT NULL,
+  `candidate_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_voter_ballot_finished_voter_ballot_started1_idx` (`voter_ballot_started_id` ASC) VISIBLE,
-  CONSTRAINT `fk_voter_ballot_finished_voter_ballot_started1`
-    FOREIGN KEY (`voter_ballot_started_id`)
-    REFERENCES `votemate`.`voter_ballot_started` (`id`)
+  INDEX `fk_voter_ballot_finished_voter_profile1_idx` (`voter_profile_id` ASC) VISIBLE,
+  INDEX `fk_voter_ballot_finished_ballot1_idx` (`ballot_id` ASC) VISIBLE,
+  INDEX `fk_voter_ballot_finished_candidate1_idx` (`candidate_id` ASC) VISIBLE,
+  CONSTRAINT `fk_voter_ballot_finished_voter_profile1`
+    FOREIGN KEY (`voter_profile_id`)
+    REFERENCES `votemate`.`voter_profile` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_voter_ballot_finished_ballot1`
+    FOREIGN KEY (`ballot_id`)
+    REFERENCES `votemate`.`ballot` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_voter_ballot_finished_candidate1`
+    FOREIGN KEY (`candidate_id`)
+    REFERENCES `votemate`.`candidate` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
