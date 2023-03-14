@@ -162,6 +162,20 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `votemate`.`group_lookup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`group_lookup` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`group_lookup` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(144) NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
+  `group_url` VARCHAR(144) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `votemate`.`group`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `votemate`.`group` ;
@@ -169,14 +183,18 @@ DROP TABLE IF EXISTS `votemate`.`group` ;
 CREATE TABLE IF NOT EXISTS `votemate`.`group` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `social_media_id` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(144) NULL DEFAULT NULL,
-  `group_url` VARCHAR(255) NOT NULL,
+  `group_lookup_id` INT NOT NULL,
   PRIMARY KEY (`id`, `social_media_id`),
   INDEX `fk_group_social_media1_idx` (`social_media_id` ASC) VISIBLE,
+  INDEX `fk_group_group_lookup1_idx` (`group_lookup_id` ASC) VISIBLE,
   CONSTRAINT `fk_group_social_media1`
     FOREIGN KEY (`social_media_id`)
-    REFERENCES `votemate`.`social_media` (`id`))
+    REFERENCES `votemate`.`social_media` (`id`),
+  CONSTRAINT `fk_group_group_lookup1`
+    FOREIGN KEY (`group_lookup_id`)
+    REFERENCES `votemate`.`group_lookup` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -303,11 +321,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `votemate`.`user_clicks`
+-- Table `votemate`.`web_media`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`user_clicks` ;
+DROP TABLE IF EXISTS `votemate`.`web_media` ;
 
-CREATE TABLE IF NOT EXISTS `votemate`.`user_clicks` (
+CREATE TABLE IF NOT EXISTS `votemate`.`web_media` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `core_id` INT NOT NULL,
   `click_timestamp` DATETIME NOT NULL,
@@ -315,7 +333,7 @@ CREATE TABLE IF NOT EXISTS `votemate`.`user_clicks` (
   `podcast_id` INT NULL,
   `web_broadcast_id` INT NULL,
   `website_id` INT NULL,
-  `website_length_of_stay_seconds` INT NULL,
+  `length_of_stay_seconds` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_clicks_core_profile1_idx` (`core_id` ASC) VISIBLE,
   INDEX `fk_user_clicks_ads1_idx` (`ad_id` ASC) VISIBLE,
@@ -364,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `votemate`.`ip` (
   INDEX `fk_ip_user_clicks1_idx` (`user_clicks_id` ASC) VISIBLE,
   CONSTRAINT `fk_ip_user_clicks1`
     FOREIGN KEY (`user_clicks_id`)
-    REFERENCES `votemate`.`user_clicks` (`id`)
+    REFERENCES `votemate`.`web_media` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -470,11 +488,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `votemate`.`profile_data`
+-- Table `votemate`.`profile_demographic`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`profile_data` ;
+DROP TABLE IF EXISTS `votemate`.`profile_demographic` ;
 
-CREATE TABLE IF NOT EXISTS `votemate`.`profile_data` (
+CREATE TABLE IF NOT EXISTS `votemate`.`profile_demographic` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `core_id` INT NOT NULL,
   `gender_id` INT NOT NULL,
@@ -483,6 +501,7 @@ CREATE TABLE IF NOT EXISTS `votemate`.`profile_data` (
   `marital_status` ENUM('Single', 'Separated', 'Divorced', 'Married', 'Widowed') NULL DEFAULT NULL,
   `most_recent_education` VARCHAR(144) NULL,
   `current_occupation` VARCHAR(144) NULL,
+  `annual_income` DECIMAL(10,2) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_meta_data_core_profile1_idx` (`core_id` ASC) VISIBLE,
   INDEX `fk_profile_data_gender_look_up1_idx` (`gender_id` ASC) VISIBLE,
@@ -1119,15 +1138,15 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `votemate`.`subscriptions`
+-- Table `votemate`.`printed_media_subscription`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`subscriptions` ;
+DROP TABLE IF EXISTS `votemate`.`printed_media_subscription` ;
 
-CREATE TABLE IF NOT EXISTS `votemate`.`subscriptions` (
+CREATE TABLE IF NOT EXISTS `votemate`.`printed_media_subscription` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `core_id` INT NOT NULL,
-  `newspaper_id` INT NOT NULL,
-  `magazine_id` INT NOT NULL,
+  `newspaper_id` INT NULL,
+  `magazine_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_subscriptions_core_profile1_idx` (`core_id` ASC) VISIBLE,
   INDEX `fk_subscriptions_newspaper1_idx` (`newspaper_id` ASC) VISIBLE,
@@ -1157,10 +1176,36 @@ DROP TABLE IF EXISTS `votemate`.`election` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`election` (
   `id` INT NOT NULL,
-  `election_title` VARCHAR(45) NOT NULL,
+  `election_type` VARCHAR(45) NOT NULL,
   `election_start_date` DATETIME NOT NULL,
   `election_end_date` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`ballot`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`ballot` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`ballot` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `election_id` INT NOT NULL,
+  `district_lookup_id` INT NOT NULL,
+  `ballot_title` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_ballot_election1_idx` (`election_id` ASC) VISIBLE,
+  INDEX `fk_ballot_district_lookup1_idx` (`district_lookup_id` ASC) VISIBLE,
+  CONSTRAINT `fk_ballot_election1`
+    FOREIGN KEY (`election_id`)
+    REFERENCES `votemate`.`election` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ballot_district_lookup1`
+    FOREIGN KEY (`district_lookup_id`)
+    REFERENCES `votemate`.`district_lookup` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -1185,33 +1230,44 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `votemate`.`ballot`
+-- Table `votemate`.`ballot_question`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`ballot` ;
+DROP TABLE IF EXISTS `votemate`.`ballot_question` ;
 
-CREATE TABLE IF NOT EXISTS `votemate`.`ballot` (
+CREATE TABLE IF NOT EXISTS `votemate`.`ballot_question` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `election_id` INT NOT NULL,
-  `district_lookup_id` INT NOT NULL,
-  `candidate_id` INT NOT NULL,
-  `ballot_title` VARCHAR(45) NOT NULL,
+  `ballot_id` INT NOT NULL,
+  `question` VARCHAR(144) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_ballot_election1_idx` (`election_id` ASC) VISIBLE,
-  INDEX `fk_ballot_candidate1_idx` (`candidate_id` ASC) VISIBLE,
-  INDEX `fk_ballot_district_lookup1_idx` (`district_lookup_id` ASC) VISIBLE,
-  CONSTRAINT `fk_ballot_election1`
-    FOREIGN KEY (`election_id`)
-    REFERENCES `votemate`.`election` (`id`)
+  INDEX `fk_ballot_choice_ballot1_idx` (`ballot_id` ASC) VISIBLE,
+  CONSTRAINT `fk_ballot_choice_ballot1`
+    FOREIGN KEY (`ballot_id`)
+    REFERENCES `votemate`.`ballot` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`ballot_question_has_candidate`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`ballot_question_has_candidate` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`ballot_question_has_candidate` (
+  `id` VARCHAR(45) NOT NULL,
+  `ballot_question_id` INT NOT NULL,
+  `candidate_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_ballot_choice_has_candidate_candidate1_idx` (`candidate_id` ASC) VISIBLE,
+  INDEX `fk_ballot_choice_has_candidate_ballot_choice1_idx` (`ballot_question_id` ASC) VISIBLE,
+  CONSTRAINT `fk_ballot_choice_has_candidate_ballot_choice1`
+    FOREIGN KEY (`ballot_question_id`)
+    REFERENCES `votemate`.`ballot_question` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ballot_candidate1`
+  CONSTRAINT `fk_ballot_choice_has_candidate_candidate1`
     FOREIGN KEY (`candidate_id`)
     REFERENCES `votemate`.`candidate` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ballot_district_lookup1`
-    FOREIGN KEY (`district_lookup_id`)
-    REFERENCES `votemate`.`district_lookup` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -1224,28 +1280,27 @@ DROP TABLE IF EXISTS `votemate`.`voter_ballot_started` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`voter_ballot_started` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `start` DATETIME NOT NULL,
-  `voter_profile_id` INT NOT NULL,
   `ballot_id` INT NOT NULL,
-  `candidate_id` INT NOT NULL,
+  `voter_profile_id` INT NOT NULL,
+  `ballot_question_has_candidate_id` VARCHAR(45) NOT NULL,
+  `start` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_voter_ballot_started_voter_profile1_idx` (`voter_profile_id` ASC) VISIBLE,
+  INDEX `fk_voter_ballot_started_ballot_question_has_candidate1_idx` (`ballot_question_has_candidate_id` ASC) VISIBLE,
   INDEX `fk_voter_ballot_started_ballot1_idx` (`ballot_id` ASC) VISIBLE,
-  INDEX `fk_voter_ballot_started_candidate1_idx` (`candidate_id` ASC) VISIBLE,
-  UNIQUE INDEX `candidate_id_UNIQUE` (`candidate_id` ASC) VISIBLE,
   CONSTRAINT `fk_voter_ballot_started_voter_profile1`
     FOREIGN KEY (`voter_profile_id`)
     REFERENCES `votemate`.`voter_profile` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT `fk_voter_ballot_started_ballot_question_has_candidate1`
+    FOREIGN KEY (`ballot_question_has_candidate_id`)
+    REFERENCES `votemate`.`ballot_question_has_candidate` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_voter_ballot_started_ballot1`
     FOREIGN KEY (`ballot_id`)
     REFERENCES `votemate`.`ballot` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_voter_ballot_started_candidate1`
-    FOREIGN KEY (`candidate_id`)
-    REFERENCES `votemate`.`candidate` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -1262,25 +1317,18 @@ CREATE TABLE IF NOT EXISTS `votemate`.`voter_ballot_finished` (
   `start_time` DATETIME NOT NULL,
   `finish_time` DATETIME NOT NULL,
   `voter_profile_id` INT NOT NULL,
-  `ballot_id` INT NOT NULL,
-  `candidate_id` INT NOT NULL,
+  `ballot_question_has_candidate_id` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_voter_ballot_finished_voter_profile1_idx` (`voter_profile_id` ASC) VISIBLE,
-  INDEX `fk_voter_ballot_finished_ballot1_idx` (`ballot_id` ASC) VISIBLE,
-  INDEX `fk_voter_ballot_finished_candidate1_idx` (`candidate_id` ASC) VISIBLE,
+  INDEX `fk_voter_ballot_finished_ballot_question_has_candidate1_idx` (`ballot_question_has_candidate_id` ASC) VISIBLE,
   CONSTRAINT `fk_voter_ballot_finished_voter_profile1`
     FOREIGN KEY (`voter_profile_id`)
     REFERENCES `votemate`.`voter_profile` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_voter_ballot_finished_ballot1`
-    FOREIGN KEY (`ballot_id`)
-    REFERENCES `votemate`.`ballot` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_voter_ballot_finished_candidate1`
-    FOREIGN KEY (`candidate_id`)
-    REFERENCES `votemate`.`candidate` (`id`)
+  CONSTRAINT `fk_voter_ballot_finished_ballot_question_has_candidate1`
+    FOREIGN KEY (`ballot_question_has_candidate_id`)
+    REFERENCES `votemate`.`ballot_question_has_candidate` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
