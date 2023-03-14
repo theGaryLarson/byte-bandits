@@ -21,7 +21,7 @@ USE `votemate` ;
 DROP TABLE IF EXISTS `votemate`.`core_profile` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`core_profile` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `f_name` VARCHAR(255) NULL,
   `l_name` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
