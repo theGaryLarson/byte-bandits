@@ -229,7 +229,7 @@ def load_podcast(json_file_path):
 
 def load_ad(json_file_path):
     """
-        load_podcast is dependent on political_affiliation table
+        load_ad is dependent on tables: political_affiliation, marketing_agency
     """
     # Load JSON data from file
     with open(json_file_path, 'r') as f:
@@ -251,11 +251,14 @@ def load_ad(json_file_path):
                     agency_query = "SELECT id FROM marketing_agency WHERE name = %s"
                     cursor.execute(agency_query, (ad["marketing_agency"],))
                     agency_result = cursor.fetchone()
+
                     if agency_result is not None:
-                        agency_id = party_result[0]
-                add_ad = "INSERT INTO ad (name, marketing_agency_id,  political_affiliation_id)" \
-                         "  VALUES (%s, %s, %s)"
-                data_ad = (ad['ad_title'], agency_id, party_id)
+                        agency_id = agency_result[0]
+                add_ad = "INSERT INTO ad (ad_title, marketing_agency_id,  political_affiliation_id, start_airtime," \
+                         "end_airtime, networks)" \
+                         "  VALUES (%s, %s, %s, %s, %s, %s)"
+                data_ad = (ad['ad_title'], agency_id, party_id, ad["start_airtime"], ad["end_airtime"],
+                           json.dumps(ad["networks"]))
                 cursor.execute(add_ad, data_ad)
 
         # Commit the changes
