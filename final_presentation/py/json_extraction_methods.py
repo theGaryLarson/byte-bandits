@@ -1,9 +1,87 @@
-import random
-
 import mysql.connector
 import json
+import random
+
+from vm_config import host, user, password, database
 from vm_config import config
-from insert_bendover_data_in_table import load_bendover_data_feed
+
+
+
+def load_bendover_data_feed(json_file_path):
+    # Load JSON data from file
+    with open(json_file_path, 'r') as f:
+        data = json.load(f)
+
+    # Connect to MySQL database
+    db = mysql.connector.connect(
+        host=host,
+        user=user,
+        password=password,
+        database=database
+    )
+
+    # Create cursor object to execute SQL queries
+    cursor = db.cursor()
+
+    # Loop through each person's information and insert it into the MySQL table
+    for person in data["data"]:
+        sql = "INSERT INTO bendover_data_feed (" \
+              "bendover_id," \
+              "first_name," \
+              "last_name," \
+              "email," \
+              "political_affiliation," \
+              "political_intensity," \
+              "religious_affiliation," \
+              "religious_intensity," \
+              "social_issue_views," \
+              "social_mate_preference," \
+              "gender," \
+              "birthdate," \
+              "location," \
+              "education," \
+              "occupation," \
+              "hobbies) " \
+              "VALUES (" \
+              "%s, " \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s," \
+              "%s)"
+        values = (
+            person["id"],
+            person["first_name"],
+            person["last_name"],
+            person["email"],
+            person["political_affiliation"],
+            person["political_intensity"],
+            person["religious_affiliation"],
+            person["religious_intensity"],
+            json.dumps(person["social_issues"]),
+            json.dumps(person["social_mate_preference"]),
+            person["gender"],
+            person["birthdate"],
+            person["location"],
+            person["education"],
+            person["occupation"],
+            json.dumps(person["hobbies"])
+        )
+        cursor.execute(sql, values)
+        db.commit()
+
+    # Close the database connection
+    db.close()
 
 
 def load_religious_affiliation_lookup_mysql(json_file_path):
@@ -356,165 +434,23 @@ def load_group(json_file_path):
             cnx.commit()
 
 
-def load_social_media():
-    from random_dates import dates
-    import random
-
-    with mysql.connector.connect(**config) as cnx:
-        with cnx.cursor(dictionary=True, buffered=True) as cursor:
-            user_stmt = "SELECT * FROM bendover_data_feed;"
-            cursor.execute(user_stmt)
-            users = cursor.fetchall()
-            count = random.randint(3, 6)
-            for user in users:
-                statement = "SELECT core_profile.id " \
-                            "FROM core_profile " \
-                            "WHERE %s = f_name AND %s = l_name;"
-                values = (user["first_name"], user["last_name"])
-                cursor.execute(statement, values)
-                results = cursor.fetchone()
-                core_id = results["id"]
-
-                if user["political_affiliation"] == "Democratic Party":
-                    stmt = "SELECT * FROM group_lookup WHERE political_lean = 'left' ORDER BY RAND() LIMIT %s"
-                elif user["political_affiliation"] == "Republican Party":
-                    stmt = "SELECT * FROM group_lookup WHERE political_lean = 'right' ORDER BY RAND() LIMIT %s"
-                else:
-                    stmt = "SELECT * FROM group_lookup ORDER BY RAND() LIMIT %s"
-                cursor.execute(stmt, (count, ))
-                user_groups = cursor.fetchall()
-                for group in user_groups:
-                    random_idx = random.randrange(len(dates))
-                    url = "/".join(group['group_url'].split("/")[:3]) + "/" + user["first_name"].lower() + user["last_name"].lower()
-
-                    stmt = "SELECT social_media_platform_id FROM `group` " \
-                            "WHERE group.id = %s"
-
-                    values = (group["id"])
-                    cursor.execute(stmt, (values,))
-                    sm_platform_id = cursor.fetchone()['social_media_platform_id']
-                    stmt = "INSERT INTO social_media (core_id, sm_platform_id, user_guid, url, last_active, group_id) " \
-                           "VALUES(%s, %s, %s, %s, %s, %s)"
-                    values = (core_id, sm_platform_id, None,  url, dates[random_idx], group['id'])
-                    cursor.execute(stmt, values)
-            cnx.commit()
-
-
-def load_web_media():
-    from random_dates import dates
-    import random
-    web_media_types = ["ad", "broadcast", "podcast", "website"]
-
-    with mysql.connector.connect(**config) as cnx:
-        with cnx.cursor(dictionary=True, buffered=True) as cursor:
-            user_stmt = "SELECT * FROM bendover_data_feed;"
-            cursor.execute(user_stmt)
-            users = cursor.fetchall()
-            for user in users:
-
-                statement = "SELECT core_profile.id " \
-                            "FROM core_profile " \
-                            "WHERE %s = f_name AND %s = l_name;"
-                values = (user["first_name"], user["last_name"])
-                cursor.execute(statement, values)
-                results = cursor.fetchone()
-                core_id = results["id"]
-
-                statement = "SELECT id FROM political_affiliation_lookup WHERE affiliation = %s"
-                cursor.execute(statement, (user["political_affiliation"],))
-                pol_affil_id = cursor.fetchone()["id"]
-
-                for media_entry_type in ["ad", "broadcast", "podcast", "website"]:
-                    if media_entry_type == 'ad':
-                        count = random.randint(6, 10)
-                        stmt = "SELECT * FROM ad WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
-
-                        cursor.execute(stmt, (pol_affil_id, count))
-                        user_ads = cursor.fetchall()
-
-                        for ad in user_ads:
-                            random_idx = random.randrange(len(dates))
-                            length_of_stay_seconds = random.randint(15, 120) # 15 seconds - 2 minutes
-                            stmt = "INSERT INTO web_media (core_id, click_timestamp, ad_id, podcast_id, " \
-                                   "web_broadcast_id, website_id, length_of_stay_seconds ) " \
-                                   "VALUES(%s, %s, %s, %s, %s, %s, %s)"
-                            values = (core_id, dates[random_idx], ad['id'], None, None,
-                                      None, length_of_stay_seconds)
-
-                            cursor.execute(stmt, values)
-
-                    elif media_entry_type == 'broadcast':
-                        count = random.randint(6, 10)
-                        stmt = "SELECT * FROM web_broadcast WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
-                        cursor.execute(stmt, (pol_affil_id, count))
-                        user_broadcasts = cursor.fetchall()
-
-                        for broadcast in user_broadcasts:
-                            random_idx = random.randrange(len(dates))
-                            length_of_stay_seconds = random.randint(30, 3720) # 30 seconds - 62 minutes
-
-                            stmt = "INSERT INTO web_media (core_id, click_timestamp, ad_id, podcast_id, " \
-                                   "web_broadcast_id, website_id, length_of_stay_seconds ) " \
-                                   "VALUES(%s, %s, %s, %s, %s, %s, %s)"
-                            values = (core_id, dates[random_idx], None, None, broadcast['id'],
-                                      None, length_of_stay_seconds)
-
-                            cursor.execute(stmt, values)
-
-                    elif media_entry_type == 'podcast':
-                        count = random.randint(6, 10)
-                        stmt = "SELECT * FROM podcast WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
-                        cursor.execute(stmt, (pol_affil_id, count))
-                        user_podcasts = cursor.fetchall()
-
-                        for podcast in user_podcasts:
-                            random_idx = random.randrange(len(dates))
-                            length_of_stay_seconds = random.randint(120, 1920) # 2 minutes - 32 minutes
-
-                            stmt = "INSERT INTO web_media (core_id, click_timestamp, ad_id, podcast_id, " \
-                                   "web_broadcast_id, website_id, length_of_stay_seconds ) " \
-                                   "VALUES(%s, %s, %s, %s, %s, %s, %s)"
-                            values = (core_id, dates[random_idx], None, podcast['id'], None,
-                                      None, length_of_stay_seconds)
-
-                            cursor.execute(stmt, values)
-
-                    elif media_entry_type == 'website':
-                        count = random.randint(6, 10)
-                        stmt = "SELECT * FROM website WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
-                        cursor.execute(stmt, (pol_affil_id, count))
-                        user_websites = cursor.fetchall()
-
-                        for website in user_websites:
-                            random_idx = random.randrange(len(dates))
-                            length_of_stay_seconds = random.randint(180, 2700) # 3 minutes - 45 minutes
-
-                            stmt = "INSERT INTO web_media (core_id, click_timestamp, ad_id, podcast_id, " \
-                                   "web_broadcast_id, website_id, length_of_stay_seconds ) " \
-                                   "VALUES(%s, %s, %s, %s, %s, %s, %s)"
-                            values = (core_id, dates[random_idx], None, None, None,
-                                      website['id'], length_of_stay_seconds)
-
-                            cursor.execute(stmt, values)
-            cnx.commit()
-
 if __name__ == '__main__':
-    load_bendover_data_feed("../json/bendover_data_feed.json")
-    load_religious_affiliation_lookup_mysql("../json/religious_affiliation_lookup.json")
-    load_political_affiliation_lookup_mysql("../json/political_affiliation_lookup.json")
-    load_social_issue_view_type_lookup("../json/social_issue_view_type_lookup.json")
-    load_social_media_platform("../json/social_media_platform.json")
-    load_gender("../json/gender.json")
-    load_marketing_agency("../json/marketing_agency.json")
-    load_newspaper("../json/newspaper.json")
-    load_magazine("../json/magazine.json")
-    load_web_broadcast("../json/web_broadcast.json")
-    load_website("../json/website.json")
-    load_podcast("../json/podcast.json")
-    load_ad("../json/ad.json")
-    load_social_issue_view_lookup("../json/social_issue_view_lookup.json")
-    load_social_media_group_lookup("../json/social_media_groups.json")
-    load_group("../json/social_media_groups.json")
-    load_social_media()
-    load_web_media()
+    # load_bendover_data_feed("../json/bendover_data_feed.json")
+    # load_religious_affiliation_lookup_mysql("../json/religious_affiliation_lookup.json")
+    # load_political_affiliation_lookup_mysql("../json/political_affiliation_lookup.json")
+    # load_social_issue_view_type_lookup("../json/social_issue_view_type_lookup.json")
+    # load_social_media_platform("../json/social_media_platform.json")
+    # load_gender("../json/gender.json")
+    # load_marketing_agency("../json/marketing_agency.json")
+    # load_newspaper("../json/newspaper.json")
+    # load_magazine("../json/magazine.json")
+    # load_web_broadcast("../json/web_broadcast.json")
+    # load_website("../json/website.json")
+    # load_podcast("../json/podcast.json")
+    # load_ad("../json/ad.json")
+    # load_social_issue_view_lookup("../json/social_issue_view_lookup.json")
+    # load_social_media_group_lookup("../json/social_media_groups.json")
+    # load_group("../json/social_media_groups.json")
+    # load_social_media()
+    # load_web_media()
     print()
