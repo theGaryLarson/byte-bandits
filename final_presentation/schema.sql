@@ -776,10 +776,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `votemate`.`core_profile_has_social_issue_view` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`core_profile_has_social_issue_view` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `core_profile_id` INT NOT NULL,
   `social_issue_view_look_up_id` INT NOT NULL,
+  `opinion` VARCHAR(45) NOT NULL,
   `intensity` INT NOT NULL,
+  `post_date` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_core_profile_has_social_issue_view_look_up_social_issue__idx` (`social_issue_view_look_up_id` ASC) VISIBLE,
   INDEX `fk_core_profile_has_social_issue_view_look_up_core_profile1_idx` (`core_profile_id` ASC) VISIBLE,
@@ -873,8 +875,9 @@ DROP TABLE IF EXISTS `votemate`.`core_profile_has_religious_affiliation` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`core_profile_has_religious_affiliation` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `religious_affiliation_look_up_id` INT NOT NULL,
   `core_profile_id` INT NOT NULL,
+  `religious_affiliation_look_up_id` INT NOT NULL,
+  `intensity` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_core_profile_has_religious_affiliation_religious_affilia_idx` (`religious_affiliation_look_up_id` ASC) VISIBLE,
   INDEX `fk_core_profile_has_religious_affiliation_core_profile1_idx` (`core_profile_id` ASC) VISIBLE,
