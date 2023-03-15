@@ -400,25 +400,123 @@ def load_social_media():
             cnx.commit()
 
 
+def load_web_media():
+    from random_dates import dates
+    import random
+    web_media_types = ["ad", "broadcast", "podcast", "website"]
+
+    with mysql.connector.connect(**config) as cnx:
+        with cnx.cursor(dictionary=True, buffered=True) as cursor:
+            user_stmt = "SELECT * FROM bendover_data_feed;"
+            cursor.execute(user_stmt)
+            users = cursor.fetchall()
+            for user in users:
+
+                statement = "SELECT core_profile.id " \
+                            "FROM core_profile " \
+                            "WHERE %s = f_name AND %s = l_name;"
+                values = (user["first_name"], user["last_name"])
+                cursor.execute(statement, values)
+                results = cursor.fetchone()
+                core_id = results["id"]
+
+                statement = "SELECT id FROM political_affiliation_lookup WHERE affiliation = %s"
+                cursor.execute(statement, (user["political_affiliation"],))
+                pol_affil_id = cursor.fetchone()["id"]
+
+                for media_entry_type in ["ad", "broadcast", "podcast", "website"]:
+                    if media_entry_type == 'ad':
+                        count = random.randint(6, 10)
+                        stmt = "SELECT * FROM ad WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
+
+                        cursor.execute(stmt, (pol_affil_id, count))
+                        user_ads = cursor.fetchall()
+
+                        for ad in user_ads:
+                            random_idx = random.randrange(len(dates))
+                            length_of_stay_seconds = random.randint(15, 120) # 15 seconds - 2 minutes
+                            stmt = "INSERT INTO web_media (core_id, click_timestamp, ad_id, podcast_id, " \
+                                   "web_broadcast_id, website_id, length_of_stay_seconds ) " \
+                                   "VALUES(%s, %s, %s, %s, %s, %s, %s)"
+                            values = (core_id, dates[random_idx], ad['id'], None, None,
+                                      None, length_of_stay_seconds)
+
+                            cursor.execute(stmt, values)
+
+                    elif media_entry_type == 'broadcast':
+                        count = random.randint(6, 10)
+                        stmt = "SELECT * FROM web_broadcast WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
+                        cursor.execute(stmt, (pol_affil_id, count))
+                        user_broadcasts = cursor.fetchall()
+
+                        for broadcast in user_broadcasts:
+                            random_idx = random.randrange(len(dates))
+                            length_of_stay_seconds = random.randint(30, 3720) # 30 seconds - 62 minutes
+
+                            stmt = "INSERT INTO web_media (core_id, click_timestamp, ad_id, podcast_id, " \
+                                   "web_broadcast_id, website_id, length_of_stay_seconds ) " \
+                                   "VALUES(%s, %s, %s, %s, %s, %s, %s)"
+                            values = (core_id, dates[random_idx], None, None, broadcast['id'],
+                                      None, length_of_stay_seconds)
+
+                            cursor.execute(stmt, values)
+
+                    elif media_entry_type == 'podcast':
+                        count = random.randint(6, 10)
+                        stmt = "SELECT * FROM podcast WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
+                        cursor.execute(stmt, (pol_affil_id, count))
+                        user_podcasts = cursor.fetchall()
+
+                        for podcast in user_podcasts:
+                            random_idx = random.randrange(len(dates))
+                            length_of_stay_seconds = random.randint(120, 1920) # 2 minutes - 32 minutes
+
+                            stmt = "INSERT INTO web_media (core_id, click_timestamp, ad_id, podcast_id, " \
+                                   "web_broadcast_id, website_id, length_of_stay_seconds ) " \
+                                   "VALUES(%s, %s, %s, %s, %s, %s, %s)"
+                            values = (core_id, dates[random_idx], None, podcast['id'], None,
+                                      None, length_of_stay_seconds)
+
+                            cursor.execute(stmt, values)
+
+                    elif media_entry_type == 'website':
+                        count = random.randint(6, 10)
+                        stmt = "SELECT * FROM website WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
+                        cursor.execute(stmt, (pol_affil_id, count))
+                        user_websites = cursor.fetchall()
+
+                        for website in user_websites:
+                            random_idx = random.randrange(len(dates))
+                            length_of_stay_seconds = random.randint(180, 2700) # 3 minutes - 45 minutes
+
+                            stmt = "INSERT INTO web_media (core_id, click_timestamp, ad_id, podcast_id, " \
+                                   "web_broadcast_id, website_id, length_of_stay_seconds ) " \
+                                   "VALUES(%s, %s, %s, %s, %s, %s, %s)"
+                            values = (core_id, dates[random_idx], None, None, None,
+                                      website['id'], length_of_stay_seconds)
+
+                            cursor.execute(stmt, values)
+            cnx.commit()
 
 if __name__ == '__main__':
-    # load_bendover_data_feed("../json/bendover_data_feed.json")
-    # load_religious_affiliation_lookup_mysql("../json/religious_affiliation_lookup.json")
-    # load_political_affiliation_lookup_mysql("../json/political_affiliation_lookup.json")
-    # load_social_issue_view_type_lookup("../json/social_issue_view_type_lookup.json")
-    # load_social_media_platform("../json/social_media_platform.json")
-    # load_gender("../json/gender.json")
-    # load_marketing_agency("../json/marketing_agency.json")
-    # # methods dependent on political_affiliation_lookup table
-    # load_newspaper("../json/newspaper.json")
-    # load_magazine("../json/magazine.json")
-    # load_web_broadcast("../json/web_broadcast.json")
-    # load_website("../json/website.json")
-    # load_podcast("../json/podcast.json")
-    # # dependent on marketing_agency and political_affiliation_lookup tables
-    # load_ad("../json/ad.json")
-    # load_social_issue_view_lookup("../json/social_issue_view_lookup.json")
-    # load_social_media_group_lookup("../json/social_media_groups.json")
-    # load_group("../json/social_media_groups.json")
+    load_bendover_data_feed("../json/bendover_data_feed.json")
+    load_religious_affiliation_lookup_mysql("../json/religious_affiliation_lookup.json")
+    load_political_affiliation_lookup_mysql("../json/political_affiliation_lookup.json")
+    load_social_issue_view_type_lookup("../json/social_issue_view_type_lookup.json")
+    load_social_media_platform("../json/social_media_platform.json")
+    load_gender("../json/gender.json")
+    load_marketing_agency("../json/marketing_agency.json")
+    # methods dependent on political_affiliation_lookup table
+    load_newspaper("../json/newspaper.json")
+    load_magazine("../json/magazine.json")
+    load_web_broadcast("../json/web_broadcast.json")
+    load_website("../json/website.json")
+    load_podcast("../json/podcast.json")
+    # dependent on marketing_agency and political_affiliation_lookup tables
+    load_ad("../json/ad.json")
+    load_social_issue_view_lookup("../json/social_issue_view_lookup.json")
+    load_social_media_group_lookup("../json/social_media_groups.json")
+    load_group("../json/social_media_groups.json")
     load_social_media()
+    load_web_media()
     print()
