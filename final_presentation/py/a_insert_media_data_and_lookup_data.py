@@ -1,3 +1,5 @@
+import random
+
 import mysql.connector
 import json
 from vm_config import config
@@ -309,21 +311,114 @@ def load_social_issue_view_lookup(json_file_path):
         # Commit the changes
         cnx.commit()
 
+
+def load_social_media_group_lookup(json_file_path):
+    # Load JSON data from file
+    with open(json_file_path, 'r') as f:
+        data = json.load(f)
+
+    # Insert each item as a new row in the table
+    with mysql.connector.connect(**config) as cnx:
+        with cnx.cursor() as cursor:
+            for pair in data['social_media_groups']:
+                for idx, group in enumerate(pair["groups"]):
+                    name = group["name"]
+                    lean = group["political_leaning"]
+                    url = group["url"]
+                    add_group = "INSERT INTO group_lookup (name, political_lean, group_url)  " \
+                                "VALUES (%s, %s, %s)"
+                    data_platform = (name, lean, url)
+                    cursor.execute(add_group, data_platform)
+
+        # Commit the changes
+        cnx.commit()
+
+
+def load_group(json_file_path):
+    # Load JSON data from file
+    with open(json_file_path, 'r') as f:
+        data = json.load(f)
+
+    with mysql.connector.connect(**config) as cnx:
+        with cnx.cursor() as cursor:
+            for pair in data['social_media_groups']:
+                statement = "SELECT id FROM social_media_platform WHERE platform = %s;"
+                cursor.execute(statement, (pair["platform"],))
+                social_media_id = cursor.fetchone()[0]
+                for group in pair["groups"]:
+                    statement = "SELECT id FROM group_lookup WHERE name = %s"
+                    cursor.execute(statement, (group["name"],))
+                    group_lookup_id = cursor.fetchone()[0]
+                    insert_stmt = "INSERT INTO `group` (group_lookup_id, social_media_platform_id) " \
+                                  "VALUES (%s, %s)"
+                    data = (group_lookup_id, social_media_id)
+                    cursor.execute(insert_stmt, data)
+            cnx.commit()
+
+
+def load_social_media():
+    from random_dates import dates
+    import random
+
+    with mysql.connector.connect(**config) as cnx:
+        with cnx.cursor(dictionary=True, buffered=True) as cursor:
+            user_stmt = "SELECT * FROM bendover_data_feed;"
+            cursor.execute(user_stmt)
+            users = cursor.fetchall()
+            count = random.randint(3, 6)
+            for user in users:
+                statement = "SELECT core_profile.id " \
+                            "FROM core_profile " \
+                            "WHERE %s = f_name AND %s = l_name;"
+                values = (user["first_name"], user["last_name"])
+                cursor.execute(statement, values)
+                results = cursor.fetchone()
+                core_id = results["id"]
+
+                if user["political_affiliation"] == "Democratic Party":
+                    stmt = "SELECT * FROM group_lookup WHERE political_lean = 'left' ORDER BY RAND() LIMIT %s"
+                elif user["political_affiliation"] == "Republican Party":
+                    stmt = "SELECT * FROM group_lookup WHERE political_lean = 'right' ORDER BY RAND() LIMIT %s"
+                else:
+                    stmt = "SELECT * FROM group_lookup ORDER BY RAND() LIMIT %s"
+                cursor.execute(stmt, (count, ))
+                user_groups = cursor.fetchall()
+                for group in user_groups:
+                    random_idx = random.randrange(len(dates))
+                    url = "/".join(group['group_url'].split("/")[:3]) + "/" + user["first_name"].lower() + user["last_name"].lower()
+
+                    stmt = "SELECT social_media_platform_id FROM `group` " \
+                            "WHERE group.id = %s"
+
+                    values = (group["id"])
+                    cursor.execute(stmt, (values,))
+                    sm_platform_id = cursor.fetchone()['social_media_platform_id']
+                    stmt = "INSERT INTO social_media (core_id, sm_platform_id, user_guid, url, last_active, group_id) " \
+                           "VALUES(%s, %s, %s, %s, %s, %s)"
+                    values = (core_id, sm_platform_id, None,  url, dates[random_idx], group['id'])
+                    cursor.execute(stmt, values)
+            cnx.commit()
+
+
+
 if __name__ == '__main__':
-    load_bendover_data_feed("../json/bendover_data_feed.json")
-    load_religious_affiliation_lookup_mysql("../json/religious_affiliation_lookup.json")
-    load_political_affiliation_lookup_mysql("../json/political_affiliation_lookup.json")
-    load_social_issue_view_type_lookup("../json/social_issue_view_type_lookup.json")
-    load_social_media_platform("../json/social_media_platform.json")
-    load_gender("../json/gender.json")
-    load_marketing_agency("../json/marketing_agency.json")
-    # methods dependent on political_affiliation_lookup table
-    load_newspaper("../json/newspaper.json")
-    load_magazine("../json/magazine.json")
-    load_web_broadcast("../json/web_broadcast.json")
-    load_website("../json/website.json")
-    load_podcast("../json/podcast.json")
-    # dependent on marketing_agency and political_affiliation_lookup tables
-    load_ad("../json/ad.json")
-    load_social_issue_view_lookup("../json/social_issue_view_lookup.json")
+    # load_bendover_data_feed("../json/bendover_data_feed.json")
+    # load_religious_affiliation_lookup_mysql("../json/religious_affiliation_lookup.json")
+    # load_political_affiliation_lookup_mysql("../json/political_affiliation_lookup.json")
+    # load_social_issue_view_type_lookup("../json/social_issue_view_type_lookup.json")
+    # load_social_media_platform("../json/social_media_platform.json")
+    # load_gender("../json/gender.json")
+    # load_marketing_agency("../json/marketing_agency.json")
+    # # methods dependent on political_affiliation_lookup table
+    # load_newspaper("../json/newspaper.json")
+    # load_magazine("../json/magazine.json")
+    # load_web_broadcast("../json/web_broadcast.json")
+    # load_website("../json/website.json")
+    # load_podcast("../json/podcast.json")
+    # # dependent on marketing_agency and political_affiliation_lookup tables
+    # load_ad("../json/ad.json")
+    # load_social_issue_view_lookup("../json/social_issue_view_lookup.json")
+    # load_social_media_group_lookup("../json/social_media_groups.json")
+    # load_group("../json/social_media_groups.json")
+    load_social_media()
     print()
