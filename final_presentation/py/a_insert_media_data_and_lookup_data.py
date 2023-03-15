@@ -1,7 +1,7 @@
 import mysql.connector
 import json
-from vm_config import config;
-from load_BO_user_data import load_bendover_data_feed
+from vm_config import config
+from insert_bendover_data_in_table import load_bendover_data_feed
 
 
 def load_religious_affiliation_lookup_mysql(json_file_path):
@@ -71,6 +71,21 @@ def load_social_media_platform(json_file_path):
         # Commit the changes
         cnx.commit()
 
+def load_gender(json_file_path):
+    # Load JSON data from file
+    with open(json_file_path, 'r') as f:
+        data = json.load(f)
+
+    # Insert each item as a new row in the table
+    with mysql.connector.connect(**config) as cnx:
+        with cnx.cursor() as cursor:
+            for gender in data['gender_options']:
+                add_gender = "INSERT INTO gender_lookup (identity, acronym)  VALUES (%s, %s)"
+                data_gender = (gender['full_name'], gender['abbrev'])
+                cursor.execute(add_gender, data_gender)
+
+        # Commit the changes
+        cnx.commit()
 
 def load_marketing_agency(json_file_path):
     # Load JSON data from file
@@ -199,6 +214,7 @@ def load_website(json_file_path):
         cnx.commit()
 
 
+
 def load_podcast(json_file_path):
     """
         load_podcast is dependent on political_affiliation table
@@ -265,12 +281,41 @@ def load_ad(json_file_path):
         cnx.commit()
 
 
+
+def load_social_issue_view_lookup(json_file_path):
+    """
+        load_social_issue_view_lookup is dependent on table: social_issue_view_type_lookup
+    """
+    # Load JSON data from file
+    with open(json_file_path, 'r') as f:
+        data = json.load(f)
+
+    # Insert each item as a new row in the table
+    with mysql.connector.connect(**config) as cnx:
+        with cnx.cursor() as cursor:
+            for issue in data['social_issue_view_lookup']:
+                category_id = None
+                if issue["category"] is not None:
+                    query = "SELECT id FROM social_issue_view_type_lookup WHERE category = %s"
+                    cursor.execute(query, (issue["category"],))
+                    cat_id = cursor.fetchone()
+                    if cat_id is not None:
+                        category_id = cat_id[0]
+                add_issue = "INSERT INTO social_issue_view_lookup (view, view_type_id)" \
+                         "  VALUES (%s, %s)"
+                data_issue = (issue['subcategory'], category_id)
+                cursor.execute(add_issue, data_issue)
+
+        # Commit the changes
+        cnx.commit()
+
 if __name__ == '__main__':
     load_bendover_data_feed("../json/bendover_data_feed.json")
     load_religious_affiliation_lookup_mysql("../json/religious_affiliation_lookup.json")
     load_political_affiliation_lookup_mysql("../json/political_affiliation_lookup.json")
     load_social_issue_view_type_lookup("../json/social_issue_view_type_lookup.json")
     load_social_media_platform("../json/social_media_platform.json")
+    load_gender("../json/gender.json")
     load_marketing_agency("../json/marketing_agency.json")
     # methods dependent on political_affiliation_lookup table
     load_newspaper("../json/newspaper.json")
@@ -280,4 +325,5 @@ if __name__ == '__main__':
     load_podcast("../json/podcast.json")
     # dependent on marketing_agency and political_affiliation_lookup tables
     load_ad("../json/ad.json")
+    load_social_issue_view_lookup("../json/social_issue_view_lookup.json")
     print()

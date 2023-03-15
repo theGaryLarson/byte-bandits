@@ -78,3 +78,4 @@ def load_bendover_data_feed(json_file_path):
 
     # Close the database connection
     db.close()
+
