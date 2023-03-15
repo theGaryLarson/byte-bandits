@@ -112,6 +112,47 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `votemate`.`group_lookup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`group_lookup` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`group_lookup` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(144) NOT NULL,
+  `political_lean` VARCHAR(255) NOT NULL,
+  `group_url` VARCHAR(144) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`group`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`group` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`group` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `group_lookup_id` INT NOT NULL,
+  `social_media_platform_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_group_group_lookup1_idx` (`group_lookup_id` ASC) VISIBLE,
+  INDEX `fk_group_social_media_platform1_idx` (`social_media_platform_id` ASC) VISIBLE,
+  CONSTRAINT `fk_group_group_lookup1`
+    FOREIGN KEY (`group_lookup_id`)
+    REFERENCES `votemate`.`group_lookup` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_group_social_media_platform1`
+    FOREIGN KEY (`social_media_platform_id`)
+    REFERENCES `votemate`.`social_media_platform` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `votemate`.`social_media`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `votemate`.`social_media` ;
@@ -120,18 +161,25 @@ CREATE TABLE IF NOT EXISTS `votemate`.`social_media` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `core_id` INT NOT NULL,
   `sm_platform_id` INT NOT NULL,
-  `user_guid` VARCHAR(255) NOT NULL,
+  `user_guid` VARCHAR(255) NULL,
   `url` VARCHAR(255) NULL,
   `last_active` DATE NULL,
+  `group_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `core_id` (`core_id` ASC) VISIBLE,
   INDEX `sm_platform_id` (`sm_platform_id` ASC) VISIBLE,
+  INDEX `fk_social_media_group1_idx` (`group_id` ASC) VISIBLE,
   CONSTRAINT `social_media_ibfk_1`
     FOREIGN KEY (`core_id`)
     REFERENCES `votemate`.`core_profile` (`id`),
   CONSTRAINT `social_media_ibfk_2`
     FOREIGN KEY (`sm_platform_id`)
-    REFERENCES `votemate`.`social_media_platform` (`id`))
+    REFERENCES `votemate`.`social_media_platform` (`id`),
+  CONSTRAINT `fk_social_media_group1`
+    FOREIGN KEY (`group_id`)
+    REFERENCES `votemate`.`group` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb4
@@ -156,45 +204,6 @@ CREATE TABLE IF NOT EXISTS `votemate`.`friend` (
   CONSTRAINT `fk_friend_social_media1`
     FOREIGN KEY (`social_media_id`)
     REFERENCES `votemate`.`social_media` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`group_lookup`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`group_lookup` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`group_lookup` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(144) NOT NULL,
-  `description` VARCHAR(255) NOT NULL,
-  `group_url` VARCHAR(144) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`group`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`group` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`group` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `social_media_id` INT NOT NULL,
-  `group_lookup_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `social_media_id`),
-  INDEX `fk_group_social_media1_idx` (`social_media_id` ASC) VISIBLE,
-  INDEX `fk_group_group_lookup1_idx` (`group_lookup_id` ASC) VISIBLE,
-  CONSTRAINT `fk_group_social_media1`
-    FOREIGN KEY (`social_media_id`)
-    REFERENCES `votemate`.`social_media` (`id`),
-  CONSTRAINT `fk_group_group_lookup1`
-    FOREIGN KEY (`group_lookup_id`)
-    REFERENCES `votemate`.`group_lookup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
