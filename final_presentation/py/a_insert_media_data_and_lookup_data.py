@@ -506,13 +506,11 @@ if __name__ == '__main__':
     load_social_media_platform("../json/social_media_platform.json")
     load_gender("../json/gender.json")
     load_marketing_agency("../json/marketing_agency.json")
-    # methods dependent on political_affiliation_lookup table
     load_newspaper("../json/newspaper.json")
     load_magazine("../json/magazine.json")
     load_web_broadcast("../json/web_broadcast.json")
     load_website("../json/website.json")
     load_podcast("../json/podcast.json")
-    # dependent on marketing_agency and political_affiliation_lookup tables
     load_ad("../json/ad.json")
     load_social_issue_view_lookup("../json/social_issue_view_lookup.json")
     load_social_media_group_lookup("../json/social_media_groups.json")
