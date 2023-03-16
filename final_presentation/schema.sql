@@ -1187,37 +1187,11 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `votemate`.`election` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`election` (
-  `id` INT NOT NULL,
-  `election_type` VARCHAR(45) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
   `election_start_date` DATETIME NOT NULL,
   `election_end_date` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `votemate`.`ballot`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`ballot` ;
-
-CREATE TABLE IF NOT EXISTS `votemate`.`ballot` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `election_id` INT NOT NULL,
-  `district_lookup_id` INT NOT NULL,
-  `ballot_title` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_ballot_election1_idx` (`election_id` ASC) VISIBLE,
-  INDEX `fk_ballot_district_lookup1_idx` (`district_lookup_id` ASC) VISIBLE,
-  CONSTRAINT `fk_ballot_election1`
-    FOREIGN KEY (`election_id`)
-    REFERENCES `votemate`.`election` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ballot_district_lookup1`
-    FOREIGN KEY (`district_lookup_id`)
-    REFERENCES `votemate`.`district_lookup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -1242,42 +1216,61 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `votemate`.`ballot_question`
+-- Table `votemate`.`states`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`ballot_question` ;
+DROP TABLE IF EXISTS `votemate`.`states` ;
 
-CREATE TABLE IF NOT EXISTS `votemate`.`ballot_question` (
+CREATE TABLE IF NOT EXISTS `votemate`.`states` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `ballot_id` INT NOT NULL,
-  `question` VARCHAR(144) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `votemate`.`ballot_choice`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `votemate`.`ballot_choice` ;
+
+CREATE TABLE IF NOT EXISTS `votemate`.`ballot_choice` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `office` VARCHAR(255) NOT NULL,
+  `states_id` INT NOT NULL,
+  `election_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_ballot_choice_ballot1_idx` (`ballot_id` ASC) VISIBLE,
-  CONSTRAINT `fk_ballot_choice_ballot1`
-    FOREIGN KEY (`ballot_id`)
-    REFERENCES `votemate`.`ballot` (`id`)
+  INDEX `fk_ballot_choices_states1_idx` (`states_id` ASC) VISIBLE,
+  INDEX `fk_ballot_choices_election1_idx` (`election_id` ASC) VISIBLE,
+  CONSTRAINT `fk_ballot_choices_states1`
+    FOREIGN KEY (`states_id`)
+    REFERENCES `votemate`.`states` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ballot_choices_election1`
+    FOREIGN KEY (`election_id`)
+    REFERENCES `votemate`.`election` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `votemate`.`ballot_question_has_candidate`
+-- Table `votemate`.`ballot_choice_has_candidate`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `votemate`.`ballot_question_has_candidate` ;
+DROP TABLE IF EXISTS `votemate`.`ballot_choice_has_candidate` ;
 
-CREATE TABLE IF NOT EXISTS `votemate`.`ballot_question_has_candidate` (
-  `id` VARCHAR(45) NOT NULL,
-  `ballot_question_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `votemate`.`ballot_choice_has_candidate` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ballot_choice_id` INT NOT NULL,
   `candidate_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_ballot_choice_has_candidate_candidate1_idx` (`candidate_id` ASC) VISIBLE,
-  INDEX `fk_ballot_choice_has_candidate_ballot_choice1_idx` (`ballot_question_id` ASC) VISIBLE,
-  CONSTRAINT `fk_ballot_choice_has_candidate_ballot_choice1`
-    FOREIGN KEY (`ballot_question_id`)
-    REFERENCES `votemate`.`ballot_question` (`id`)
+  INDEX `fk_ballot_choices_has_candidate_candidate1_idx` (`candidate_id` ASC) VISIBLE,
+  INDEX `fk_ballot_choices_has_candidate_ballot_choices1_idx` (`ballot_choice_id` ASC) VISIBLE,
+  CONSTRAINT `fk_ballot_choices_has_candidate_ballot_choices1`
+    FOREIGN KEY (`ballot_choice_id`)
+    REFERENCES `votemate`.`ballot_choice` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ballot_choice_has_candidate_candidate1`
+  CONSTRAINT `fk_ballot_choices_has_candidate_candidate1`
     FOREIGN KEY (`candidate_id`)
     REFERENCES `votemate`.`candidate` (`id`)
     ON DELETE NO ACTION
@@ -1292,27 +1285,27 @@ DROP TABLE IF EXISTS `votemate`.`voter_ballot_started` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`voter_ballot_started` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `ballot_id` INT NOT NULL,
-  `voter_profile_id` INT NOT NULL,
-  `ballot_question_has_candidate_id` VARCHAR(45) NOT NULL,
   `start` DATETIME NOT NULL,
+  `voter_profile_id` INT NOT NULL,
+  `ballot_choice_id` INT NOT NULL,
+  `candidate_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_voter_ballot_started_voter_profile1_idx` (`voter_profile_id` ASC) VISIBLE,
-  INDEX `fk_voter_ballot_started_ballot_question_has_candidate1_idx` (`ballot_question_has_candidate_id` ASC) VISIBLE,
-  INDEX `fk_voter_ballot_started_ballot1_idx` (`ballot_id` ASC) VISIBLE,
+  INDEX `fk_voter_ballot_started_candidate1_idx` (`candidate_id` ASC) VISIBLE,
+  INDEX `fk_voter_ballot_started_ballot_choice1_idx` (`ballot_choice_id` ASC) VISIBLE,
   CONSTRAINT `fk_voter_ballot_started_voter_profile1`
     FOREIGN KEY (`voter_profile_id`)
     REFERENCES `votemate`.`voter_profile` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_voter_ballot_started_ballot_question_has_candidate1`
-    FOREIGN KEY (`ballot_question_has_candidate_id`)
-    REFERENCES `votemate`.`ballot_question_has_candidate` (`id`)
+  CONSTRAINT `fk_voter_ballot_started_candidate1`
+    FOREIGN KEY (`candidate_id`)
+    REFERENCES `votemate`.`candidate` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_voter_ballot_started_ballot1`
-    FOREIGN KEY (`ballot_id`)
-    REFERENCES `votemate`.`ballot` (`id`)
+  CONSTRAINT `fk_voter_ballot_started_ballot_choice1`
+    FOREIGN KEY (`ballot_choice_id`)
+    REFERENCES `votemate`.`ballot_choice` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -1325,22 +1318,27 @@ DROP TABLE IF EXISTS `votemate`.`voter_ballot_finished` ;
 
 CREATE TABLE IF NOT EXISTS `votemate`.`voter_ballot_finished` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `time_submitted` DATETIME NOT NULL,
-  `start_time` DATETIME NOT NULL,
-  `finish_time` DATETIME NOT NULL,
+  `submission_time` DATETIME NOT NULL,
   `voter_profile_id` INT NOT NULL,
-  `ballot_question_has_candidate_id` VARCHAR(45) NOT NULL,
+  `ballot_choice_id` INT NOT NULL,
+  `candidate_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_voter_ballot_finished_voter_profile1_idx` (`voter_profile_id` ASC) VISIBLE,
-  INDEX `fk_voter_ballot_finished_ballot_question_has_candidate1_idx` (`ballot_question_has_candidate_id` ASC) VISIBLE,
+  INDEX `fk_voter_ballot_finished_ballot_choice1_idx` (`ballot_choice_id` ASC) VISIBLE,
+  INDEX `fk_voter_ballot_finished_candidate1_idx` (`candidate_id` ASC) VISIBLE,
   CONSTRAINT `fk_voter_ballot_finished_voter_profile1`
     FOREIGN KEY (`voter_profile_id`)
     REFERENCES `votemate`.`voter_profile` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_voter_ballot_finished_ballot_question_has_candidate1`
-    FOREIGN KEY (`ballot_question_has_candidate_id`)
-    REFERENCES `votemate`.`ballot_question_has_candidate` (`id`)
+  CONSTRAINT `fk_voter_ballot_finished_ballot_choice1`
+    FOREIGN KEY (`ballot_choice_id`)
+    REFERENCES `votemate`.`ballot_choice` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_voter_ballot_finished_candidate1`
+    FOREIGN KEY (`candidate_id`)
+    REFERENCES `votemate`.`candidate` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
