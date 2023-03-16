@@ -1,0 +1,393 @@
+{
+  "elections": [
+    {
+      "name": "2024 General Election",
+      "start_time": "2024-11-05 00:00:00",
+      "end_time": "2024-11-05 23:59:59",
+      "states": [
+        {
+          "name": "California",
+          "ballot_choices": [
+            {
+              "office": "President",
+              "candidates": [
+                {
+                  "first_name": "John",
+                  "last_name": "Rialto",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Edgar",
+                  "last_name": "Martinez",
+                  "party": "Republican Party"
+                },
+                {
+                  "first_name": "Alex",
+                  "last_name": "Johnson",
+                  "party": "Independent"
+                }
+              ]
+            },
+            {
+              "office": "Senator",
+              "candidates": [
+                {
+                  "first_name": "Emma",
+                  "last_name": "Wilson",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Olivia",
+                  "last_name": "Brown",
+                  "party": "Republican Party"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Texas",
+          "ballot_choices": [
+            {
+              "office": "President",
+              "candidates": [
+                {
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Jane",
+                  "last_name": "Smith",
+                  "party": "Republican Party"
+                },
+                {
+                  "first_name": "Alex",
+                  "last_name": "Johnson",
+                  "party": "Independent"
+                }
+              ]
+            },
+            {
+              "office": "Senator",
+              "candidates": [
+                {
+                  "first_name": "Sophia",
+                  "last_name": "Green",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Emily",
+                  "last_name": "Davis",
+                  "party": "Republican Party"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Washington",
+          "ballot_choices": [
+            {
+              "office": "President",
+              "candidates": [
+                {
+                  "first_name": "John",
+                  "last_name": "Torque",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Jane",
+                  "last_name": "Dundan",
+                  "party": "Republican Party"
+                },
+                {
+                  "first_name": "Rex",
+                  "last_name": "Johnson",
+                  "party": "Independent"
+                }
+              ]
+            },
+            {
+              "office": "Senator",
+              "candidates": [
+                {
+                  "first_name": "Sophi",
+                  "last_name": "Bleu",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Emily",
+                  "last_name": "Rodriguez",
+                  "party": "Republican Party"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2026 Midterm Election",
+      "start_time": "2026-11-03 00:00:00",
+      "end_time": "2026-11-03 23:59:59",
+      "states": [
+        {
+          "name": "New York",
+          "ballot_choices": [
+            {
+              "office": "Governor",
+              "candidates": [
+                {
+                  "first_name": "Michael",
+                  "last_name": "Kim",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Elena",
+                  "last_name": "Gutierrez",
+                  "party": "Republican Party"
+                },
+                {
+                  "first_name": "Samir",
+                  "last_name": "Patel",
+                  "party": "Independent"
+                }
+              ]
+            },
+            {
+              "office": "Senator",
+              "candidates": [
+                {
+                  "first_name": "Liam",
+                  "last_name": "O'Connor",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Mila",
+                  "last_name": "Kovalev",
+                  "party": "Republican Party"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Florida",
+          "ballot_choices": [
+            {
+              "office": "Governor",
+              "candidates": [
+                {
+                  "first_name": "Carlos",
+                  "last_name": "Rivera",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Fiona",
+                  "last_name": "Chen",
+                  "party": "Republican Party"
+                },
+                {
+                  "first_name": "Aisha",
+                  "last_name": "Abdul",
+                  "party": "Independent"
+                }
+              ]
+            },
+            {
+              "office": "Senator",
+              "candidates": [
+                {
+                  "first_name": "Maurice",
+                  "last_name": "Thompson",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Nina",
+                  "last_name": "Bianchi",
+                  "party": "Republican Party"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2028 General Election",
+      "start_time": "2028-11-07 00:00:00",
+      "end_time": "2028-11-07 23:59:59",
+      "states": [
+        {
+          "name": "Illinois",
+          "ballot_choices": [
+            {
+              "office": "President",
+              "candidates": [
+                {
+                  "first_name": "Hannah",
+                  "last_name": "Goldberg",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Victor",
+                  "last_name": "Sanchez",
+                  "party": "Republican Party"
+                },
+                {
+                  "first_name": "Grace",
+                  "last_name": "Adewale",
+                  "party": "Independent"
+                }
+              ]
+            },
+            {
+              "office": "Senator",
+              "candidates": [
+                {
+                  "first_name": "Levi",
+                  "last_name": "Yazzie",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Anika",
+                  "last_name": "Krishnan",
+                  "party": "Republican Party"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Arizona",
+          "ballot_choices": [
+            {
+              "office": "President",
+              "candidates": [
+                {
+                  "first_name": "Esther",
+                  "last_name": "Lee",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Joseph",
+                  "last_name": "Nakamura",
+                  "party": "Republican Party"
+                },
+                {
+                  "first_name": "Miguel",
+                  "last_name": "Santos",
+                  "party": "Independent"
+                }
+              ]
+            },
+            {
+              "office": "Senator",
+              "candidates": [
+                {
+                  "first_name": "Rosa",
+                  "last_name": "Mendoza",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Derek",
+                  "last_name": "Nguyen",
+                  "party": "Republican Party"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2030 Midterm Election",
+      "start_time": "2030-11-05 00:00:00",
+      "end_time": "2030-11-05 23:59:59",
+      "states": [
+        {
+          "name": "Colorado",
+          "ballot_choices": [
+            {
+              "office": "Governor",
+              "candidates": [
+                {
+                  "first_name": "Isabella",
+                  "last_name": "Garcia",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Lucas",
+                  "last_name": "Simmons",
+                  "party": "Republican Party"
+                },
+                {
+                  "first_name": "Farah",
+                  "last_name": "Khan",
+                  "party": "Independent"
+                }
+              ]
+            },
+            {
+              "office": "Senator",
+              "candidates": [
+                {
+                  "first_name": "Oscar",
+                  "last_name": "Perez",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Yasmine",
+                  "last_name": "Kamel",
+                  "party": "Republican Party"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Michigan",
+          "ballot_choices": [
+            {
+              "office": "Governor",
+              "candidates": [
+                {
+                  "first_name": "Nora",
+                  "last_name": "Washington",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Benjamin",
+                  "last_name": "Morales",
+                  "party": "Republican Party"
+                },
+                {
+                  "first_name": "Xavier",
+                  "last_name": "Singh",
+                  "party": "Independent"
+                }
+              ]
+            },
+            {
+              "office": "Senator",
+              "candidates": [
+                {
+                  "first_name": "Gabriella",
+                  "last_name": "Olsen",
+                  "party": "Democratic Party"
+                },
+                {
+                  "first_name": "Joshua",
+                  "last_name": "Adekunle",
+                  "party": "Republican Party"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
