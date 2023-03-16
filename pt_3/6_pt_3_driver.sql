@@ -1,4 +1,4 @@
-USE targeted_marketing_pt_3;
+USE targeted_marketing;
 DELIMITER //
 CREATE PROCEDURE bendover_driver()
 
@@ -85,7 +85,6 @@ insertion_loop: LOOP
 	# select politic category ----------------------------------------------------------------
 	-- insert political affiliation and political intensity into profile_opinion
 	-- adds 'Politics' if not found then returns the id. (have to be really careful about typos)
-	# todo: adjust to fit new schema
     SELECT get_current_opinion_type_id('Politics')
     -- store the opinion type for the current political_affiliation in curr_opinion_type_id
     INTO curr_opinion_type_id;
@@ -105,7 +104,6 @@ insertion_loop: LOOP
     # ----------------------------------------------------------------------------------------
 
 	-- change to religion category -----------------------------------------------------------
-	# todo: adjust to fit new schema
     SELECT get_current_opinion_type_id('Religion')
     INTO curr_opinion_type_id;
 
