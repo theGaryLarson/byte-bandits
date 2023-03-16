@@ -52,8 +52,8 @@ VALUES (11, 'johndoe@gmail.com'),
 	   (14, 'sarawilliams@gmail.com'),
        (15, 'gary.larson@email.com');
 
-INSERT INTO phone (core_id, phone_num)
-VALUES (11, '555-555-5555'),
+INSERT INTO phone (core_id, country_code, area_code, extension, line_number)
+VALUES (11, '1', '555', '555', '5555'),
        (12, '555-555-5556'),
        (13, '555-555-5557'),
 	   (14, '555-555-5558'),
