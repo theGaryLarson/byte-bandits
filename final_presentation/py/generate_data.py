@@ -317,7 +317,7 @@ def load_web_media():
 
                 for media_entry_type in ["ad", "broadcast", "podcast", "website"]:
                     if media_entry_type == 'ad':
-                        count = random.randint(6, 10)
+                        count = random.randint(8, 15)
                         stmt = "SELECT * FROM ad WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
 
                         cursor.execute(stmt, (pol_affil_id, count))
@@ -335,8 +335,10 @@ def load_web_media():
                             cursor.execute(stmt, values)
 
                     elif media_entry_type == 'broadcast':
-                        count = random.randint(6, 10)
-                        stmt = "SELECT * FROM web_broadcast WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
+                        count = random.randint(3, 10)
+                        stmt = "SELECT * " \
+                               "FROM web_broadcast " \
+                               "WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
                         cursor.execute(stmt, (pol_affil_id, count))
                         user_broadcasts = cursor.fetchall()
 
@@ -354,7 +356,9 @@ def load_web_media():
 
                     elif media_entry_type == 'podcast':
                         count = random.randint(6, 10)
-                        stmt = "SELECT * FROM podcast WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
+                        stmt = "SELECT * " \
+                               "FROM podcast " \
+                               "WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
                         cursor.execute(stmt, (pol_affil_id, count))
                         user_podcasts = cursor.fetchall()
 
@@ -371,8 +375,10 @@ def load_web_media():
                             cursor.execute(stmt, values)
 
                     elif media_entry_type == 'website':
-                        count = random.randint(6, 10)
-                        stmt = "SELECT * FROM website WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
+                        count = random.randint(9, 18)
+                        stmt = "SELECT * " \
+                               "FROM website " \
+                               "WHERE political_affiliation_id = %s ORDER BY RAND() LIMIT %s"
                         cursor.execute(stmt, (pol_affil_id, count))
                         user_websites = cursor.fetchall()
 
@@ -386,6 +392,55 @@ def load_web_media():
                             values = (core_id, dates[random_idx], None, None, None,
                                       website['id'], length_of_stay_seconds)
 
+                            cursor.execute(stmt, values)
+            cnx.commit()
+
+
+def load_printed_media_subscriptions():
+    import random
+
+    with mysql.connector.connect(**config) as cnx:
+        with cnx.cursor(dictionary=True, buffered=True) as cursor:
+            user_stmt = "SELECT * FROM bendover_data_feed;"
+            cursor.execute(user_stmt)
+            users = cursor.fetchall()
+
+            for subscriber in users:
+                statement = "SELECT core_profile.id " \
+                            "FROM core_profile " \
+                            "WHERE f_name = %s AND l_name = %s;"
+                values = (subscriber["first_name"], subscriber["last_name"])
+                cursor.execute(statement, values)
+                results = cursor.fetchone()
+                core_id = results["id"]
+
+                for printed_media_type in ["newspaper", "magazine"]:
+                    if printed_media_type == "newspaper":
+                        count = random.randint(1, 6)
+                        stmt = "SELECT * FROM newspaper WHERE political_affiliation_id = " \
+                               "(SELECT id FROM political_affiliation_lookup WHERE affiliation = %s) " \
+                               "ORDER BY RAND() LIMIT %s"
+                        cursor.execute(stmt, (subscriber["political_affiliation"], count))
+                        newspapers = cursor.fetchall()
+
+                        for paper in newspapers:
+                            stmt = "INSERT INTO printed_media_subscription (core_id, newspaper_id, magazine_id) " \
+                                   "VALUES(%s, %s, %s)"
+                            values = (core_id, paper['id'], None)
+                            cursor.execute(stmt, values)
+
+                    if printed_media_type == "magazine":
+                        count = random.randint(3, 6)
+                        stmt = "SELECT * FROM magazine WHERE political_affiliation_id = " \
+                               "(SELECT id FROM political_affiliation_lookup WHERE affiliation = %s) " \
+                               "ORDER BY RAND() LIMIT %s"
+                        cursor.execute(stmt, (subscriber["political_affiliation"], count))
+                        magazines = cursor.fetchall()
+
+                        for magazine in magazines:
+                            stmt = "INSERT INTO printed_media_subscription (core_id, newspaper_id, magazine_id) " \
+                                   "VALUES(%s, %s, %s)"
+                            values = (core_id, None, magazine['id'])
                             cursor.execute(stmt, values)
             cnx.commit()
 
@@ -453,6 +508,10 @@ if __name__ == '__main__':
 
             load_web_media()
             print("web media loaded successfully")
+
+            load_printed_media_subscriptions()
+            print("printed media subscriptions loaded successfully")
+
             main_cursor.close()
             conn.close()
 
