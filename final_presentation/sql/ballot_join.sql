@@ -21,4 +21,6 @@ VALUES
 INSERT INTO voter_ballot_finished (submission_time, voter_profile_id, ballot_choice_id, candidate_id)
 VALUES
 ('2023-03-01 09:10:00', 1, 1, 1),
-('2023-03-01 09:20:00', 2, 1, 2);
+('2023-03-01 09:20:00', 2, 1, 2),
+('2023-03-01 09:10:00', 3, 3, 1),
+('2023-03-01 09:20:00', 4, 3, 2);
