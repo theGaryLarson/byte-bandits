@@ -1,0 +1,12 @@
+{
+  "social_issue_view_type_lookup": [
+    {"category": "Environmental Issues"},
+    {"category": "Education"},
+    {"category": "Human Rights and Equality"},
+    {"category": "Healthcare and Wellness"},
+    {"category": "Governance and Politics"},
+    {"category": "Socioeconomic Issues"},
+    {"category": "Law and Order"},
+    {"category": "Technology and Cybersecurity"}
+  ]
+}

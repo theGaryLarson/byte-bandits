@@ -1,0 +1,104 @@
+{
+  "website": [
+    {
+      "name": "The New York Times",
+      "url": "https://www.nytimes.com/",
+      "associated_party": "Democratic Party"
+    },
+    {
+      "name": "Fox News",
+      "url": "https://www.foxnews.com/",
+      "associated_party": "Republican Party"
+    },
+    {
+      "name": "CNN",
+      "url": "https://www.cnn.com/",
+      "associated_party": "Democratic Party"
+    },
+    {
+      "name": "Breitbart News",
+      "url": "https://www.breitbart.com/",
+      "associated_party": "Republican Party"
+    },
+    {
+      "name": "The Washington Post",
+      "url": "https://www.washingtonpost.com/",
+      "associated_party": "Democratic Party"
+    },
+    {
+      "name": "National Review",
+      "url": "https://www.nationalreview.com/",
+      "associated_party": "Republican Party"
+    },
+    {
+      "name": "MSNBC",
+      "url": "https://www.msnbc.com/",
+      "associated_party": "Democratic Party"
+    },
+    {
+      "name": "The Drudge Report",
+      "url": "https://drudgereport.com/",
+      "associated_party": "Republican Party"
+    },
+    {
+      "name": "HuffPost",
+      "url": "https://www.huffpost.com/",
+      "associated_party": "Democratic Party"
+    },
+    {
+      "name": "Newsmax",
+      "url": "https://www.newsmax.com/",
+      "associated_party": "Republican Party"
+    },
+    {
+      "name": "The Hill",
+      "url": "https://thehill.com/",
+      "associated_party": "Neutral"
+    },
+    {
+      "name": "The Daily Caller",
+      "url": "https://dailycaller.com/",
+      "associated_party": "Republican Party"
+    },
+    {
+      "name": "Politico",
+      "url": "https://www.politico.com/",
+      "associated_party": "Neutral"
+    },
+    {
+      "name": "RedState",
+      "url": "https://redstate.com/",
+      "associated_party": "Republican Party"
+    },
+    {
+      "name": "The Nation",
+      "url": "https://www.thenation.com/",
+      "associated_party": "Democratic Party"
+    },
+    {
+      "name": "The Gateway Pundit",
+      "url": "https://www.thegatewaypundit.com/",
+      "associated_party": "Republican Party"
+    },
+    {
+      "name": "Salon",
+      "url": "https://www.salon.com/",
+      "associated_party": "Democratic Party"
+    },
+    {
+      "name": "The Blaze",
+      "url": "https://www.theblaze.com/",
+      "associated_party": "Republican Party"
+    },
+    {
+      "name": "Talking Points Memo",
+      "url": "https://talkingpointsmemo.com/",
+      "associated_party": "Democratic Party"
+    },
+    {
+      "name": "Daily Kos",
+      "url": "https://www.dailykos.com/",
+      "associated_party": "Democratic Party"
+    }
+  ]
+}

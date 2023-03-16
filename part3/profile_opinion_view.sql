@@ -1,4 +1,4 @@
-USE targeted_marketing;
+USE targeted_marketing_pt_3;
 CREATE VIEW profile_opinion_view AS
 SELECT profile_opinion.id AS 'Core id', f_name, l_name, sm_opinion_type.type AS 'Category', opinion_id, opinion.opinion, intensity, `date` AS 'Post-date'
 FROM targeted_marketing.profile_opinion

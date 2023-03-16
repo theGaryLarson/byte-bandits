@@ -1,0 +1,23 @@
+{
+    "social_issue_view_lookup": [
+        {"category": "Environmental Issues", "subcategory": "Climate Change"},
+        {"category": "Governance and Politics", "subcategory": "Gun Control"},
+        {"category": "Human Rights and Equality", "subcategory": "LGBTQ+ Rights"},
+        {"category": "Socioeconomic Issues", "subcategory": "Income Inequality"},
+        {"category": "Human Rights and Equality", "subcategory": "Abortion"},
+        {"category": "Human Rights and Equality", "subcategory": "Racial Justice"},
+        {"category": "Healthcare and Wellness", "subcategory": "Healthcare"},
+        {"category": "Education", "subcategory": "Education"},
+        {"category": "Human Rights and Equality", "subcategory": "Gender Equality"},
+        {"category": "Law and Order", "subcategory": "Police Brutality"},
+        {"category": "Technology and Cybersecurity", "subcategory": "Privacy"},
+        {"category": "Governance and Politics", "subcategory": "Foreign Policy"},
+        {"category": "Technology and Cybersecurity", "subcategory": "Cybersecurity"},
+        {"category": "Law and Order", "subcategory": "Criminal Justice Reform"},
+        {"category": "Socioeconomic Issues", "subcategory": "Economic Development"},
+        {"category": "Socioeconomic Issues", "subcategory": "Homelessness"},
+        {"category": "Environmental Issues", "subcategory": "Animal Rights"},
+        {"category": "Law and Order", "subcategory": "Drug Policy"},
+        {"category": "Human Rights and Equality", "subcategory": "Immigration"}
+    ]
+}

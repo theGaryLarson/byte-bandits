@@ -1,4 +1,4 @@
-USE targeted_marketing;
+USE targeted_marketing_pt_3;
 DELIMITER //
 CREATE PROCEDURE insert_bendover_names_into_core_profile()
 BEGIN
@@ -130,6 +130,7 @@ DELIMITER ;
 
 DELIMITER //
 
+ # todo: adjust to match new schema
 CREATE PROCEDURE insert_profile_opinion
 (
     core_profile_id_arg         INT,
@@ -145,6 +146,7 @@ BEGIN
         # return true if is inserted
     # ELSE
         # return false letting us know it exists and need to transfer to opinion transaction table
+        # INSERT INTO <TRANSACTION TABLE>
     END IF;
 END//
 DELIMITER ;
@@ -176,7 +178,7 @@ CREATE PROCEDURE insert_profile_data
 BEGIN
     DECLARE curr_id     INT;
 
-    SELECT targeted_marketing.profile_data.core_id
+    SELECT targeted_marketing_pt_3.profile_data.core_id
     INTO curr_id
     FROM profile_data
     WHERE core_id = core_id_var;

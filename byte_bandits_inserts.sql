@@ -132,7 +132,7 @@ VALUES ('11', '11'),
 #              OPINIONS                  #
 ##########################################
 
-INSERT INTO sm_opinion_type (type) 
+INSERT INTO sm_opinion_type (type)
 VALUES ('Education'),
 	   ('Healthcare'),
        ('Immigration'),
@@ -142,13 +142,13 @@ VALUES ('Education'),
 	   ('Politics'),
 	   ('Climate-Change');
 
-INSERT INTO opinion (smo_type_id, opinion) 
+INSERT INTO opinion (smo_type_id, opinion)
 VALUES (11, 'I believe in increasing funding for public education'),
        (12, 'I support universal healthcare access'),
        (13, 'I support a fair and humane immigration policy'),
        (14, 'I believe in a non-interventional foreign policy'),
        (15, 'I support common-sense gun control measures');
-       
+
 INSERT INTO profile_opinion (core_id, opinion_id, intensity, `date`)
 VALUES (11, 11, 1, '2023-01-20'),
        (12, 12, 10, '2020-03-17'),

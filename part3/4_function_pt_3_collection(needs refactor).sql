@@ -1,4 +1,4 @@
-USE targeted_marketing;
+USE targeted_marketing_pt_3;
 DELIMITER //
 CREATE FUNCTION check_exists_email
 (
@@ -25,6 +25,9 @@ END//
 DELIMITER ;
 
 DELIMITER //
+ # todo: adjust to match new schema
+ # check exists becomes 3 functions
+ -- religious_affiliation, political_affiliation, social_issue_view
 CREATE FUNCTION check_exists_profile_opinion
 (
     core_profile_id_arg         INT,
@@ -61,7 +64,7 @@ DETERMINISTIC READS SQL DATA
 BEGIN
 DECLARE found_platform VARCHAR(255);
 
-SELECT `targeted_marketing`.social_media_platform.platform
+SELECT `targeted_marketing_pt_3`.social_media_platform.platform
 INTO found_platform
 FROM social_media_platform
 WHERE `social_media_platform`.platform = platform;
@@ -78,6 +81,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
+ # todo: adjust to match new schema
 CREATE FUNCTION get_current_opinion_type_id
 (
 	opinion_type_var VARCHAR(45)
@@ -114,6 +118,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
+ # todo: adjust to match new schema
 CREATE FUNCTION get_opinion_id
 (
 	smo_type_id_var		INT,
@@ -161,7 +166,7 @@ DETERMINISTIC READS SQL DATA
 BEGIN
   DECLARE result INT;
   SELECT id INTO result
-  FROM targeted_marketing.core_profile
+  FROM targeted_marketing_pt_3.core_profile
   WHERE f_name = first_name AND l_name = last_name;
   IF result IS NULL THEN
       # fixme: hack solution to my main driver procedure quitting early

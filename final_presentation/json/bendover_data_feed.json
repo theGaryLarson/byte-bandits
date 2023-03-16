@@ -1,0 +1,234 @@
+{
+  "data": [
+    {
+      "id": "936DA01F-9ABD-4D9D-80C7-02AF85C822A8",
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "jane.doe@example.com",
+      "political_affiliation": "Libertarian Party",
+      "political_intensity": 10,
+      "religious_affiliation": "Atheism",
+      "religious_intensity": 1,
+      "social_issues": {
+        "climate change": {
+          "opinion": "Pro-action",
+          "post_date": "2022-04-12",
+          "opinion_intensity": 10
+        },
+        "immigration": {
+          "opinion": "Pro-immigration",
+          "post_date": "2022-04-13",
+          "opinion_intensity": 10
+        },
+        "healthcare": {
+          "opinion": "Pro-universal healthcare",
+          "post_date": "2022-04-14",
+          "opinion_intensity": 10
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Libertarian Party",
+        "religious_affiliation": "Atheism",
+        "gender": "I"
+      },
+      "gender": "TM",
+      "birthdate": "1993-02-06",
+      "location": "New York, NY",
+      "education": "Bachelor's degree in Computer Science",
+      "occupation": "Software Engineer",
+      "hobbies": ["Programming", "Reading", "Hiking"]
+    },
+    {
+      "id": "7C4A8D09-E2F8-496E-AFCE-DA96A76E31A3",
+      "first_name": "John",
+      "last_name": "Smith",
+      "email": "john.smith@example.com",
+      "political_affiliation": "Republican Party",
+      "political_intensity": 1,
+      "religious_affiliation": "Christianity",
+      "religious_intensity": 10,
+      "social_issues": {
+        "climate change": {
+          "opinion": "Skeptical",
+          "post_date": "2021-04-12",
+          "opinion_intensity": 1
+        },
+        "immigration": {
+          "opinion": "Anti-immigration",
+          "post_date": "2021-04-13",
+          "opinion_intensity": 1
+        },
+        "healthcare": {
+          "opinion": "Pro-market healthcare",
+          "post_date": "2021-04-14",
+          "opinion_intensity": 1
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Republican Party",
+        "religious_affiliation": "Christianity",
+        "gender": "F"
+      },
+      "gender": "TF",
+      "birthdate": "2001-02-20",
+      "location": "Los Angeles, CA",
+      "education": "Associate's degree in Business",
+      "occupation": "Entrepreneur",
+      "hobbies": ["Surfing", "Yoga", "Cooking"]
+    },
+    {
+      "id": "A1B2C3D4-E5F6-G7H8-I9J0-K1L2M3N4O5",
+      "first_name": "Emily",
+      "last_name": "Johnson",
+      "email": "emily.johnson@example.com",
+      "political_affiliation": "Independent",
+      "political_intensity": 5,
+      "religious_affiliation": "Buddhism",
+      "religious_intensity": 7,
+      "social_issues": {
+        "climate change": {
+          "opinion": "Pro-action",
+          "post_date": "2022-04-15",
+          "opinion_intensity": 9
+        },
+        "immigration": {
+          "opinion": "Pro-immigration",
+          "post_date": "2022-04-16",
+          "opinion_intensity": 8
+        },
+        "healthcare": {
+          "opinion": "Pro-universal healthcare",
+          "post_date": "2022-04-17",
+          "opinion_intensity": 7
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Independent",
+        "religious_affiliation": "Buddhism",
+        "gender": "M"
+      },
+      "gender": "F",
+      "birthdate": "1994-02-06",
+      "location": "Chicago, IL",
+      "education": "Master's degree in Education",
+      "occupation": "Teacher",
+      "hobbies": ["Painting", "Traveling", "Gardening"]
+    },
+    {
+      "id": "P1Q2R3S4-T5U6-V7W8-X9Y0-Z1A2B3C4D5",
+      "first_name": "Michael",
+      "last_name": "Brown",
+      "email": "michael.brown@example.com",
+      "political_affiliation": "Republican Party",
+      "political_intensity": 9,
+      "religious_affiliation": "Judaism",
+      "religious_intensity": 8,
+      "social_issues": {
+        "climate change": {
+        "opinion": "Skeptical",
+        "post_date": "2021-04-15",
+        "opinion_intensity": 1
+        },
+        "immigration": {
+          "opinion": "Anti-immigration",
+          "post_date": "2021-04-16",
+          "opinion_intensity": 2
+        },
+        "healthcare": {
+          "opinion": "Pro-market healthcare",
+          "post_date": "2021-04-17",
+          "opinion_intensity": 3
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Republican Party",
+        "religious_affiliation": "Judaism",
+        "gender": "F"
+      },
+      "gender": "TF",
+      "birthdate": "1998-05-22",
+      "location": "Houston, TX",
+      "education": "Doctorate degree in Physics",
+      "occupation": "Research Scientist",
+      "hobbies": ["Astronomy, Sudoku, Beer Pong"]
+    },
+    {
+      "id": "6D420CB6-73A9-4F77-AE68-BD8E6B726FA0",
+      "first_name": "Andy",
+      "last_name": "McDaniels",
+      "email": "andy.mcdaniels@example.com",
+      "political_affiliation": "Democratic Party",
+      "political_intensity": 8,
+      "religious_affiliation": "None",
+      "religious_intensity": 1,
+      "social_issues": {
+        "gun control": {
+          "opinion": "Pro-gun control",
+          "post_date": "2023-03-14",
+          "opinion_intensity": 9
+        },
+        "LGBTQ+ Rights": {
+          "opinion": "Pro-LGBTQ rights",
+          "post_date": "2023-03-13",
+          "opinion_intensity": 7
+        },
+        "income inequality": {
+          "opinion": "Pro-progressive taxation",
+          "post_date": "2023-03-12",
+          "opinion_intensity": 6
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Democratic Party",
+        "religious_affiliation": "None",
+        "gender": "F"
+      },
+      "gender": "M",
+      "birthdate": "1990-05-25",
+      "location": "San Francisco, CA",
+      "education": "Bachelor's degree in Environmental Studies",
+      "occupation": "Environmental Activist",
+      "hobbies": ["Hiking", "Biking", "Cooking"]
+    },
+    {
+      "id": "A2E960C1-CB22-42D1-A1A3-C3B0A771BC0C",
+      "first_name": "Bernie",
+      "last_name": "Schneider",
+      "email": "bernie.schneider@example.com",
+      "political_affiliation": "Democratic Party",
+      "political_intensity": 9,
+      "religious_affiliation": "Judaism",
+      "religious_intensity": 8,
+      "social_issues": {
+        "gun control": {
+          "opinion": "Pro-gun control",
+          "post_date": "2023-03-14",
+          "opinion_intensity": 7
+        },
+        "climate change": {
+          "opinion": "Pro-action",
+          "post_date": "2023-03-13",
+          "opinion_intensity": 10
+        },
+        "racial justice": {
+          "opinion": "Pro-equity",
+          "post_date": "2023-03-12",
+          "opinion_intensity": 9
+        }
+      },
+      "social_mate_preference": {
+        "political_affiliation": "Democratic Party",
+        "religious_affiliation": "Judaism",
+        "gender": "M"
+      },
+      "gender": "M",
+      "birthdate": "1985-01-01",
+      "location": "Washington, D.C.",
+      "education": "Master's degree in Public Policy",
+      "occupation": "Policy Analyst",
+      "hobbies": ["Playing the piano", "Reading", "Traveling"]
+    }
+
+
+  ]
+}
