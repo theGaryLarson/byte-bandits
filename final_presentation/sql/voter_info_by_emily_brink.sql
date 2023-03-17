@@ -5,7 +5,7 @@ INSERT INTO district_lookup (district) VALUES
 ('District 4'),
 ('District 5'),
 ('District 6');
-
+select * from district_lookup;
 
 INSERT INTO voter_profile (core_id, district_lookup_id, username, password, salt, email, device_id, login_date) VALUES
 (11, 1, 'jane_doe', 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5', 'abc123def456ghi789', 'jane_doe@example.com', 'f0e1d2c3b4a59687', '2023-01-01 00:00:00'),
@@ -14,6 +14,7 @@ INSERT INTO voter_profile (core_id, district_lookup_id, username, password, salt
 (14, 4, 'michael_brown', 'd4e5f6g7h8i9j0k1l2m3n4o5a1b2c3', 'abc123ghi789def456', 'michael_brown@example.com', '8s7t6u5v4w3x2y1z0a1', '2023-01-01 00:00:00'),
 (15, 5, 'andy_mcdaniels', 'e5f6g7h8i9j0k1l2m3n4o5a1b2c3d4', 'def456abc123ghi789', 'andy_mcdaniels@example.com', '7a6b5c4d3e2f1g0h9i8', '2023-01-01 00:00:00'),
 (16, 6, 'bernie_schneider', 'f6g7h8i9j0k1l2m3n4o5a1b2c3d4e5', 'ghi789def456abc123', 'bernie_schneider@example.com', '6z5y4x3w2v1u0t9s8r7', '2023-01-01 00:00:00');
+select * from voter_profile;
 
 INSERT INTO voter_log (voter_profile_id, last_login, last_device_id) VALUES
 (1, '2023-01-01 00:00:00', 'f0e1d2c3b4a59687'),

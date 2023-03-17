@@ -1,7 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 
-from final_presentation.py.json_extraction_methods import *
+from final_presentation.py_by_gary.json_extraction_methods import *
 from vm_config import config
 
 """
