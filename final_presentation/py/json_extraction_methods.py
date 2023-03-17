@@ -1,10 +1,11 @@
+from datetime import datetime, timedelta
+
 import mysql.connector
 import json
 import random
 
 from vm_config import host, user, password, database
 from vm_config import config
-
 
 
 def load_bendover_data_feed(json_file_path):
@@ -151,6 +152,7 @@ def load_social_media_platform(json_file_path):
         # Commit the changes
         cnx.commit()
 
+
 def load_gender(json_file_path):
     # Load JSON data from file
     with open(json_file_path, 'r') as f:
@@ -166,6 +168,7 @@ def load_gender(json_file_path):
 
         # Commit the changes
         cnx.commit()
+
 
 def load_marketing_agency(json_file_path):
     # Load JSON data from file
@@ -294,7 +297,6 @@ def load_website(json_file_path):
         cnx.commit()
 
 
-
 def load_podcast(json_file_path):
     """
         load_podcast is dependent on political_affiliation table
@@ -361,7 +363,6 @@ def load_ad(json_file_path):
         cnx.commit()
 
 
-
 def load_social_issue_view_lookup(json_file_path):
     """
         load_social_issue_view_lookup is dependent on table: social_issue_view_type_lookup
@@ -382,7 +383,7 @@ def load_social_issue_view_lookup(json_file_path):
                     if cat_id is not None:
                         category_id = cat_id[0]
                 add_issue = "INSERT INTO social_issue_view_lookup (view, view_type_id)" \
-                         "  VALUES (%s, %s)"
+                            "  VALUES (%s, %s)"
                 data_issue = (issue['subcategory'], category_id)
                 cursor.execute(add_issue, data_issue)
 
@@ -399,13 +400,19 @@ def load_social_media_group_lookup(json_file_path):
     with mysql.connector.connect(**config) as cnx:
         with cnx.cursor() as cursor:
             for pair in data['social_media_groups']:
+                smp_id_query = """SELECT id 
+                            FROM social_media_platform
+                            WHERE platform = %s"""
+                cursor.execute(smp_id_query, (pair["platform"], ))
+                smp_id = cursor.fetchone()[0]
                 for idx, group in enumerate(pair["groups"]):
+
                     name = group["name"]
                     lean = group["political_leaning"]
                     url = group["url"]
-                    add_group = "INSERT INTO group_lookup (name, political_lean, group_url)  " \
-                                "VALUES (%s, %s, %s)"
-                    data_platform = (name, lean, url)
+                    add_group = """INSERT INTO group_lookup (name, political_lean, group_url, social_media_platform_id)  
+                                VALUES (%s, %s, %s, %s)"""
+                    data_platform = (name, lean, url, smp_id)
                     cursor.execute(add_group, data_platform)
 
         # Commit the changes
@@ -420,16 +427,21 @@ def load_group(json_file_path):
     with mysql.connector.connect(**config) as cnx:
         with cnx.cursor() as cursor:
             for pair in data['social_media_groups']:
-                statement = "SELECT id FROM social_media_platform WHERE platform = %s;"
+                statement = """SELECT social_media.id 
+                               FROM social_media 
+                               JOIN social_media_platform ON social_media.sm_platform_id = social_media_platform.id
+                               WHERE core_id = %s;"""
                 cursor.execute(statement, (pair["platform"],))
                 social_media_id = cursor.fetchone()[0]
                 for group in pair["groups"]:
                     statement = "SELECT id FROM group_lookup WHERE name = %s"
                     cursor.execute(statement, (group["name"],))
                     group_lookup_id = cursor.fetchone()[0]
-                    insert_stmt = "INSERT INTO `group` (group_lookup_id, social_media_platform_id) " \
-                                  "VALUES (%s, %s)"
-                    data = (group_lookup_id, social_media_id)
+                    insert_stmt = "INSERT INTO `group` (social_media_id, group_lookup_id, timestamp ) " \
+                                  "VALUES (%s, %s, %s)"
+                    # subtracting random range of days from today's current date to simulate different times
+                    data = (group_lookup_id, social_media_id, (datetime.now() -
+                            timedelta(days=random.randrange(60, 720))).strftime("%Y-%m-%d %H:%M:%S"))
                     cursor.execute(insert_stmt, data)
             cnx.commit()
 

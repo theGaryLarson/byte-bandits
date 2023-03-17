@@ -6,7 +6,7 @@ INSERT INTO district_lookup (district) VALUES
 ('District 5'),
 ('District 6');
 
-
+SELECT * FROM district_lookup;
 INSERT INTO voter_profile (core_id, district_lookup_id, username, password, salt, email, device_id, login_date) VALUES
 (11, 1, 'jane_doe', 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5', 'abc123def456ghi789', 'jane_doe@example.com', 'f0e1d2c3b4a59687', '2023-01-01 00:00:00'),
 (12, 2, 'john_smith', 'b2c3d4e5f6g7h8i9j0k1l2m3n4o5a1', 'def456ghi789abc123', 'john_smith@example.com', '1a2b3c4d5e6f7g8h9i0j', '2023-01-01 00:00:00'),
