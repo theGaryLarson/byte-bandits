@@ -31,3 +31,11 @@
 _**The database should be loaded and can run queries in the following:**_
  1. _analytics_by_emily_brink.sql_
  2. _media_influences_by_gary_larson_and_nicklas_dipietro.sql_
+
+
+****
+SECTIONS
+
+Clickstreams & Web Media: Gary Larson & Nicklas DiPietro
+Ballot Section: Robel Hailu
+Voter Profile & Auth: Emily Brink
